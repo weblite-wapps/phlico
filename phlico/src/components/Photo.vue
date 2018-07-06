@@ -5,15 +5,24 @@
       :alt="picture.image_name"
       :srcset="picture.url"
       :src="picture.url"
-      @mouseover="show.icons = true"
-      @mouseleave="show.icons = false">
+      @mouseover="showCaption = !showCaption">
 
+    <div
+      v-show="showCaption"
+      class="caption-like-container">
+        <span class="caption">{{ captionPresent(picture.caption) }}</span>
+      <lable
+        class="comment"
+        @click="showComments(1)">🔖</lable>
+      <lable
+          :class="[{'liked': (isLiked)}, 'heart']"
+          @click="isLiked = !isLiked">❤</lable>
+
+    </div>
     <!--<input id="toggle-heart" type="checkbox" />-->
     <!--<label for="toggle-heart">❤</label>-->
 
-    <lable
-      id="heart"
-      :class="{'liked': (liked)}">❤</lable>
+
 
   </div>
 </template>
@@ -23,16 +32,18 @@
     name: "photo",
     data: function() {
       return {
-        liked: false,
-        show: {
-          icons: false,
-          liked: false,
-        }
+        isLiked: false,
+        showCaption: false,
       }
     },
     methods: {
-      test() {
-        // console.log("test is ready")
+      captionPresent: function(caption) {
+        if (caption.length < 50) return caption
+        return caption.substring(0, 47) + '...'
+      },
+      showComments: (caption) => {
+        console.log(caption)
+        this.$emit('SHOW_COMMENTS', caption)
       }
     },
     props: {
@@ -44,9 +55,10 @@
 <style scoped>
   .app {
     height: 100%;
+    width: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;
     margin: 0;
   }
   .photo-post {
@@ -59,55 +71,58 @@
     cursor: pointer;
   }
 
-  #heart {
-    cursor: pointer;
-    color: #aab8c2;
-    transition: 200ms ease-in;
-    transform: scale(1);
-  }
-
-  #heart:hover {
-    transition: 200ms ease-in-out;
-    transform: scale(1.4) ;
-  }
-
-  .liked{
-    cursor: pointer;
-    color: #e2264d;
-  }
-
-  normalHeart {
-    color: #aab8c2;
-  }
-
-  #heart
-  [id='toggle-heart'] {
+  .caption-like-container {
+    display: flex;
     position: absolute;
-    left: -100vw;
+    z-index: 3;
+    justify-content: space-between;
+    align-items: baseline;
+    max-width: 300px;
+    max-height: 300px;
+    width: 100%;
+    height: 5%;
+    background-color: rgba(0,0,0,0.7);
   }
 
-  [for='toggle-heart'] {
-    color: #aab8c2;
+  .caption {
+    font-size: 12px;
+    align-item: flex-end;
+    align-self: center;
+    color:white;
+    margin-top: 4px;
+    margin-left: 5px;
+    max-width: 80%;
+    /*justify-content: space-around;*/
+    /*align-items: baseline;*/
+    /*align-item: flex-end;*/
+    /*text-align: center;*/
   }
 
-  [id='toggle-heart']:checked + label {
-    color: #e2264d;
-    animation: heart 1s cubic-bezier(.17, .89, .32, 1.49);
-  }
-
-  [for='toggle-heart'] {
-    font-size: 2em;
+  .comment {
     cursor: pointer;
   }
 
-  [for='toggle-heart'] {
-    align-self: flex-end;
+  .heart {
+    color: white;
+    align-item: flex-end;
+    margin-right: 5px;
+    align-self: center;
+    cursor: pointer;
   }
-  @keyframes heart { 0%, 17.5% { font-size: 0; } }
 
-  [id='toggle-heart']:checked + label {
-    will-change: font-size;
-    animation: heart 1s cubic-bezier(.17, .89, .32, 1.49);
+  .liked {
+    /*display: inline-block;*/
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    position: relative;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+    color: red;
   }
+
 
 </style>

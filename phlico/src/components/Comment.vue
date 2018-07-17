@@ -52,13 +52,24 @@
 
 <style scoped>
   .comment-container {
+    box-shadow: 0px 2px 20px #666;
+    max-width: 650px;
     display: flex;
+    align-items: center;
     justify-content: baseline;
+    margin-top: 5px;
+    transition: all 0.3s ease-in;
+    transform: translateY(2px);
+  }
+  .comment-container:hover {
+    background-color: rgba(0, 0, 0, .1);
+    transform: translateY(5px);
   }
   .user-profile{
     display:  flex;
     justify-content: center;
     align-items: center;
+    margin-left: 5px;
     min-width: 40px;
     height: 40px;
     border-radius: 50px;
@@ -67,24 +78,24 @@
   }
   .user-comment {
     flex-wrap: wrap;
-    margin-left: 10px;
+    margin-left: 12px;
   }
   /* Theme */
   .red-theme {
-    background-color: red;
-    color: #00F7FF;
+    background-color: #E53C3C;
+    color: #050000;
   }
   .blue-theme {
-    background-color: #3E92E0;
-    color: #D20246;
+    background-color: #2E67E9;
+    color: #FFA200;
   }
   .dark-theme {
-    background-color: black;
+    background-color: #0B0E13;
     color: white;
   }
   .light-theme {
-    background-color: #ccc;
-    color: black;
+    background-color: #7F7979;
+    color: #FFFFFF;
   }
 
 </style>

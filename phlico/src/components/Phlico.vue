@@ -109,7 +109,8 @@ export default {
 <style scoped>
 #r {
   background-color: darkkhaki;
-  max-width: 300px;
+  width: 650px;
+  height: 650px;
   width: 100%;
   height: 100%;
 }

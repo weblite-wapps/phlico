@@ -1,7 +1,7 @@
 {
-  "name": "phlico",
+  "name": "phlicox",
   "version": "1.0.0",
-  "description": "photo like comment collector in MVEN",
+  "description": "A Vue.js project",
   "author": "AmirHossein Ebrahimi <amrihosseinebrahimi77@gmail.com>",
   "private": true,
   "scripts": {
@@ -10,7 +10,6 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "nodemon": "^1.18.0",
     "vue": "^2.5.2"
   },
   "devDependencies": {

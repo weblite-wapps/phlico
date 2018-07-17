@@ -1,9 +1,12 @@
 const express = require('express')
 // const router = require('./router/index')
-// const database = require('./db/index')
+const database = require('./db/index')
 
-const PORT = process.env.PORT || 30000;
-app = express()
+const PORT = process.env.PORT || 3000
+
+
+const app = express()
+console.log(database.connect('d'))
 // database.connect('instalite_db')
 // app.use('/', router)
 

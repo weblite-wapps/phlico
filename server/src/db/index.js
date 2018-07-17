@@ -1,5 +1,3 @@
 const dbhandler = require('./dbhandler')
 
-module.exports = {
-	dbhandler
-}
+module.exports = dbhandler

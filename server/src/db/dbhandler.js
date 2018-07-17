@@ -2,9 +2,9 @@ const mongoose = require('mongoose')
 const Picture = require('./models/index')
 
 
-exports.connect = (name) => {
+exports.connect = function(name) {
 	mongoose.connect(`mongodb://localhost/${name}`)
-	
+
 	var db = mongoose.connection
 	db.on('error', console.error.bind(console, 'connection error:'))
 	db.once('open', () => {

@@ -1,12 +1,13 @@
 //import mongoose, our ODM for mongoDB
-const mongose = require('mongoose')
+const mongoose = require('mongoose')
 
 //Define all of its fields
-const definition = {
   /*name: {
     type: String,
     required: true
   },*/
+const definition = {
+  name: String
 }
 
 //Set any options for the schema
@@ -15,7 +16,7 @@ const options = {
 }
 
 //make the schema as a new instance of a mongoose schema, using our definition and options
-const pictureSchema = new mongoose.Schema(definition, options)
+const schema = new mongoose.Schema(definition, options)
 
 //export that
-module.exports = mongoose.model('Picture', pictureSchema)
+module.exports = mongoose.model('Picture', schema)

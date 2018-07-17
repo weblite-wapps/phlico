@@ -4,9 +4,14 @@
   "description": "a server side of phlico",
   "main": "index.js",
   "scripts": {
-  	"start": "npm src/app.js",
+    "start": "node .\\node_modules\\nodemon\\bin\\nodemon.js src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "amirhossein ebrahimi <amirhosseinebrahimi77@gmail.com>",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3",
+    "mongoose": "^5.2.4",
+    "nodemon": "^1.18.2"
+  }
 }

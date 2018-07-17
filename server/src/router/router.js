@@ -10,6 +10,9 @@ router.use((req, res,next) => {
 	next()
 })
 
-// GET POST method for route
+// GET 
+
+// POST 
+
 
 module.exports = router

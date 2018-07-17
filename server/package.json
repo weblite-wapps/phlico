@@ -1,0 +1,12 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "a server side of phlico",
+  "main": "index.js",
+  "scripts": {
+  	"start": "npm src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "amirhossein ebrahimi <amirhosseinebrahimi77@gmail.com>",
+  "license": "ISC"
+}

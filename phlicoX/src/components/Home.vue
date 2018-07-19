@@ -1,8 +1,9 @@
 <template>
   <div id="app">
 		<appheader :title="title()"/>
-
-		<card :image="{imageUrl: '../assets/images/img (1).jpg'}"/>	
+		<albums v-if="state === 'gallery'"/>
+		<albums v-if="state === 'gallery'"/>
+			
 		<!-- gallery -->
 <!-- 		<gallery
 			v-if="state === 'gallery'"
@@ -16,7 +17,7 @@
 
 	    <!-- <thumbs></thumbs> -->
       <!-- <viewer></viewer>   -->
-        
+     
 		<img 
 			v-if="state === 'gallery'"
 			src="../assets/icons/plus-sign.png" 
@@ -32,6 +33,7 @@
 import appheader from './appheader.vue'
 import gallery from './gallery.vue'
 import uploader from './uploader.vue'
+import albums from './albums.vue'
 
 
 export default {
@@ -89,20 +91,22 @@ export default {
   components: {
   	appheader,
     gallery,
-    uploader
+    albums,
+    uploader,
   }
 
 }
 </script>
 
 <style scoped>
+
 	#app {
-		display: flex;
-		flex-direction: column;
+		/* display: block; */
 		overflow: auto;
 	}
 
 	#plus-sign {
+		display: block;
 		z-index: 20;
 		cursor: pointer;
 		margin: 0 auto;

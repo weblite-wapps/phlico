@@ -1,4 +1,3 @@
-//import mongoose, our ODM for mongoDB
 const mongoose = require('mongoose')
 
 //Define all of its fields

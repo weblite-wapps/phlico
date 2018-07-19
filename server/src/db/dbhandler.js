@@ -1,11 +1,12 @@
 const mongoose = require('mongoose')
+// model
 const Picture = require('./models/index')
 
 
 exports.connect = function(name) {
 	mongoose.connect(`mongodb://localhost/${name}`)
 
-	var db = mongoose.connection
+	const db = mongoose.connection
 	db.on('error', console.error.bind(console, 'connection error:'))
 	db.once('open', () => {
 		console.log('Connection to database successfully is made ...')
@@ -14,4 +15,16 @@ exports.connect = function(name) {
 	})
 }
 
+exports.add = (name) => {
+	console.log('hisname is ' + name)
+	return new Picture({name}).save()
+} 
 // exports.anotherLogics = () => null;
+
+/*export const loadNote = async id => Note
+  .findOne({ id })
+  .exec()
+
+export const saveNote = async (id, text) => Note
+  .findOneAndUpdate({ id }, { id, text }, { upsert: true });
+*/

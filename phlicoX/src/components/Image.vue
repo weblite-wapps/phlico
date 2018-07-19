@@ -4,6 +4,7 @@
   		:src="require(imgsrc)" 
   		alt="#"> -->
     <h1>{{imgsrc}}</h1>
+    <!-- <h1>as</h1> -->
   </div>
 </template>
 
@@ -11,18 +12,19 @@
 export default {
   name: 'Image',
   
-  data: () => {
+  data() {
   	return  {
-  		source: require("")
-  }},
+    }
+  },
 
   props: {
-  	imgsrc: {
-  		type: String,
-  		required: true,
-  		default: ''
-  	}
+    imgsrc: {
+      type: String,
+      required: true,
+      default: 'aaa'
+    }
   }
+
 
 }
 </script>

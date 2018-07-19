@@ -1,5 +1,3 @@
 const Picture = require('./picture')
 
-module.exports = {
-	Picture
-}
+module.exports = Picture

@@ -19,6 +19,10 @@ exports.add = (name) => {
 	console.log('hisname is ' + name)
 	return new Picture({name}).save()
 } 
+
+exports.getAll = () => {
+	return Picture.find().exec()
+}
 // exports.anotherLogics = () => null;
 
 /*export const loadNote = async id => Note

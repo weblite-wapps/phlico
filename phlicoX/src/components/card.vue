@@ -17,6 +17,7 @@
 		<a 
 			class="card-footer"
 			:href="present.info.path">
+			<p>1/9</p>
 			<h3>{{present.footer.title}}</h3>
 			<p>{{present.footer.discription}}</p>		
 			<p class="like">{{present.footer.likes}} <span>❤</span></p>

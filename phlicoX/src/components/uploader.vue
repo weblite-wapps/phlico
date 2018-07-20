@@ -31,12 +31,14 @@
       action='http://localhost:3000/upload' 
       method='post' 
       encType="multipart/form-data">
-				<input type="file" name="sampleFile" id="uploader" class="input-file"/>
-        <label tabindex="0" for="uploader" class="input-file-trigger"">Select a file...</label>
+				<input type="file" name="sampleFile" id="uploader" class="input-file" @change="getFile"/>
+        <label tabindex="0" for="uploader" class="input-file-trigger">Select a file...</label>
+        <input type="hidden" name="hidden" :value="json()">
         <textarea name="caption" value="no Caption"></textarea>
         <input type="submit" value="upload" />
 		</form>
 
+			<button @click="submitFile">new Send</button>
 <!-- <form ref='uploadForm' 
       id='uploadForm' 
       action='http://localhost:3000/upload' 
@@ -58,22 +60,30 @@ export default {
   data() {
   	return {
   		file: '',
-  		imageData: ''
+  		imageData: '',
+  		testobject: {
+  			name: 'ali',
+  			wisid: 45
+  		},
   	}
   },
 
   methods: {
   	getFile(event) {
   		this.file = event.target.files[0]
-  		console.log(`this.file:= ${this.file}`)
+  		console.log(this.file)
   	},
 
+  	json(){
+  		console.log('my json file', JSON.stringify(this.testobject))
+  		return JSON.stringify(this.testobject)
+  	},
   	submitFile() {
 			const domain = 'http://localhost:3000'
 			let filename = this.file
   		request
 		    .post(domain + '/upload')
-		    .send(new FormData("file", filename))
+		    .attach("thefile", filename)
 		    .catch(err => console.log(err))
 		    .then(() => {console.log('i finished my job')})
 

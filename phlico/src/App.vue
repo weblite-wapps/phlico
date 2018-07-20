@@ -1,25 +1,14 @@
 <template>
   <div>
-		<photo 
-			v-if="mode === 'photos'" 
-			v-on:comment="changeMode($event, 'comment')"/>
-    <phlico 
-      :user-comments="comments"
-      v-else
-      v-on:photo="changeMode($event, 'photo')"/>
+    <home/>  
   </div>
 </template>
 
 <script>
-import Phlico from './components/Phlico.vue'
-import PhotoTest from './components/PhotoTest.vue'
-import Comments from './components/Comments.vue'
-
-
+import home from './components/home.vue'
 export default {
   name: 'App',
-  data() {
-  	return {
+  data() {return {
   		mode: 'photos',
   		user_comment: {
   			like: false,
@@ -80,28 +69,17 @@ export default {
             comment_text: "no more thing to say hooo",
             liked: false,
           },
-        },
-
-  	}
-  },
+        },}},
   components: {
-    'phlico': Comments,
-    'photo': PhotoTest,
+    home
   },
-  methods: {
-  	changeMode: function(information, mode) {
-  		if (mode === 'comment') {
-  			this.mode = 'comments'
-  			this.user_comment.like = information
-  		}
-  		else if (mode === 'photo') {
-        this.mode = 'photos'
-  			
-  		}
-  	}
-  }
 }
 </script>
 
 <style>
+  #app {
+    /* sizing */
+    width:  350px;
+    height: 460px;
+  }
 </style>

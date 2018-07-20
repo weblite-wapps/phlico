@@ -3,21 +3,7 @@
 		<appheader :title="title()"/>
 		<albums v-if="state === 'gallery'"/>
 		<albums v-if="state === 'gallery'"/>
-			
-		<!-- gallery -->
-<!-- 		<gallery
-			v-if="state === 'gallery'"
-			:title="gallery.title" 
-			:images="gallery.imgs"/> -->
-
-<!-- 		<gallery
-			v-if="state === 'gallery'"
-			title="Second Album" 
-			:images="gallery.imgs"/> -->
-
-	    <!-- <thumbs></thumbs> -->
-      <!-- <viewer></viewer>   -->
-     
+		 
 		<img 
 			v-if="state === 'gallery'"
 			src="../assets/icons/plus-sign.png" 

@@ -1,101 +1,73 @@
 <template>
-  <div class="comment-container">
-    <div class="user-profile" :class="theme">
-      <h2 v-if="!hasPhoto"
-        class="user-short-name">{{ userShortName(comment.user_name) }}</h2>
-      <img
-        v-else
-        src="../assets/logo.png" alt="#">
-    </div>
-    <div class="user-comment">
-      <p>{{comment.comment_text}}</p>
+  <div class="i">
+    
+    <div class="comment-box">
+      <div class="comment-text">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip 
+      </div>
+      <div class="comment-footer">
+        <div class="comment-info">
+          <span class="comment-autor">
+            <a href="">Amirhe</a>
+            <span class="comment-date">Feb 2, 2013 11:32:04 PM</span>
+          </span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-  export default {
-    name: "comment",
-    data: function() {
-      return {
-        userName: "",
-        hasPhoto: false,
-      }
-    },
-
-    methods:{
-      userShortName: function(userName) {
-        let splittedname = userName.split(' ')
-        if (splittedname.length > 1) {
-          return (splittedname[0].charAt(0) + '.' + splittedname[splittedname.length - 1].charAt(0)).toUpperCase();
-        } else {
-          return userName.toUpperCase().substring(0, 2)
-        }
-      }
-    },
-    props: {
-      comment: {
-        type: Object,
-        required: true,
-        vlidator: function(value) {
-          return value != ''
-        }
-      },
-      theme: {
-        type: String,
-        default: 'dark_theme',
-        required: false,
-      }
-    },
-  }
+export default {
+  name: 'commen',
+  data() {
+    return {}
+  },
+}
 </script>
 
 <style scoped>
-  .comment-container {
-    box-shadow: 0px 2px 20px #666;
-    max-width: 650px;
-    display: flex;
-    align-items: center;
-    justify-content: baseline;
-    margin-top: 5px;
-    transition: all 0.3s ease-in;
-    transform: translateY(2px);
-  }
-  .comment-container:hover {
-    background-color: rgba(0, 0, 0, .1);
-    transform: translateY(5px);
-  }
-  .user-profile{
-    display:  flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 5px;
-    min-width: 40px;
-    height: 40px;
-    border-radius: 50px;
-    font-family: "Segoe UI Light";
-    font-size: 10px;
-  }
-  .user-comment {
-    flex-wrap: wrap;
-    margin-left: 12px;
-  }
-  /* Theme */
-  .red-theme {
-    background-color: #E53C3C;
-    color: #050000;
-  }
-  .blue-theme {
-    background-color: #2E67E9;
-    color: #FFA200;
-  }
-  .dark-theme {
-    background-color: #0B0E13;
-    color: white;
-  }
-  .light-theme {
-    background-color: #7F7979;
-    color: #FFFFFF;
-  }
-
+.comment-box {
+  background-color: #fcfcfc;
+  border-radius: 4px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .15);
+  min-height: 60px;
+  padding: 15px;
+}
+.comment-text {
+  color: #555f77;
+  font-size: 15px;
+  margin-bottom: 25px;
+}
+.comment-footer {
+  color: #abc4c2;
+  font-size: 13px;
+}
+.comment-footer  a {
+  text-decoration: none;
+  cursor: default;
+  color: #555f77;
+}
+.comment-info {
+  float: left;
+  width: 85%;
+}
+.comment-date {
+  margin: 0 10px;
+}
+.comment-box::before {
+  content: '';
+  height: 0;
+  width: 0;
+  position: relative;
+  display: block;
+  border-width: 10px 12px 10px 0;
+  border-style: solid;
+  border-color: transparent #fcfcfc;
+  top: 8px;
+  left: -27px;
+    
+}
 </style>

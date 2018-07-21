@@ -2,12 +2,13 @@
   <div class="gallery">
     <span class="title">{{ title }}</span>
   	<div class="wrapper">
+
         <img
-          v-if="item && item.imageUrl && get(item.imageUrl)" 
+          v-if="item && item.imageUrl" 
           v-for="(item, index) in images" 
           :key="index"
           class="small-view"
-          :src="get(item.imageUrl)"
+          src="https://www.lifewire.com/thmb/mIsQ7FtrrZ34DlJ5inLphDC33p8=/768x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/please-stand-by-500879062-56fd7b5f3df78c7d9efc4ed2.jpg"
           :alt="item.imageUrl">  
           <!-- :srcset="get(item.imageUrl)" -->
 
@@ -29,7 +30,7 @@ export default {
 
   methods: {
     get: function(name) {
-      return require("../assets/images/" + name)
+      return 'http:localhost/img/'
     },    
   }
 }

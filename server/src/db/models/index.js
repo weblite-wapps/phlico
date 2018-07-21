@@ -1,3 +1,3 @@
-const Picture = require('./picture')
+const Phlico = require('./phlico')
 
-module.exports = Picture
+module.exports = Phlico

@@ -35,10 +35,13 @@
         <label tabindex="0" for="uploader" class="input-file-trigger">Select a file...</label>
         <input type="hidden" name="hidden" :value="json()">
         <textarea name="caption" value="no Caption"></textarea>
-        <input type="submit" value="upload" />
+        <img 
+        	src="../assets/logo.png" 
+        	style="cursor:pointer;" 
+        	@click="submitFile()" value="upload"/>
+				<!-- <button @click="submitFile">new Send</button> -->
 		</form>
 
-			<button @click="submitFile">new Send</button>
 <!-- <form ref='uploadForm' 
       id='uploadForm' 
       action='http://localhost:3000/upload' 
@@ -79,16 +82,43 @@ export default {
   		return JSON.stringify(this.testobject)
   	},
   	submitFile() {
+  		const formData = new FormData();
 			const domain = 'http://localhost:3000'
-			let filename = this.file
-  		request
-		    .post(domain + '/upload')
-		    .attach("thefile", filename)
-		    .catch(err => console.log(err))
-		    .then(() => {console.log('i finished my job')})
+
+			formData.append("wisid", 1);
+			formData.append("userid", 1);
+			formData.append("username", "a");
+			formData.append("image", this.file);
+
+			request
+				.post(domain + '/atest')	
+		    .send(formData)
+		    .then(() => {
+		    	console.log('photo sent')
+		    })
+		    .catch((err) => {
+		    	console.log(err)
+		    })
 
 
-		    // .send({name: filename})
+
+	/*	.post(domain + '/atest')
+				.send(formData)
+				.then(() => console.log('test no problem'))
+				.catch((err) => console.log(err))
+*/
+				// .send({name: 'amirHossein'})
+				// .send({file: filename})
+
+			 // request
+			 //   .post(domain + '/upload')
+			 //   .attach('image', filename)
+			 //   .on('error', (err) => console.log(err))
+			 //   .then(function callback() {
+			 //   		console.log('i just got backed')
+			 //   });
+
+		  //   // .send({name: filename})
 			console.log("submit button clicked")
     },
   }
@@ -98,7 +128,8 @@ export default {
 <style scoped>
 .input-file-container {
   position: relative;
-  width: 225px;
+  /* width: 225px; */
+
 } 
 .input-file-trigger {
   display: block;
@@ -136,7 +167,7 @@ export default {
   font-size: .9em;
   font-weight: bold;
 }
-.file-return:not(:empty):before {
+.file-return:not(:empty)::before {
   content: "Selected file: ";
   font-style: normal;
   font-weight: normal;
@@ -149,9 +180,9 @@ export default {
 
 
 	#container {
-		height: 100%;
 		width: 100%;
 		text-align: center;
+		overflow: hidden;
 	}
 	small {
 		color: rgba(0,0,0, .4);
@@ -160,7 +191,7 @@ export default {
 	}
 
 	.file-input::-webkit-file-upload-button {
-		/* visibility: hidden; */
+		visibility: hidden;
 	}
 	.file-input + label  {
 	  font-size: 1.25em;

@@ -1,9 +1,10 @@
 const mongoose = require('mongoose')
 // model
-const Picture = require('./models/index')
+const Phlico = require('./models/index')
 
 
-exports.connect = function(name) {
+/*Database handlers*/
+exports.connect = name => {
 	mongoose.connect(`mongodb://localhost/${name}`)
 
 	const db = mongoose.connection
@@ -11,18 +12,67 @@ exports.connect = function(name) {
 	db.once('open', () => {
 		console.log('Connection to database successfully is made ...')
 		// Test
-		// db.db.dropDatabase()
+		db.db.dropDatabase()
 	})
 }
 
-exports.add = (name) => {
-	console.log('hisname is ' + name)
-	return new Picture({name}).save()
+
+exports.savePhoto = async (photoInfo, filename) => {
+	/*configur file name concationation of filename+time+userid.extension*/
+	return Phlico.findOne({wisid: photoInfo.wisid}, (err, phlico) => {
+		/*--fix Type err should be chaeked */
+		if (err) {
+			return new Phlico({
+				wisid: photoInfo.wisid,
+			  userid: photoInfo.userid,
+			  username: photoInfo.username,
+			  pictures: [{
+			  	id: photoInfo.pictures.id,
+			  	userid: photoInfo.pictures.userid,
+			  	username: photoInfo.pictures.username,
+			  	caption: photoInfo.pictures.caption,
+			  	comments: []
+			  }]
+			}).save()
+		}
+		else {
+			return phlico.pictures.push({
+		  	id: photoInfo.pictures.id,
+		  	imagename: photoInfo.pictures.imagename,
+		  	userid: photoInfo.pictures.userid,
+		  	username: photoInfo.pictures.username,
+		  	caption: photoInfo.pictures.caption,
+		  	comments: []
+			}).save()
+		}
+	})
 } 
 
-exports.getAll = () => {
-	return Picture.find().exec()
-}
+exports.getAllPhoto = async wisid =>  Phlico
+	.find({ wisid })
+	.exec()
+
+exports.saveComent = async (photoInfo, comment) => {
+	return Phlico.findOne({wisid: photoInfo.wisid, pictures:{ id: photoInfo.pictures.id}}, (err, phlico) => {
+
+		/*--fix Type err should be chaeked */
+		if (err) {
+			console.log("--dbHandler can't get model")
+		}
+		else {
+			return phlico.pictures.push({
+		  	id: photoInfo.pictures.id,
+		  	imagename: photoInfo.pictures.imagename,
+		  	userid: photoInfo.pictures.userid,
+		  	username: photoInfo.pictures.username,
+		  	caption: photoInfo.pictures.caption,
+		  	comments: {$push: {comment}}
+			}).save()
+		}
+	})
+} 
+
+
 // exports.anotherLogics = () => null;
 
 /*export const loadNote = async id => Note

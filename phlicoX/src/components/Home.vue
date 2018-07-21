@@ -1,9 +1,10 @@
 <template>
   <div id="app">
 		<appheader :title="title()"/>
+    <img :src="get('a.png')" width="350px">
 		<albums v-if="state === 'gallery'"/>
 		<albums v-if="state === 'gallery'"/>
-		 
+
 		<img 
 			v-if="state === 'gallery'"
 			src="../assets/icons/plus-sign.png" 
@@ -71,7 +72,10 @@ export default {
   	title() {
   		if (this.state === 'gallery') return 'Albums'
   		else return 'Uploader'
-  	}
+  	},
+  get(name) {
+  	return `http://localhost:3000/img/${name}`
+  },
   },
 
   components: {

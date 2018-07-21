@@ -2,6 +2,8 @@
   <div class="i">
     
     <div class="comment-box">
+      <!-- :class="{'like': (like)}" -->
+      <div class="comment-like"><span v-if="!like">⚪</span><span v-else>🔴</span></div>
       <div class="comment-text">
         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -11,8 +13,8 @@
         <div class="comment-info">
           <span class="comment-autor">
             <a href="">Amirhe</a>
-            <span class="comment-date">Feb 2, 2013 11:32:04 PM</span>
           </span>
+            <span class="comment-date">Feb 2, 2013 11:32:04 PM</span>
         </div>
       </div>
     </div>
@@ -23,7 +25,9 @@
 export default {
   name: 'commen',
   data() {
-    return {}
+    return {
+      like: false,
+    }
   },
 }
 </script>
@@ -39,7 +43,7 @@ export default {
 .comment-text {
   color: #555f77;
   font-size: 15px;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
 }
 .comment-footer {
   color: #abc4c2;
@@ -51,8 +55,9 @@ export default {
   color: #555f77;
 }
 .comment-info {
-  float: left;
-  width: 85%;
+  display: flex;
+  justify-content: space-between;  
+  align-items: center;
 }
 .comment-date {
   margin: 0 10px;
@@ -67,7 +72,16 @@ export default {
   border-style: solid;
   border-color: transparent #fcfcfc;
   top: 8px;
-  left: -27px;
-    
+  left: -27px;  
+}
+.comment-like {
+  font-size: 10px;
+  position: relative;
+  right: -300px;
+  top: -20px;
+}
+.state {
+  padding: 0;
+  margin: 0;
 }
 </style>

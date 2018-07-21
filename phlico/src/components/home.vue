@@ -3,6 +3,7 @@
   	<!-- <card/> -->
     <!-- <get-comment/> -->
     <comment/>
+    
   </div>
 </template>
 

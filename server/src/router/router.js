@@ -3,11 +3,13 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const fileUpload = require('express-fileupload')
 const database = require('../db/index')
+const path = require('path')
 
 
 var router = express.Router()
 router.use(fileUpload())
 router.use(bodyParser.json())
+router.use('/static', express.static(path.join(__dirname, 'public')))
 router.use((req, res,next) => {
 	// set base rule for this hole route
 	res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080')
@@ -21,10 +23,12 @@ router.use((req, res,next) => {
 // POST 
 router.post('/upload', function(req, res){
 	console.log(req.body)
+	console.log(req.body.hidden)
+
 	if (!req.files)
     return res.status(400).send('No files were uploaded.');
 	let sampleFile = req.files.sampleFile
-	sampleFile.mv('./public/images/image.png', (err) => {
+	sampleFile.mv(`./public/images/${sampleFile.name}`, (err) => {
 		if (err)
 			return res.status(500).send(err)
     res.send('File uploaded!');

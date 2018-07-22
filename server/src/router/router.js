@@ -28,20 +28,9 @@ router.use((req, res,next) => {
 	next()
 })
 
-
-// GET 
-// router.get('/:wisid', (req, res) => {
-
-
-// })
-
-
-// POST 
-
+// POST
 router.post('/upload', upload.single('image'), function (req, res) {
   console.log('in /upload post method')
-  // console.log(req.body)
-  // console.log(req.file)
 
   if (!req.file) {
     console.log('No file recived!')
@@ -51,7 +40,6 @@ router.post('/upload', upload.single('image'), function (req, res) {
     const domain = `${req.protocol}://${req.hostname}:3000`
     const filesrc = `/img/${req.file.filename}`
 
-    console.log("%%%", domain + filesrc)
     /*Reformat and resize image with graphics magic*/
     gm(domain + filesrc)
     	.size(function (err, size) {
@@ -67,28 +55,11 @@ router.post('/upload', upload.single('image'), function (req, res) {
   }
 })
 
-// this.write(`../public/images/square-${req.file.filename}`, (err) => {
-// if (!req.files)
-//    return res.status(400).send('No files were uploaded.');
-// let sampleFile = req.files.sampleFile
-// sampleFile.mv(`./public/images/${sampleFile.name}`, (err) => {
-// 	if (err)
-// 		return res.status(500).send(err)
-//    res.send('File uploaded!');
-// })
 
-// router.post('/atest', upload.single('image'), function(req, res) {
-// 	console.log('a test')
-// 	console.log(req.file)
-// 	console.log(req.body)
-// })
-
-// GET 
-
+// GET
 router.get('/img/:name', ({params: {name}}, res) => {
-  console.log('in image get request')
   res.download(`./public/images/${name}`, (err) => {
-    console.log("Download Err", err)
+    if(err) console.log("Download Err", err)
   })
 })
   // loadNote(id)

@@ -1,7 +1,7 @@
 <template>
   <div id="container">
-<!-- 	  <label 
-	  	class="btn" 
+<!-- 	  <label
+	  	class="btn"
 	  	for="upload">Choose your picture</label>
 	  <div>
 	    <input class="file-input" type="file" id="upload"/>
@@ -10,7 +10,7 @@
 	  </div>
 
 	  <small>upload not implemented, just the file-selection</small>
-		  <div class="input-file-container">  
+		  <div class="input-file-container">
 		    <input
 		    	class="input-file"
 		    	type="file"
@@ -23,29 +23,29 @@
 		    Select a file...</label>
 		  </div>
   	<p class="file-return">"As"</p>
- -->		
+ -->
 
-		<form 
-			ref='uploadForm'			
+		<form
+			ref='uploadForm'
 			id='uploadForm'
-      action='http://localhost:3000/upload' 
-      method='post' 
+      action='http://localhost:3000/upload'
+      method='post'
       encType="multipart/form-data">
-				<input type="file" name="sampleFile" id="uploader" class="input-file" @change="getFile"/>
+				<input type="file" name="image" id="uploader" class="input-file" @change="getFile"/>
         <label tabindex="0" for="uploader" class="input-file-trigger">Select a file...</label>
         <input type="hidden" name="hidden" :value="json()">
         <textarea name="caption" value="no Caption"></textarea>
-        <img 
-        	src="../assets/logo.png" 
-        	style="cursor:pointer;" 
+        <img
+        	src="../assets/logo.png"
+        	style="cursor:pointer;"
         	@click="submitFile()" value="upload"/>
 				<!-- <button @click="submitFile">new Send</button> -->
 		</form>
 
-<!-- <form ref='uploadForm' 
-      id='uploadForm' 
-      action='http://localhost:3000/upload' 
-      method='post' 
+<!-- <form ref='uploadForm'
+      id='uploadForm'
+      action='http://localhost:3000/upload'
+      method='post'
       encType="multipart/form-data">
         <input type="file" name="sampleFile" />
         <input type='submit' value='Upload!' />
@@ -59,7 +59,7 @@ import request from 'superagent'
 
 export default {
   name: 'Upload',
-  
+
   data() {
   	return {
   		file: '',
@@ -91,7 +91,7 @@ export default {
 			formData.append("image", this.file);
 
 			request
-				.post(domain + '/atest')	
+				.post(domain + '/upload')
 		    .send(formData)
 		    .then(() => {
 		    	console.log('photo sent')
@@ -99,26 +99,6 @@ export default {
 		    .catch((err) => {
 		    	console.log(err)
 		    })
-
-
-
-	/*	.post(domain + '/atest')
-				.send(formData)
-				.then(() => console.log('test no problem'))
-				.catch((err) => console.log(err))
-*/
-				// .send({name: 'amirHossein'})
-				// .send({file: filename})
-
-			 // request
-			 //   .post(domain + '/upload')
-			 //   .attach('image', filename)
-			 //   .on('error', (err) => console.log(err))
-			 //   .then(function callback() {
-			 //   		console.log('i just got backed')
-			 //   });
-
-		  //   // .send({name: filename})
 			console.log("submit button clicked")
     },
   }
@@ -130,7 +110,7 @@ export default {
   position: relative;
   /* width: 225px; */
 
-} 
+}
 .input-file-trigger {
   display: block;
   padding: 14px 45px;

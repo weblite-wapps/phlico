@@ -3,7 +3,7 @@
 		<ul class="card-list">
 				v-for="(item, index) in images"
 				:key="index"
-			<card 
+			<card
 				:images="images"/>
 		</ul>
   </div>
@@ -13,13 +13,11 @@
 import card from './card.vue'
 export default {
   name: 'Albums',
-  
+
   data() {
   	return {
   		images: [
 				{info: {src: 'img (1).jpg', path: 'albumid/us', name: 'egg'}, footer:{title: 'Psylogy', discription: 'new Tech knowladge'}},
-				{info: {src: 'img (2).jpg', path: 'albumid/us', name: 'egg'}, footer:{title: 'Psylogy', discription: 'new Tech knowladge'}},
-				{info: {src: 'img (3).jpg', path: 'albumid/us', name: 'egg'}, footer:{title: 'Psylogy', discription: 'new Tech knowladge'}}
   		]
   	}
   },

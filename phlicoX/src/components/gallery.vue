@@ -2,14 +2,11 @@
   <div class="gallery">
     <span class="title">{{ title }}</span>
   	<div class="wrapper">
-
         <img
-          v-if="item && item.imageUrl" 
-          v-for="(item, index) in images" 
-          :key="index"
+          v-if="item && item.imageUrl"
           class="small-view"
           src="https://www.lifewire.com/thmb/mIsQ7FtrrZ34DlJ5inLphDC33p8=/768x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/please-stand-by-500879062-56fd7b5f3df78c7d9efc4ed2.jpg"
-          :alt="item.imageUrl">  
+          :alt="item.imageUrl">
           <!-- :srcset="get(item.imageUrl)" -->
 
     </div> <!-- wrapper -->
@@ -19,7 +16,7 @@
 <script>
 export default {
   name: 'gallery',
-  
+
   data() {
   	return {
 
@@ -31,14 +28,14 @@ export default {
   methods: {
     get: function(name) {
       return 'http:localhost/img/'
-    },    
+    },
   }
 }
 </script>
 
 <style scoped>
   .title {
-    width: 100%;  
+    width: 100%;
     color: #2C3E50;
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     font-size: 15px;
@@ -60,11 +57,11 @@ export default {
     max-width: 107px;
     width: 100%;
     height: 100%;
-    padding: 3px; 
+    padding: 3px;
     margin: 0 auto;
   }
   .small-view:hover {
     box-shadow: 0 0 1.5px #1F7071;
-    cursor: zoom-in; 
+    cursor: zoom-in;
   }
 </style>

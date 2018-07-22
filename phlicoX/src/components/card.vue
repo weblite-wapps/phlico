@@ -6,29 +6,25 @@
   		@mouseover="load()">
 			<img :src="present.info.src" :alt="present.info.name" @click="next()">
 		</div>
-  	<!-- <a 
-  		:class="['card-image', {'is-loaded': (present.load)}]"
-  		:href='present.info.path'
-  		:style="{backgroundImage: present.info.src}"
-  		:data-image-full="present.info.src"
-  		@mouseover="load()">
-			<img :src="present.info.src" :alt="present.info.name" @click="next()">
-		</a> -->
-		<a 
-			class="card-footer"
-			:href="present.info.path">
-			<p>1/9</p>
-			<h3>{{present.footer.title}}</h3>
-			<p>{{present.footer.discription}}</p>		
-			<p class="like">{{present.footer.likes}} <span>❤</span></p>
-		</a>			
+		<div class="card-footer">
+			<p>{{present.footer.discription}}</p>
+      <div class="nav">
+        <div class="logos">
+          <!-- SendPhoto Method Should be send and get request from server-->
+          <!-- show Comments emit this event -->
+          <img src="../assets/icons/return.png" alt="Send to inline" class="logo" @click="sendPhoto()">
+          <img src="../assets/icons/comment.png" alt="Messages" class="logo" @click="showComments()">
+        </div>
+  			<p class="like-number">{{present.footer.likes}}<img src="../assets/icons/likeicon.png" alt="Like" id="heart"></p>
+      </div>
+    </div>
   </li>
 </template>
 
 <script>
 export default {
   name: 'card',
-  
+
   data() {
   	return {
   		objects: [],
@@ -36,12 +32,12 @@ export default {
   		index: 0,
   	}
   },
-  
+
   created() {
   	// initliza value
   	//--sbfix check wheter exist or not ? should behandled
 
-		// this.objects = this.$props.images  	
+		// this.objects = this.$props.images
 	this.objects = this.$props.images.map((image) => ({
 				info: {
 					src: require('../assets/images/'+image.info.src),
@@ -49,13 +45,13 @@ export default {
 					name: image.info.name,
 				},
 		  	footer: {
-		  		title: image.footer.title, 
+		  		title: image.footer.title,
 		  		discription: image.footer.discription,
-			  	likes: 15,
+			  	likes: 315,
 		  	},
-		  	load: false,	
+		  	load: false,
   	}))
-  
+
   	this.present = this.objects[0]
   },
   methods: {
@@ -86,6 +82,7 @@ export default {
 		font-size: 1rem;
 		text-decoration: none;
 		overflow: hidden;
+    background-color: rgba(1,1,1,0.1);
 		box-shadow: 0 0 3rem -1rem rgba(0, 0, 0, .5);
 		transition: transform .1s ease-in-out, box-show .3s;
 	}
@@ -100,7 +97,7 @@ export default {
 		background: #fff center center no-repeat;
 		background-size: cover;
 		filter: blur(4px);
-	}	 
+	}
 	.card-image.is-loaded {
 		filter: none;
 		transition: filter 1.5s;
@@ -112,13 +109,15 @@ export default {
 	}
 	/* Card Footer Style */
 	.card-footer {
-		display: block;
-		padding: 1rem .5rem;
+    display: flex;
+    flex-direction: column;
 		color: #515151;
 		text-decoration: none;
 	}
-	.card-footer > p > h2{
-		margin: 0;
+	.card-footer > p{
+		margin: 10px 0 3px 0;
+    font-size: 12px;
+    color: #c94c13;
 	}
 	/* like */
 	.like {
@@ -130,4 +129,29 @@ export default {
 	.like > span {
 		color: #F12626;
 	}
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 5px;
+  }
+  .like-number {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1.1px 1.4px 0 rgba(7, 1, 2, 0.63);
+  }
+  .logo {
+    width: 40px;
+    height: 40px;
+    margin: 0 5px;
+    cursor: pointer;
+  }
+  #heart {
+    width: 15px;
+    height: 15px;
+    margin: 0 5px;
+  }
 </style>

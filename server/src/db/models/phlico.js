@@ -4,21 +4,17 @@ const mongoose = require('mongoose')
 // Definition of all fields
 const definition = {
   wisid: Number,
-  userid: Number,
+	userid: Number,
   username: String,
-  pictures: [{
-  	id: Number,
-  	imagename: String,
-  	userid: Number,
-  	username: String,
-  	caption: String,
-  	comments: [{
-  		authorid: Number,
-  		author: String,
-  		opinion: String,
-  		liked: Boolean
-  	}]
-  }],
+  imagename: String,
+  caption: String,
+	comments: [{
+  	authorid: Number,
+		author: String,
+		opinion: String,
+		date: String,
+	}],
+	likes: [String]
 }
 
 //Set any options for the schema

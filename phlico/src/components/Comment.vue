@@ -1,20 +1,17 @@
 <template>
-  <div class="i">
-    
+  <div class="comment">
     <div class="comment-box">
       <!-- :class="{'like': (like)}" -->
-      <div class="comment-like"><span v-if="!like">⚪</span><span v-else>🔴</span></div>
+      <!--<div class="comment-like"><span v-if="!like">⚪</span><span v-else>🔴</span></div>-->
       <div class="comment-text">
         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip 
+        quis nostrud exercitation ullamco laboris nisi ut aliquip
       </div>
       <div class="comment-footer">
         <div class="comment-info">
-          <span class="comment-autor">
-            <a href="">Amirhe</a>
-          </span>
-            <span class="comment-date">Feb 2, 2013 11:32:04 PM</span>
+          <span class="comment-autor"><a href="">@mirhe</a></span>
+            <span class="comment-date">{{comment_time()}}</span>
         </div>
       </div>
     </div>
@@ -26,8 +23,19 @@ export default {
   name: 'commen',
   data() {
     return {
-      like: false,
+      like: true,
     }
+  },
+
+  methods: {
+    comment_time: function() {
+      const t = Date().split(' ').splice(1, 4)
+      return `${t[0]} ${t[1]}, ${t[2]} ${t[3]}`
+    }
+  },
+
+  created() {
+  //  all data from database should be catch and re store
   },
 }
 </script>
@@ -46,7 +54,7 @@ export default {
   margin-bottom: 15px;
 }
 .comment-footer {
-  color: #abc4c2;
+  color: #95aeac;
   font-size: 13px;
 }
 .comment-footer  a {
@@ -56,7 +64,7 @@ export default {
 }
 .comment-info {
   display: flex;
-  justify-content: space-between;  
+  justify-content: space-between;
   align-items: center;
 }
 .comment-date {
@@ -70,18 +78,19 @@ export default {
   display: block;
   border-width: 10px 12px 10px 0;
   border-style: solid;
-  border-color: transparent #fcfcfc;
+  border-color: transparent #f5f5f5;
   top: 8px;
-  left: -27px;  
+  left: -27px;
 }
-.comment-like {
-  font-size: 10px;
-  position: relative;
-  right: -300px;
-  top: -20px;
-}
-.state {
-  padding: 0;
-  margin: 0;
+/*.comment-like {*/
+  /*font-size: 10px;*/
+  /*float: right;*/
+  /*margin-bottom: 5px;*/
+  /*!*position: relative;*!*/
+  /*!*right: -300px;*!*/
+  /*!*top: -20px;*!*/
+/*}*/
+.comment {
+  margin: 5px 10px;
 }
 </style>

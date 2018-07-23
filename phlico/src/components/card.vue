@@ -1,13 +1,24 @@
 <template>
-  <div>
-			<div 
-				@mouseover=""
-				:style="card">
-			</div>
-				<span 
-					id="heart" 
-					@click="liked = !liked"
-					:class="{'unlike': (!liked), 'like': (liked)}">❤</span>
+  <div
+    :style="card">
+    <!--Heart-->
+    <span
+      id="heart"
+      @click="liked = !liked"
+      :class="{'unlike': (!liked), 'like': (liked)}">❤</span>
+    <!--Notification-->
+    <span class="nav-pop-ups">
+      <!--click emmit to show comments-->
+      <img
+        src="../assets/logo/commentBox.png"
+        :class="['logo', {'pop-up': (popupCommentBox)}]"
+        @click="">
+      <!--Click emmit to show add comment page-->
+      <img
+        src="../assets/logo/addComment.png"
+        class="logo pop-up"
+        @click="">
+    </span>
   </div>
 </template>
 
@@ -17,12 +28,10 @@ export default {
   data() {
   	return {
   		card: {
-  			'backgroundImage': 'url(' + this.get() + ')',
-  			'backgroundSize': 'contain',
-  			'backgroundRepeat': 'no-repeat',
-  			'width': '100%',
-  			'height': '450px',
-  			'border-bottom': '4px solid #f2624a',
+  			'backgroundImage': this.get('img/- (4).jpg'),
+  			'width': '400px',
+  			'height': '400px',
+        'boxShadow': '0 2px 1px rgba(0,0,0, .3)'
   		},
   		liked: false,
   		image: {
@@ -33,55 +42,72 @@ export default {
   			user: {
   				name: "amirhe",
   			}
-  		}
+  		},
+
+  	  popupCommentBox: true,
+      popupAddComment: true,
   	}
   },
 
   methods: {
-  	get: function() {
-  		return require('../assets/test/picture.jpg')
+  	get: function(name) {
+  	  const domain = "http://localhost:3000/"
+  		return `url('${domain}${name}')`
   	}
   }
 }
 </script>
 
 <style scoped>
-.container {
-	width: 100%;
-	height: 100%;
-	/* background-color:red; */
-} 
-
-#heart {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	float: right;
-	margin: 15px;
-	font-size: 20px;
-	cursor: pointer;
-	transition: all .3s;
-}
-.unlike:hover {
-	opacity: 1;
-}
-.unlike {
-	border: 2px solid white;
-	border-radius: 100px;
-	width: 40px;
-	height: 40px;
-	opacity: .7;
-	color: white;
-	box-shadow: 0 1px 1px 0 rgba(0,0,0, .3);
-	text-shadow: 0 2px 0 rgba(0,0,0, .3);
-}
-.like {
-	border: 1px solid white;
-	text-shadow: 1px 2px 1px rgba(208, 208, 208, .5);	
-	border-radius: 100px;
-	width: .1px;
-	height: .1px;
-	color: #F70A31;
-	opacity: 1;
-}
+  #heart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    margin: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all .3s;
+  }
+  .unlike:hover {
+    opacity: 1;
+  }
+  .unlike {
+    border: 2px solid white;
+    border-radius: 100px;
+    width: 40px;
+    height: 40px;
+    opacity: .8;
+    color: #fff;
+    background-color: rgba(227,38,55,0.63);
+    box-shadow: 0 1px 1px 0 rgba(0,0,0, .7);
+    text-shadow: 0 1.5px 0 rgba(0,0,0, .7);
+  }
+  .like {
+    border: 1px solid white;
+    text-shadow: 1px 2px 1px rgba(208, 208, 208, .5);
+    border-radius: 100px;
+    width: .1px;
+    height: .1px;
+    color: #F70A31;
+    opacity: 1;
+  }
+  .nav-pop-ups {
+    width: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    bottom: -350px;
+  }
+  .logo {
+    width: 45px;
+    height: auto;
+    transition: all .3s ease-in-out;
+    opacity: 0;
+    cursor: pointer;
+  }
+  .pop-up {
+    opacity: 1;
+  }
 </style>

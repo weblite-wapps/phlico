@@ -46,7 +46,12 @@ export default {
 				},
 		  	footer: {
 		  		title: image.footer.title,
-		  		discription: image.footer.discription,
+		  		discription: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\n" +
+          "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n" +
+          "quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\n" +
+          "consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\n" +
+          "cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\n" +
+          "proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
 			  	likes: 315,
 		  	},
 		  	load: false,
@@ -75,7 +80,7 @@ export default {
 <style scoped>
 	/* Card */
 	.card {
-		display: inline-block;]
+		display: inline-block;
 		height: 100%;
 		max-width: 340px;
 		margin: 1rem;
@@ -118,16 +123,6 @@ export default {
 		margin: 10px 0 3px 0;
     font-size: 12px;
     color: #c94c13;
-	}
-	/* like */
-	.like {
-		display: flex;
-		justify-content: flex-end;
-		margin-right: 5px;
-		font-weight: bold;
-	}
-	.like > span {
-		color: #F12626;
 	}
   .nav {
     display: flex;

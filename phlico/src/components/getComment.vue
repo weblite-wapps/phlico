@@ -11,7 +11,8 @@
           required></textarea>
       </div>
       <div class="form-row">
-        <input type="submit" name="Add Comment">
+        <!--submit form using superagent-->
+        <button @click="">Submit</button>
         <!--return to main inline application-->
         <button @click="">Cancle</button>
       </div>
@@ -40,7 +41,7 @@ export default {
    border: none;
    border-radius: 4px;
    box-shadow: 0 1px 1px rgba(0, 0, 0, .15);
-   color: #b3afc0;
+   color: #cbc7e5;
    font-size: 14px;
    padding: 5px 10px;
    outline: none;
@@ -71,5 +72,19 @@ export default {
   }
   .comment-text {
     min-height: 250px;
+  }
+  ::-webkit-input-placeholder { /* Chrome */
+    color: #b3afc0;
+  }
+  :-ms-input-placeholder { /* IE 10+ */
+    color: #b3afc0;
+  }
+  ::-moz-placeholder { /* Firefox 19+ */
+    color: #b3afc0;
+    opacity: 1;
+  }
+  :-moz-placeholder { /* Firefox 4 - 18 */
+    color: #b3afc0;
+    opacity: 1;
   }
 </style>

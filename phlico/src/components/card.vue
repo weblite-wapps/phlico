@@ -28,7 +28,7 @@ export default {
   data() {
   	return {
   		card: {
-  			'backgroundImage': this.get('img/- (4).jpg'),
+  			'backgroundImage': this.get('img/- (7).jpg'),
   			'width': '400px',
   			'height': '400px',
         'boxShadow': '0 2px 1px rgba(0,0,0, .3)'

@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-  	 <card/>
-     <get-comment/>
-    <!--<comments/>-->
+    <card/>
+    <get-comment/>
+    <comments/>
     <!--<card/>-->
   </div>
 </template>

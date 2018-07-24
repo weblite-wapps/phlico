@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <home/> 
+    <home/>
   </div>
 </template>
 
@@ -9,7 +9,7 @@ import Home from './components/Home.vue'
 
 export default {
   name: 'App',
-  
+
   components: {
     'home': Home,
   }
@@ -19,7 +19,7 @@ export default {
 <style scoped>
 	#app {
 		/* sizing */
-		width:  350px;
+		width:  351px;
 		height: 100%;
 		border: 1px solid #ccc;
 	}

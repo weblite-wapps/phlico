@@ -1,56 +1,24 @@
 <template>
   <div id="container">
-<!-- 	  <label
-	  	class="btn"
-	  	for="upload">Choose your picture</label>
-	  <div>
-	    <input class="file-input" type="file" id="upload"/>
-	    <button class="btn upload" type="button" @click="submitFile">Upload File</button>
-	    <button class="btn" type="button" >Reset</button>
-	  </div>
-
-	  <small>upload not implemented, just the file-selection</small>
-		  <div class="input-file-container">
-		    <input
-		    	class="input-file"
-		    	type="file"
-		    	id="file"
-		    	@change="getFile">
-		    <label
-		    	tabindex="0"
-		    	for="file"
-		    	class="input-file-trigger"">
-		    Select a file...</label>
-		  </div>
-  	<p class="file-return">"As"</p>
- -->
-
 		<form
 			ref='uploadForm'
 			id='uploadForm'
       action='http://localhost:3000/upload'
       method='post'
       encType="multipart/form-data">
-				<input type="file" name="image" id="uploader" class="input-file" @change="getFile"/>
-        <label tabindex="0" for="uploader" class="input-file-trigger">Select a file...</label>
+				<input type="file" accept="image/*" name="image" id="uploader" class="input-file" @change="getFile"/>
+        <label tabindex="0" for="uploader" class="btn">Select a file...</label>
+        <!--Should be fixed Json is not a good name-->
         <input type="hidden" name="hidden" :value="json()">
-        <textarea name="caption" value="no Caption"></textarea>
-        <img
-        	src="../assets/logo.png"
-        	style="cursor:pointer;"
-        	@click="submitFile()" value="upload"/>
-				<!-- <button @click="submitFile">new Send</button> -->
-		</form>
-
-<!-- <form ref='uploadForm'
-      id='uploadForm'
-      action='http://localhost:3000/upload'
-      method='post'
-      encType="multipart/form-data">
-        <input type="file" name="sampleFile" />
-        <input type='submit' value='Upload!' />
+        <textarea
+          name="caption"
+          value="no Caption"
+          placeholder="Add Your Caption"
+          class="comment-text"></textarea>
+        <button
+          class="btn"
+          @click="submitFile()" >Send</button>
     </form>
- -->
   </div>
 </template>
 
@@ -106,73 +74,28 @@ export default {
 </script>
 
 <style scoped>
-.input-file-container {
-  position: relative;
-  /* width: 225px; */
-
-}
-.input-file-trigger {
-  display: block;
-  padding: 14px 45px;
-  background: #39D2B4;
-  color: #fff;
-  font-size: 1em;
-  transition: all .4s;
-  cursor: pointer;
-}
-.input-file {
-  position: absolute;
-  top: 0; left: 0;
-  width: 225px;
-  opacity: 0;
-  padding: 14px 0;
-  cursor: pointer;
-}
-.input-file:hover + .input-file-trigger,
-.input-file:focus + .input-file-trigger,
-.input-file-trigger:hover,
-.input-file-trigger:focus {
-  background: #34495E;
-  color: #39D2B4;
-}
-
-.file-return {
-  margin: 0;
-}
-.file-return:not(:empty) {
-  margin: 1em 0;
-}
-.file-return {
-  font-style: italic;
-  font-size: .9em;
-  font-weight: bold;
-}
-.file-return:not(:empty)::before {
-  content: "Selected file: ";
-  font-style: normal;
-  font-weight: normal;
-}
-
-
-
-
-
-
-
-	#container {
-		width: 100%;
-		text-align: center;
-		overflow: hidden;
-	}
-	small {
-		color: rgba(0,0,0, .4);
-	  display: block;
-	  margin-top: 1em;
-	}
-
-	.file-input::-webkit-file-upload-button {
-		visibility: hidden;
-	}
+  #container {
+    display: flex;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+  .input-file {
+    position: absolute;
+    top: 0; left: 0;
+    width: 225px;
+    opacity: 0;
+    visibility: hidden;
+    padding: 14px 0;
+    cursor: pointer;
+  }
+  .input-file:hover,
+  .input-file:focus {
+    background: #34495E;
+    color: #39D2B4;
+  }
 	.file-input + label  {
 	  font-size: 1.25em;
     font-weight: 700;
@@ -180,26 +103,50 @@ export default {
     background-color: black;
     display: inline-block;
 	}
-	.file-input{
-		width: 0.1px;
-		height: 0.1px;
-		opacity: 0;
-		overflow: hidden;
-		position: absolute;
-		z-index: -1;
-		color: white;
-	}
-
+  .comment-text {
+    background-color: rgba(49, 58, 67, 0.84);
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .15);
+    color: #cbc7e5;
+    font-size: 14px;
+    width: 280px;
+    padding: 5px 10px;
+    outline: none;
+    min-height: 70px;
+    margin: 10px;
+  }
+  .comment-text:focus {
+    box-shadow: 0 2px 6px rgba(121, 137, 148, 1);
+  }
+  ::-webkit-input-placeholder { /* Chrome */
+    color: #b3afc0;
+  }
+  :-ms-input-placeholder { /* IE 10+ */
+    color: #b3afc0;
+  }
+  ::-moz-placeholder { /* Firefox 19+ */
+    color: #b3afc0;
+    opacity: 1;
+  }
+  :-moz-placeholder { /* Firefox 4 - 18 */
+    color: #b3afc0;
+    opacity: 1;
+  }
 	.btn {
-	  border: 0px solid rgba(0,0,0, .3);
-		border-radius: 0px;
-		border-bottom-width: 1px;
-		margin: 10px auto;
-		padding: 5px 5px;
-		color: white;
-		background-color: #428BCA;
+    background-color: #555f77;
+    border:  none;
+    border-radius: 4px;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, .15);
+    color: #fff;
+    cursor: pointer;
+    display: block;
+    margin: 5px auto;
+    outline: none;
+    padding: 6px 15px;
 	}
 	.btn:hover {
-		background-color: #206098;
+		background-color: #475077;
+    box-shadow: 0 1px 2px rgb(51, 56, 67);
 	}
 </style>

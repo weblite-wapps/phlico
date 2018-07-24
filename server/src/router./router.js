@@ -10,8 +10,8 @@ const database = require('../db/index')
 const storage = multer.diskStorage({
   destination: './public/images',
   filename: function (req, file, callback) {
-  	// callback(null, Date.now().toString() + '-as123' +path.extname(file.originalname))
-  	callback(null, file.originalname)
+  	callback(null, Date.now().toString() + path.extname(file.originalname))
+  	// callback(null, file.originalname)
   }
 })
 const upload = multer({ storage })
@@ -47,17 +47,42 @@ router.post('/upload', upload.single('image'), function (req, res) {
     		this.gravity("Center")
     	  this.extent(Math.max(size.width, size.height), Math.max(size.width, size.height))
     	  this.resize(400, 400)
-        this.write(`./public/images/square-${req.file.filename}`, (err) => {
+        this.write(`./public/images/Sqr_${req.file.filename}`, (err) => {
           if(err) console.log("Write --err",err)
     	  })
       })
-    res.send({ success: true })
+
+    /*save original*/
+    gm(domain + filesrc)
+      .size(function (err, size) {
+        if (err) console.log("Size --err", err)
+        if (req.file.size <= 1572864)
+          this.write(`./public/images/${req.file.filename}`, (err) => {
+            if (err) console.log("Write --err", err)
+          })
+        else {
+          var _max = Math.max(size.width, size.height)
+          if (_max > 1000)
+            var _scale = 1000 / _max
+          else
+            var _scale = 500 / _max
+
+          this.resize(size.width * _scale, size.height * _scale)
+          this.write(`./public/images/${req.file.filename}`, (err) => {
+            if (err) console.log("Write --err", err)
+          })
+        }
+      })
   }
+
+  res.send({ success: true })
+
 })
 
 
 // GET
 router.get('/img/:name', ({params: {name}}, res) => {
+  console.log("indownload page with name of=", name)
   res.download(`./public/images/${name}`, (err) => {
     if(err) console.log("Download Err", err)
   })

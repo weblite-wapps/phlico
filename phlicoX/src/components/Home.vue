@@ -1,19 +1,21 @@
 <template>
-  <div id="app">
-		<appheader :title="title()"/>
-    <img :src="get('a.png')" width="350px">
-		<albums v-if="state === 'gallery'"/>
-		<albums v-if="state === 'gallery'"/>
+  <div class="home">
+		<!--<appheader :title="title()"/>-->
+    <!--<img :src="get('a.png')" width="350px">-->
+		<!--<albums v-if="state === 'gallery'"/>-->
+		<!--<albums v-if="state === 'gallery'"/>-->
+    <!--<card></card>-->
+		<!--<img-->
+			<!--v-if="state === 'gallery'"-->
+			<!--src="../assets/icons/add Photo.png"-->
+			<!--id="plus-sign"-->
+			<!--@click="changeState('upload')">-->
 
-		<img 
-			v-if="state === 'gallery'"
-			src="../assets/icons/plus-sign.png" 
-			id="plus-sign"
-			@click="changeState('upload')">
-
-		<!-- uploader + transition -->
-		<uploader v-if="state === 'upload'"/>
+		 <!--uploader + transition -->
+		<!--<uploader v-if="state === 'upload'"/>-->
+		<uploader/>
   </div>
+
 </template>
 
 <script>
@@ -21,11 +23,11 @@ import appheader from './appheader.vue'
 import gallery from './gallery.vue'
 import uploader from './uploader.vue'
 import albums from './albums.vue'
-
+import card from './card.vue'
 
 export default {
   name: 'Home',
-  
+
   data() {
   	return {
   		gallery: {
@@ -61,7 +63,7 @@ export default {
 						imageLikes: 5
 					},],
 				title: "First Album",},
-  		
+
 			state: 'gallery',
   	}},
 
@@ -83,25 +85,23 @@ export default {
     gallery,
     albums,
     uploader,
+    card,
   }
 
 }
 </script>
 
 <style scoped>
-
-	#app {
-		/* display: block; */
-		overflow: auto;
-	}
-
-	#plus-sign {
-		display: block;
-		z-index: 20;
-		cursor: pointer;
-		margin: 0 auto;
-		width: 50px;
-		height: 50px;
-	}
+  .home {
+    overflow: auto;
+  }
+	/*#plus-sign {*/
+		/*display: block;*/
+		/*z-index: 20;*/
+		/*cursor: pointer;*/
+		/*margin: 0 auto;*/
+		/*width: 70px;*/
+		/*height: 70px;*/
+	/*}*/
 
 </style>

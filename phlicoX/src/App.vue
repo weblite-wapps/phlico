@@ -22,6 +22,7 @@ export default {
 		width:  351px;
 		height: 100%;
 		border: 1px solid #ccc;
+    overflow: auto;
 	}
 
 </style>

@@ -2,32 +2,44 @@
   <div class="card">
     <!--<img src="../assets/images/- (1).jpg" alt="">-->
     <div :style="card">
+      <div class="logos">
+        <div class="top">
+          <a :href="getOriginalPhoto()">
+            <img
+            src="../assets/icons/download.png"
+            alt="downlaod-logo"
+            class="logo"></a>
 
-      <a :href="getOriginalPhoto()">
-      <img
-        src="../assets/icons/download.png"
-        alt="downlaod-logo"
-        class="logo"></a>
+          <span
+            id="heart"
+            @click="liked = !liked"
+            :class="{'unlike': (!liked), 'like': (liked)}">❤</span>
+        </div>
 
+        <div class="bot">
+          <img src="../assets/icons/comment.png"  class="logo comment" alt="">
+        </div>
+
+      </div>
 
     </div>
   </div>
 </template>
 
 <script>
-  import request from 'superagent'
 export default {
   name: 'card',
 
   data() {
   	return {
-  	  name: '',
+      liked: false,
+      name: '',
   	  card: {},
   	}
   },
 
   created() {
-    this.name = '1532431044404.jpg'
+    this.name = this.$props.imageName
     this.card = {
       'backgroundImage': `url('${this.getPhoto()}')`,
       'backgroundSize': 'Contain',
@@ -63,13 +75,56 @@ export default {
     align-items: center;
   }
   .logo {
-    margin: 5px 0 0 5px;
+    margin: 5px 5px 0 0;
     width: 40px;
     height: 40px;
+    float: right;
     transition: transform .3s ease-in-out;
     transform: scale(1);
   }
   .logo:hover {
     transform: scale(1.1);
+  }
+  #heart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all .3s;
+  }
+  .unlike:hover {
+    opacity: 1;
+  }
+  .unlike {
+    border: 2px solid white;
+    border-radius: 100px;
+    width: 40px;
+    height: 40px;
+    opacity: .8;
+    color: #fff;
+    background-color: rgba(227,38,55,0.63);
+    box-shadow: 0 1px 1px 0 rgba(0,0,0, .7);
+    text-shadow: 0 1.5px 0 rgba(0,0,0, .7);
+  }
+  .like {
+    border: 1px solid white;
+    text-shadow: 1px 2px 1px rgba(208, 208, 208, .5);
+    border-radius: 100px;
+    width: .1px;
+    height: .1px;
+    color: #F70A31;
+    opacity: 1;
+  }
+  .logos {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .comment {
+  align-self: flex-end;
   }
 </style>

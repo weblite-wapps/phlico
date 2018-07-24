@@ -1,5 +1,8 @@
 <template>
   <div class="home">
+
+    <card imageName="1532437016930.png"></card>
+    <card imageName="1532437403067.jpg"></card>
 		<!--<appheader :title="title()"/>-->
     <!--<img :src="get('a.png')" width="350px">-->
 		<!--<albums v-if="state === 'gallery'"/>-->

@@ -15,10 +15,10 @@
           value="no Caption"
           placeholder="Add Your Caption"
           class="comment-text"></textarea>
-        <button
-          class="btn"
-          @click="submitFile()" >Send</button>
     </form>
+    <button
+      class="btn"
+      @click="submitFile()">Send</button>
   </div>
 </template>
 
@@ -61,7 +61,7 @@ export default {
 			request
 				.post(domain + '/upload')
 		    .send(formData)
-		    .then(() => {
+		    .then((res) => {
 		    	console.log('photo sent')
 		    })
 		    .catch((err) => {
@@ -75,21 +75,18 @@ export default {
 
 <style scoped>
   #container {
-    display: flex;
     width: 100%;
     text-align: center;
-    justify-content: center;
-    align-items: center;
     overflow: hidden;
   }
   .input-file {
     position: absolute;
     top: 0; left: 0;
-    width: 225px;
     opacity: 0;
     visibility: hidden;
     padding: 14px 0;
     cursor: pointer;
+    background-color: red;
   }
   .input-file:hover,
   .input-file:focus {
@@ -97,11 +94,11 @@ export default {
     color: #39D2B4;
   }
 	.file-input + label  {
-	  font-size: 1.25em;
+	  font-size: 1em;
     font-weight: 700;
     color: white;
     background-color: black;
-    display: inline-block;
+    width: 85%;
 	}
   .comment-text {
     background-color: rgba(49, 58, 67, 0.84);
@@ -110,11 +107,12 @@ export default {
     box-shadow: 0 1px 1px rgba(0, 0, 0, .15);
     color: #cbc7e5;
     font-size: 14px;
-    width: 280px;
+    width: 85%;
     padding: 5px 10px;
     outline: none;
     min-height: 70px;
     margin: 10px;
+    overflow: hidden;
   }
   .comment-text:focus {
     box-shadow: 0 2px 6px rgba(121, 137, 148, 1);
@@ -134,13 +132,13 @@ export default {
     opacity: 1;
   }
 	.btn {
+    display: block;
     background-color: #555f77;
     border:  none;
     border-radius: 4px;
     box-shadow: 0 2px 2px rgba(0, 0, 0, .15);
     color: #fff;
     cursor: pointer;
-    display: block;
     margin: 5px auto;
     outline: none;
     padding: 6px 15px;

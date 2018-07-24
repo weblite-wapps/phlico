@@ -17,7 +17,11 @@
         </div>
 
         <div class="bot">
-          <img src="../assets/icons/comment.png"  class="logo comment" alt="">
+          <img
+            src="../assets/icons/comment.png"
+            class="logo comment"
+            alt="comment logo"
+            @click="changeState()">
         </div>
 
       </div>
@@ -61,6 +65,10 @@ export default {
       const domain = "http://localhost:3000/img/"
       return `${domain}${this.name}`
     },
+
+    changeState: function() {
+      this.$emit('state', 'comments')
+    }
   },
 
   props: {
@@ -90,7 +98,7 @@ export default {
     align-items: center;
     justify-content: center;
     margin: 15px;
-    font-size: 20px;
+    font-size: 15px;
     cursor: pointer;
     transition: all .3s;
   }
@@ -100,8 +108,8 @@ export default {
   .unlike {
     border: 2px solid white;
     border-radius: 100px;
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     opacity: .8;
     color: #fff;
     background-color: rgba(227,38,55,0.63);

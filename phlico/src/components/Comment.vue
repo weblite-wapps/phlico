@@ -20,7 +20,7 @@
 
 <script>
 export default {
-  name: 'commen',
+  name: 'comment',
   data() {
     return {
       like: true,

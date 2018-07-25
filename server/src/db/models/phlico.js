@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 
 // Definition of all fields
 const definition = {
-  wisid: Number,
+  wisid: String,
 	userid: Number,
   username: String,
   imagename: String,

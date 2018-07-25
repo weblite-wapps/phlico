@@ -3,7 +3,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const multer = require('multer')
 const path = require('path')
-const gm = require('gm')
+const Image = require('../helper/index')['Image']
 const database = require('../db/index')
 
 
@@ -30,53 +30,32 @@ router.use((req, res,next) => {
 
 // POST
 router.post('/upload', upload.single('image'), function (req, res) {
-  console.log('in /upload post method')
-
   if (!req.file) {
     console.log('No file recived!')
     res.send({ success: false })
   }
   else {
-    const domain = `${req.protocol}://${req.hostname}:3000`
-    const filesrc = `/img/${req.file.filename}`
+    const domain = `${req.protocol}://${req.hostname}:3000/img/`
 
-    /*Reformat and resize image with graphics magic*/
-    gm(domain + filesrc)
-    	.size(function (err, size) {
-    	  if(err) console.log("Size --err",err)
-    		this.gravity("Center")
-    	  this.extent(Math.max(size.width, size.height), Math.max(size.width, size.height))
-    	  this.resize(400, 400)
-        this.write(`./public/images/Sqr_${req.file.filename}`, (err) => {
-          if(err) console.log("Write --err",err)
-    	  })
-      })
+    console.log('domain', domain)
+    //  image reshape here
+    Image.saveMiniSize(domain, req.file.filename)
+    Image.saveHighResolution(domain, req.file.filename, req.file.size)
 
-    /*save original*/
-    gm(domain + filesrc)
-      .size(function (err, size) {
-        if (err) console.log("Size --err", err)
-        if (req.file.size <= 1572864)
-          this.write(`./public/images/${req.file.filename}`, (err) => {
-            if (err) console.log("Write --err", err)
-          })
-        else {
-          var _max = Math.max(size.width, size.height)
-          if (_max > 1000)
-            var _scale = 1000 / _max
-          else
-            var _scale = 500 / _max
-
-          this.resize(size.width * _scale, size.height * _scale)
-          this.write(`./public/images/${req.file.filename}`, (err) => {
-            if (err) console.log("Write --err", err)
-          })
-        }
-      })
+  //  Database
+    const doc = {
+      wisid: req.body.wisid,
+      username: req.body.username,
+      userid: req.body.userid,
+      caption: req.body.caption,
+      imagename: req.file.filename,
+      comments: [],
+      likes: [],
+    }
+    console.log("doco:", doc)
+    database.savePhoto(doc)
   }
-
   res.send({ success: true })
-
 })
 
 
@@ -87,6 +66,22 @@ router.get('/img/:name', ({params: {name}}, res) => {
     if(err) console.log("Download Err", err)
   })
 })
+
+/*Test*/
+router.get('/load', (req, res) => {
+  database.getAll()
+    .then((photos) => res.send(photos))
+    .catch((err) => console.log(err))
+  // res.send({"name": 123})
+})
+
+
+router.get('/load/:wisid', ({params: {wisid}}, res) => {
+  database.getAllPhoto(wisid)
+    .then((photos) => res.send(photos))
+    .catch((err) => console.log(err))
+})
+
   // loadNote(id)
   // { params: { id } }
   //   .then((note) => res.send(note))

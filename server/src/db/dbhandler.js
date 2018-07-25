@@ -9,7 +9,7 @@ exports.connect = name => {
 	mongoose.connect(`mongodb://localhost/${name}`)
 
 	const db = mongoose.connection
-	db.on('error', console.error.bind(console, 'connection error:'))
+	db.on('error', console.log)
 	db.once('open', () => {
 		console.log('Connection to database successfully is made ...')
 		// Test
@@ -23,9 +23,14 @@ exports.savePhoto = (photoInfo) => {
 	return new Phlico(photoInfo).save()
 }
 
+/*Test*/
+exports.getAll = () => Phlico.find().exec()
+
 exports.getAllPhoto = wisid =>  Phlico
 	.find({ wisid })
 	.exec()
+
+
 
 /*photoInfo = {wisid, picture:{id} ;; comment: {[Comment]} */
 exports.saveComment = (photoInfo, comment) => new Phlico({

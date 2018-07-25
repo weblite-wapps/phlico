@@ -13,8 +13,8 @@
         src="../assets/logo/commentBox.png"
         :class="['logo', {'pop-up': (popupCommentBox)}]">
       <img
-        src="../assets/logo/addComment.png"
-        class="logo pop-up"
+        src="../assets/logo/comment.png"
+        class="comment pop-up"
         @click="changeState()">
     </span>
   </div>
@@ -100,15 +100,16 @@ export default {
     opacity: 1;
   }
   .nav-pop-ups {
-    width: auto;
+    width: 90%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: relative;
     bottom: -350px;
+    margin: 0 auto;
   }
   .logo {
-    width: 45px;
+    width: 40px;
     height: auto;
     transition: all .3s ease-in-out;
     opacity: 0;
@@ -116,6 +117,12 @@ export default {
   }
   .pop-up {
     opacity: 1;
+  }
+
+  .comment {
+    width: 30px;
+    height: auto;
+    cursor: pointer;
   }
 
 </style>

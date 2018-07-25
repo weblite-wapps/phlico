@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <card
-      imageName="1532501605334.jpg"
+      imageName="1532517986232.jpg"
       v-if="state === 'card'"
       @state="changeState"/>
 

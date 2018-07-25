@@ -24,7 +24,7 @@
             @click="changeState()">
           <img
             src="../assets/icons/send.png" alt="send logo"
-            class="logo send">
+            class="send">
 
         </div>
 
@@ -88,8 +88,8 @@ export default {
   }
   .logo {
     margin: 5px 5px 0 0;
-    width: 40px;
-    height: 40px;
+    width: 25px;
+    /*height: 40px;*/
     float: right;
     transition: transform .3s ease-in-out;
     transform: scale(1);
@@ -142,9 +142,16 @@ export default {
     justify-content: space-between;
   }
   .comment {
+    margin-bottom: 5px;
     align-self: flex-end;
   }
   .send {
+    width: 40px;
     align-self: flex-start;
+    transition: transform .3s ease-in-out;
+    transform: scale(1);
+  }
+  .send:hover {
+    transform: scale(1.1);
   }
 </style>

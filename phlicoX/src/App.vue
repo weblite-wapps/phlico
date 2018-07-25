@@ -11,7 +11,6 @@
     <uploader
       @save="save"
     />
-
   </div>
 </template>
 
@@ -35,7 +34,7 @@ export default {
       username: "amirhe",
       phlicoz: [
         {
-          imageName: "1532495363561.jpeg",
+          imageName: "1532522975980.jpg",
           caption: {
             likes: 11,
             username: "amirhe",
@@ -74,7 +73,7 @@ export default {
               }]
         },
         {
-          imageName: "1532500411040.gif",
+          imageName: "1532522765665.jpg",
           caption: {
             likes: 11,
             username: "amirhe",
@@ -149,5 +148,24 @@ export default {
 		border: 1px solid #ccc;
     overflow: auto;
 	}
+  #app::-webkit-scrollbar-track
+  {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 1px;
+    width: 5px;
+    background-color: #F5F5F5;
+  }
 
+  #app::-webkit-scrollbar
+  {
+    width: 4px;
+    background-color: #fefefe;
+  }
+
+  #app::-webkit-scrollbar-thumb
+  {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #252a3e;
+  }
 </style>

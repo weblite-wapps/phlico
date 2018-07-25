@@ -1,5 +1,16 @@
 <template>
   <div id="get-comment">
+    <div id="caption">
+      <div class="caption-text">
+        <p>{{caption.text}}</p>
+      </div>
+
+      <div class="bot">
+        <span>{{caption.likes}} ❤</span>
+        <span class="username">{{caption.username}}</span>
+      </div>
+    </div>
+
     <form
       action=""
       class="form"
@@ -14,7 +25,6 @@
         <!--submit form using superagent-->
         <button @click="">Submit</button>
         <!--return to main inline application-->
-        <button @click="">Cancle</button>
       </div>
     </form>
   </div>
@@ -22,17 +32,51 @@
 
 <script>
 export default {
-  name: 'comments',
-  data() {return {}}
+  name: 'getComments',
+
+  props: {
+    caption: Object,
+  }
 }
 </script>
 
 <style scoped>
-  #get-comment {
-    width: 400px;
-    height: 400px;
-    background-color: rgba(45, 71, 42, 0.19);
+  #caption {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 90%;
+    margin: 5px 0;
+  }
+  .bot {
+    display: flex;
+    width: auto;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+  }
+  .username {
+    color: #cfccd0;
+    background-color: #2c3e50;
+    padding: 0 8px;
+    margin-left: 20px;
+    border-radius: 20px;
+    font-size: 10px;
+  }
+  .caption-text {
+    /*display: inline-block;*/
+    display: flex;
+    word-wrap: break-word;
+    color: #333333;
+    text-align: center;
+  }
+
+  #get-comment {
+    width: 100%;
+    height: auto;
+    /*background-color: rgba(45, 71, 42, 0.19);*/
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
   }
@@ -45,7 +89,7 @@ export default {
    font-size: 14px;
    padding: 5px 10px;
    outline: none;
-   width: 370px;
+   width: 340px;
   }
   .form .form-row  input[type=submit],
   .form .form-row  button {
@@ -63,15 +107,15 @@ export default {
   .form .form-row .comment-text:focus,
   .form .form-row input[type=submit]:hover,
   .form .form-row button:hover{
-    box-shadow: 0 2px 6px rgba(121, 137, 148, 1);
+    box-shadow: 0 2px 6px rgb(83, 94, 105);
   }
   .form-row {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 30px
+    margin-bottom: 10px
   }
   .comment-text {
-    min-height: 250px;
+    min-height: 60px;
   }
   ::-webkit-input-placeholder { /* Chrome */
     color: #b3afc0;

@@ -4,14 +4,12 @@
       <!-- :class="{'like': (like)}" -->
       <!--<div class="comment-like"><span v-if="!like">⚪</span><span v-else>🔴</span></div>-->
       <div class="comment-text">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip
+        {{comment.text}}
       </div>
       <div class="comment-footer">
         <div class="comment-info">
-          <span class="comment-autor"><a href="">@mirhe</a></span>
-            <span class="comment-date">{{comment_time()}}</span>
+          <span class="comment-autor"><a href="">{{ comment.author }}</a></span>
+            <span class="comment-date">2fev</span>
         </div>
       </div>
     </div>
@@ -35,8 +33,12 @@ export default {
   },
 
   created() {
-  //  all data from database should be catch and re store
+    //  all data from database should be catch and re store
   },
+
+  props: {
+    comment: Object,
+  }
 }
 </script>
 
@@ -71,18 +73,6 @@ export default {
     margin: 0 10px;
     color: rgb(129, 158, 240);
 
-  }
-  .comment-box::before {
-    content: '';
-    height: 0;
-    width: 0;
-    position: relative;
-    display: block;
-    border-width: 10px 12px 10px 0;
-    border-style: solid;
-    border-color: transparent rgb(76, 84, 91);
-    top: 8px;
-    left: -25px;
   }
   .comment {
     margin: 5px 10px;

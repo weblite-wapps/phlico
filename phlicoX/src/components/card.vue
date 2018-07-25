@@ -138,7 +138,13 @@ export default {
   }
   .bot {
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction:  row-reverse;
     justify-content: space-between;
+  }
+  .comment {
+    align-self: flex-end;
+  }
+  .send {
+    align-self: flex-start;
   }
 </style>

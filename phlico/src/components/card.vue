@@ -8,16 +8,14 @@
       :class="{'unlike': (!liked), 'like': (liked)}">❤</span>
     <!--Notification-->
     <span class="nav-pop-ups">
-      <!--click emmit to show comments-->
+      <!--Click emmit to show add comment page-->
       <img
         src="../assets/logo/commentBox.png"
-        :class="['logo', {'pop-up': (popupCommentBox)}]"
-        @click="">
-      <!--Click emmit to show add comment page-->
+        :class="['logo', {'pop-up': (popupCommentBox)}]">
       <img
         src="../assets/logo/addComment.png"
         class="logo pop-up"
-        @click="">
+        @click="changeState()">
     </span>
   </div>
 </template>
@@ -27,33 +25,42 @@ export default {
   name: 'card',
   data() {
   	return {
-  		card: {
-  			'backgroundImage': this.get('img/- (4).jpg'),
-  			'width': '400px',
-  			'height': '400px',
-        'boxShadow': '0 2px 1px rgba(0,0,0, .3)'
-  		},
-  		liked: false,
-  		image: {
-  			info: {
-  				title: "in The Sea",
-  				caption: "my first photo in this weblite application",
-  			},
-  			user: {
-  				name: "amirhe",
-  			}
-  		},
-
+      name: '',
+      card: {},
+      liked: false,
   	  popupCommentBox: true,
       popupAddComment: true,
   	}
   },
 
+  created() {
+    this.name = this.$props.imageName
+    this.card = {
+      'backgroundImage': `url('${this.getPhoto()}')`,
+      'backgroundSize': 'Contain',
+      'backgroundRepeat': 'no-repeat',
+      'backgroundColor': 'rgb(255,50,39)',
+      'width': '400px',
+      'height': '400px',
+      'margin': '10px 0',
+      'boxShadow': '0 2px 1px rgba(0,0,0, .3)'
+    }
+  },
+
   methods: {
-  	get: function(name) {
-  	  const domain = "http://localhost:3000/"
-  		return `url('${domain}${name}')`
-  	}
+  	getPhoto: function() {
+      const domain = "http://localhost:3000/img/"
+      return `${domain}Sqr_${this.name}`
+  	},
+    changeState: function() {
+  	  console.log("clicked")
+      this.$emit('state', 'comments')
+    },
+
+  },
+
+  props: {
+    imageName: String,
   }
 }
 </script>
@@ -110,4 +117,5 @@ export default {
   .pop-up {
     opacity: 1;
   }
+
 </style>

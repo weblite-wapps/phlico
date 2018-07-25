@@ -1,23 +1,36 @@
 <template>
   <div id="container">
-		<form
-			ref='uploadForm'
-			id='uploadForm'
-      action='http://localhost:3000/upload'
-      method='post'
-      encType="multipart/form-data">
-				<input type="file" accept="image/*" name="image" id="uploader" class="input-file" @change="getFile"/>
-        <label tabindex="0" for="uploader" class="btn">Select a file...</label>
-        <textarea
+    <div>
+      <label tabindex="0" for="uploader" class="btn">Select a file...</label>
+      <input type="file" accept="image/*" name="image" id="uploader" class="input-file" @change="getFile"/>
+      <textarea
           name="caption"
           value="no Caption"
           placeholder="Add Your Caption"
           v-model="caption"
           class="comment-text"></textarea>
-    </form>
-    <button
-      class="btn"
-      @click="submitFile()">Send</button>
+      <button
+        class="btn"
+        @click="submitFile()">Send</button>
+    </div>
+    <!--<form-->
+    <!--ref='uploadForm'-->
+    <!--id='uploadForm'-->
+    <!--action='http://localhost:3000/upload'-->
+    <!--method='post'-->
+    <!--encType="multipart/form-data">-->
+    <!--<input type="file" accept="image/*" name="image" id="uploader" class="input-file" @change="getFile"/>-->
+    <!--<textarea-->
+    <!--name="caption"-->
+    <!--value="no Caption"-->
+    <!--placeholder="Add Your Caption"-->
+    <!--v-model="caption"-->
+    <!--class="comment-text"></textarea>-->
+    <!--<label tabindex="0" for="uploader" class="btn">Select a file...</label>-->
+    <!--</form>-->
+    <!--<button-->
+      <!--class="btn"-->
+    <!--@click="submitFile()">Send</button>-->
 
   </div>
 </template>
@@ -51,9 +64,9 @@ export default {
 <style scoped>
   #container {
     text-align: center;
-    overflow: hidden;
-    width: 100%;
-    height: 320px;
+    width: 320px;
+    height: auto;
+    margin: 30px auto 0 auto;
   }
   .input-file {
     position: absolute;
@@ -62,7 +75,6 @@ export default {
     visibility: hidden;
     padding: 14px 0;
     cursor: pointer;
-    background-color: red;
   }
   .input-file:hover,
   .input-file:focus {

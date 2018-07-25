@@ -1,19 +1,28 @@
 <template>
   <div id="app">
-    <home
-      :phlicoz="phlicoz"
-      :webliteInfo="webliteInfo"/>
+    <phlico
+      v-for="(item, index) in phlicoz"
+      :key="index"
+      :imageName="item.imageName"
+      :caption="item.caption"
+      :comments="item.comments"
+      />
+
+    <uploader
+      @save="save"
+    />
+
   </div>
 </template>
 
 <script>
-import Home from './components/Home.vue'
-// helper
-import webliteHandler from './helper/function/weblite.api'
-//
-import config from './config'
-// W
-const { W } = window
+  import phlico from './components/phlico'
+  import uploader from './components/uploader'
+
+  // helper
+  import webliteHandler from './helper/function/weblite.api'
+  import requestHandler from './helper/function/requestHandler'
+  const { W } = window
 
 
 export default {
@@ -22,8 +31,88 @@ export default {
   data() {
     return {
       wisid: (W && W.wisid) || '1',
-      phlicoz: [],
-      webliteInfo: {},
+      userid: 1,
+      username: "amirhe",
+      phlicoz: [
+        {
+          imageName: "1532495363561.jpeg",
+          caption: {
+            likes: 11,
+            username: "amirhe",
+            text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod" ,
+          },
+          comments:
+            [{
+            author: "@mirhe",
+            time: 'Feb 2, 2018 22:30pm',
+            text: "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n",
+            },
+            {
+            author: "@mirhe",
+            time: 'Feb 2, 2018 22:30pm',
+            text: "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n",
+            },
+              {
+                author: "@mirhe",
+                time: 'Feb 2, 2018 22:30pm',
+                text: "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n",
+              },
+              {
+                author: "@mirhe",
+                time: 'Feb 2, 2018 22:30pm',
+                text: "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n",
+              },
+              {
+                author: "@mirhe",
+                time: 'Feb 2, 2018 22:30pm',
+                text: "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n",
+              },
+              {
+                author: "@mirhe",
+                time: 'Feb 2, 2018 22:30pm',
+                text: "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n",
+              }]
+        },
+        {
+          imageName: "1532500411040.gif",
+          caption: {
+            likes: 11,
+            username: "amirhe",
+            text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod" ,
+          },
+          comments:
+            [{
+              author: "@mirhe",
+              time: 'Feb 2, 2018 22:30pm',
+              text: "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n",
+            },
+              {
+                author: "@mirhe",
+                time: 'Feb 2, 2018 22:30pm',
+                text: "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n",
+              },
+              {
+                author: "@mirhe",
+                time: 'Feb 2, 2018 22:30pm',
+                text: "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n",
+              },
+              {
+                author: "@mirhe",
+                time: 'Feb 2, 2018 22:30pm',
+                text: "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n",
+              },
+              {
+                author: "@mirhe",
+                time: 'Feb 2, 2018 22:30pm',
+                text: "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n",
+              },
+              {
+                author: "@mirhe",
+                time: 'Feb 2, 2018 22:30pm',
+                text: "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n",
+              }]
+        }
+      ],
     }
   },
   created: function() { W && webliteHandler(this) },
@@ -31,14 +120,23 @@ export default {
 
   methods: {
     init: function() {
-      request
-        .get(`${config.sevrer}/${this.wisid}`)
+      requestHandler.getAll(this.wisid)
+    },
+
+    save: function(info) {
+      requestHandler.savePhoto({
+        ...info,
+        wisid: this.wisid,
+        userid: this.userid,
+        username: this.username,
+      })
     }
   //  get all thing from data base and make them acceptable for phlico
   //   update phlico and weblite.api
   },
   components: {
-    'home': Home,
+    uploader,
+    phlico
   }
 }
 </script>

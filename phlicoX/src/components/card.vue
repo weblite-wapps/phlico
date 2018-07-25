@@ -22,6 +22,10 @@
             class="logo comment"
             alt="comment logo"
             @click="changeState()">
+          <img
+            src="../assets/icons/send.png" alt="send logo"
+            class="logo send">
+
         </div>
 
       </div>
@@ -132,7 +136,9 @@ export default {
     flex-direction: column;
     justify-content: space-between;
   }
-  .comment {
-  align-self: flex-end;
+  .bot {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
   }
 </style>

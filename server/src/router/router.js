@@ -53,7 +53,10 @@ router.post('/upload', upload.single('image'), function (req, res) {
       likes: [],
     }
     console.log("doco:", doc)
-    database.savePhoto(doc)
+    database
+      .savePhoto(doc)
+      .then(() => console.log("Photo saved successfully"))
+      .catch(err => console.log(err))
   }
   res.send({ success: true })
 })

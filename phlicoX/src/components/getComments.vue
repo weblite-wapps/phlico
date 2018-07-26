@@ -1,13 +1,14 @@
 <template>
-  <div id="get-comment">  
-    <div class="form-row">
+  <div id="comment">  
+    <div class="row">
       <textarea
         class="comment-text"
         id="scrollbar"
         placeholder="Add comment..."
         v-model="opinion"></textarea>
     </div>
-    <div class="form-row">
+
+    <div class="row">
       <button @click="submit">Submit</button>
       <button @click="changeState('card')">return</button>
       <button v-if="deleteShow" @click="changeState('delete')" id="del">Delete</button>
@@ -47,7 +48,7 @@
 </script>
 
 <style scoped>
-  #get-comment {
+  #comment {
     width: 300px;
     margin: 0 auto 2px auto;
     /*background-color: rgba(45, 71, 42, 0.19);*/
@@ -56,7 +57,7 @@
     justify-content: center;
     align-items: center;
   }
-  .form-row .comment-text {
+  .row .comment-text {
     background-color: rgba(49, 58, 67, 0.84);
     border: none;
     border-radius: 4px;
@@ -66,7 +67,7 @@
     outline: none;
     width: 300px;
   }
-  .form-row  button {
+  .row  button {
     background-color: #555f77;
     border:  none;
     border-radius: 4px;
@@ -79,11 +80,11 @@
     font-size: 10px;
     padding: 6px 15px;
   }
-  .form-row .comment-text:focus,
-  .form-row button:hover{
+  .row .comment-text:focus,
+  .row button:hover{
     box-shadow: 0 2px 6px rgb(83, 94, 105);
   }
-  .form-row {
+  .row {
     width: 100%;
     display: flex;
     justify-content: space-between;

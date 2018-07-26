@@ -22,7 +22,7 @@
   // helper
   import webliteHandler from './helper/function/weblite.api'
   import {savePhoto, deletePhoto, getAll} from './helper/function/requestHandler'
-  const { R } = window
+  const { W, R } = window
 
 
   export default {
@@ -59,14 +59,16 @@
               },
             }), body)
           })
-          .catch(err => console.log("X-getAll-APP", err))
+          .catch(err => console.log("Xmode[A]-getAll[F]-APP[vue]", err))
       },
 
       sendPhoto: function(info) {
         return photo => {
           savePhoto(info, photo)
             /*Fix Promise Working for load initialization*/
-            .then(() => this.init())
+            .then((res) => {
+              this.phlicoz = R.append(res.body.doc, this.phlicoz)
+            })
             .catch((err) => console.log(err))
         }
       },

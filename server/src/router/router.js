@@ -39,23 +39,33 @@ router.post('/upload', upload.single('image'), function (req, res) {
     const domain = `${req.protocol}://${req.hostname}:${PORT}/img/`
 
     //  image reshape here
-    Image.saveMiniSize(domain, req.file.filename)
     Image.saveHighResolution(domain, req.file.filename, req.file.size)
-
-    //  Database
-    const doc = {
-      wisid: req.body.wisid,
-      userid: req.body.userid,
-      username: req.body.username,
-      caption: req.body.caption,
-      imagename: req.file.filename,
-      comments: [],
-      likes: [],
-    }
-    database
-      .savePhoto(doc)
-      .then(() => res.send({ success: true }))
-      .catch(err => console.log(err))
+    Image.saveMiniSize(domain, req.file.filename)
+    .then(() => {
+      //  Database
+      const doc = {
+        wisid: req.body.wisid,
+        userid: req.body.userid,
+        username: req.body.username,
+        caption: req.body.caption,
+        imagename: req.file.filename,
+        comments: [],
+        likes: [],
+      }
+      database
+        .savePhoto(doc)
+        .then(() => res.send({doc: {
+            imageName: doc.imagename,
+            comments: doc.comments,
+            caption: {
+              username: doc.username,
+              likes: doc.likes.length,
+              text: doc.caption,
+            }
+          }
+        }))
+        .catch(err => console.log(err))
+    })
   }
 
 })
@@ -73,7 +83,7 @@ router.post('/addComment', function (req, res) {
   database
     .addComment(info, comment, req.body.like)
     .then(response => res.send(response))
-    .catch(err => console.log(err))
+    .catch(err => console.log("addComment --Err:",err))
 })
 
 // GET

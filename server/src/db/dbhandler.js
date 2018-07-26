@@ -35,13 +35,13 @@ exports.addComment = (photoInfo, comment, like) => {
   if (like) {
     Phlico.update({...photoInfo},
       {$push: {comments: comment, likes: photoInfo.userid}}, function (err) {
-        if (err) console.log("Cant Update Doc", err)
+        if (err) console.log("can not update phlico document --Err:", err)
       })
   }
   else {
     Phlico.update({...photoInfo},
       {$push: {comments: comment}}, function (err) {
-        if (err) console.log("Cant Update Doc", err)
+        if (err) console.log("can not update phlico document --Err:", err)
       })
   }
 

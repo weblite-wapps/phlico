@@ -29,7 +29,7 @@ export default {
   data() {
     return {
       wisid: (W && W.wisid) || '1',
-      imagename: '1532606761540.jpg',
+      imagename: '1532630487636.jpg',
       userid: '1',
       username: "amirhe",
       state: 'card',

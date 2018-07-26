@@ -6,7 +6,7 @@
       :imageName="item.imageName"
       :caption="item.caption"
       :comments="item.comments"
-      :userInfo="{userid,  username}"/>
+      :userInfo="{userid, username}"/>
 
     <uploader 
       :send="sendPhoto({wisid, userid, username})"

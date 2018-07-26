@@ -1,20 +1,20 @@
 <template>
   <div class="card">
-    <!--<img src="../assets/images/- (1).jpg" alt="">-->
     <div :style="card">
+
       <div class="logos">
         <div class="top">
           <a :href="getOriginalPhoto()">
             <img
             src="../assets/icons/download.png"
             alt="downlaod-logo"
-            class="logo"></a>
-
+            class="logo">
+          </a>
           <span
             id="heart"
             @click="changeLikeState"
             :class="{'unlike': (!liked), 'like': (liked)}">❤</span>
-        </div>
+        </div> <!-- top -->
 
         <div class="bot">
           <img
@@ -25,68 +25,67 @@
           <img
             src="../assets/icons/send.png" alt="send logo"
             class="send">
-
-        </div>
-
-      </div>
+        </div> <!-- bot -->
+      </div> <!--logos-->
 
     </div>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'card',
+  export default {
+    name: 'card',
 
-  data() {
-  	return {
-      liked: false,
-      name: '',
-  	  card: {},
-  	}
-  },
+    data() {
+    	return {
+        liked: false,
+        name: '',
+    	  card: {},
+    	}
+    },
 
-  created() {
-    this.name = this.$props.imageName
-    this.card = {
-      'backgroundImage': `url('${this.getPhoto()}')`,
-      'backgroundSize': 'Contain',
-      'backgroundRepeat': 'no-repeat',
-      'backgroundColor': 'rgb(255,50,39)',
-      'width': '320px',
-      'height': '320px',
-      'boxShadow': '0 1px 1px rgba(0,0,0, .3)',
-      'margin': '10px 0',
+    created() {
+      this.imageName = this.imageName
+      this.card = {
+        'backgroundImage': `url('${this.getPhoto()}')`,
+        'backgroundSize': 'Contain',
+        'backgroundRepeat': 'no-repeat',
+        'backgroundColor': 'rgb(255,50,39)',
+        'width': '320px',
+        'height': '320px',
+        'boxShadow': '0 1px 1px rgba(0,0,0, .3)',
+        'margin': '10px 0',
+      }
+    },
+
+    methods: {
+      getPhoto: function() {
+        const domain = "http://localhost:3000/img/"
+        return `${domain}Sqr_${this.imageName}`
+      },
+
+      getOriginalPhoto() {
+        const domain = "http://localhost:3000/img/"
+        return `${domain}${this.imageName}`
+      },
+
+      changeState: function() {
+        this.$emit('state', 'comments')
+      },
+
+      changeLikeState: function() {
+        this.liked = !this.liked
+        const like = this.liked
+        this.$emit('like', like)
+      }
+    },
+
+    props: {
+      imageName: String,
     }
-  },
-
-  methods: {
-    getPhoto: function() {
-      const domain = "http://localhost:3000/img/"
-      return `${domain}Sqr_${this.name}`
-    },
-
-    getOriginalPhoto() {
-      const domain = "http://localhost:3000/img/"
-      return `${domain}${this.name}`
-    },
-
-    changeState: function() {
-      this.$emit('state', 'comments')
-    },
-
-    changeLikeState: function() {
-      this.liked = !this.liked
-      const like = this.liked
-      this.$emit('like', like)
-    }
-  },
-
-  props: {
-    imageName: String,
   }
-}
 </script>
+
 <style scoped>
   .card {
     display: flex;
@@ -96,7 +95,6 @@ export default {
   .logo {
     margin: 5px 5px 0 0;
     width: 25px;
-    /*height: 40px;*/
     float: right;
     transition: transform .3s ease-in-out;
     transform: scale(1);

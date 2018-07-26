@@ -12,7 +12,7 @@
 
           <span
             id="heart"
-            @click="liked = !liked"
+            @click="changeLikeState"
             :class="{'unlike': (!liked), 'like': (liked)}">❤</span>
         </div>
 
@@ -21,7 +21,7 @@
             src="../assets/icons/comment.png"
             class="logo comment"
             alt="comment logo"
-            @click="changeState()">
+            @click="changeState">
           <img
             src="../assets/icons/send.png" alt="send logo"
             class="send">
@@ -52,6 +52,7 @@ export default {
       'backgroundImage': `url('${this.getPhoto()}')`,
       'backgroundSize': 'Contain',
       'backgroundRepeat': 'no-repeat',
+      'backgroundColor': 'rgb(255,50,39)',
       'width': '320px',
       'height': '320px',
       'boxShadow': '0 1px 1px rgba(0,0,0, .3)',
@@ -72,6 +73,12 @@ export default {
 
     changeState: function() {
       this.$emit('state', 'comments')
+    },
+
+    changeLikeState: function() {
+      this.liked = !this.liked
+      const like = this.liked
+      this.$emit('like', like)
     }
   },
 
@@ -124,8 +131,8 @@ export default {
     border: 1px solid white;
     text-shadow: 1px 2px 1px rgba(208, 208, 208, .5);
     border-radius: 100px;
-    width: .1px;
-    height: .1px;
+    width: 0px;
+    height: 0px;
     color: #F70A31;
     opacity: 1;
   }

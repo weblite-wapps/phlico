@@ -6,36 +6,54 @@
       </div>
 
       <div class="bot">
-        <span>{{caption.likes}} ❤</span>
+        <span>{{getLikes(caption.likes)}} ❤</span>
         <span class="username">{{caption.username}}</span>
       </div>
     </div>
 
-    <form
-      action=""
-      class="form"
-      name="form">
-      <div class="form-row">
-        <textarea
-          class="comment-text"
-          placeholder="Add comment..."
-          required></textarea>
-      </div>
-      <div class="form-row">
-        <!--submit form using superagent-->
-        <button @click="">Submit</button>
-        <!--return to main inline application-->
-      </div>
-    </form>
+
+    <div class="form-row">
+      <textarea
+        class="comment-text"
+        id="scrollbar"
+        placeholder=" Add comment..."
+        v-model="opinion"></textarea>
+    </div>
+    <div class="form-row">
+      <button @click="submit">Submit</button>
+    </div>
   </div>
 </template>
 
 <script>
+
 export default {
   name: 'getComments',
+  data(){
+    return {
+      opinion: '',
+    }
+  },
+
+  methods: {
+    getLikes: function(likes) {
+      return likes || 0;
+    },
+    submit: function() {
+      const t = Date().split(' ').splice(1, 4)
+      const date = `${t[0]} ${t[1]}, ${t[2]} ${t[3]}`
+      if (this.opinion === '') alert('Comment is empty')
+      else {
+        const opinion = this.opinion
+        this.send({opinion, date})
+        this.$emit('state', 'card')
+      }
+    }
+  },
 
   props: {
     caption: Object,
+    send: Function,
   }
 }
 </script>
@@ -80,7 +98,7 @@ export default {
     justify-content: center;
     align-items: center;
   }
-  .form .form-row .comment-text {
+  .form-row .comment-text {
    background-color: rgba(49, 58, 67, 0.84);
    border: none;
    border-radius: 4px;
@@ -91,8 +109,8 @@ export default {
    outline: none;
    width: 340px;
   }
-  .form .form-row  input[type=submit],
-  .form .form-row  button {
+  .form-row  input[type=submit],
+  .form-row  button {
     background-color: #555f77;
     border:  none;
     border-radius: 4px;
@@ -104,9 +122,9 @@ export default {
     outline: none;
     padding: 6px 15px;
   }
-  .form .form-row .comment-text:focus,
-  .form .form-row input[type=submit]:hover,
-  .form .form-row button:hover{
+  .form-row .comment-text:focus,
+  .form-row input[type=submit]:hover,
+  .form-row button:hover{
     box-shadow: 0 2px 6px rgb(83, 94, 105);
   }
   .form-row {
@@ -116,19 +134,27 @@ export default {
   }
   .comment-text {
     min-height: 60px;
+    overflow: auto;
   }
-  ::-webkit-input-placeholder { /* Chrome */
-    color: #b3afc0;
+  #scrollbar::-webkit-scrollbar-track
+  {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 1px;
+    width: 5px;
+    background-color: #F5F5F5;
   }
-  :-ms-input-placeholder { /* IE 10+ */
-    color: #b3afc0;
+
+  #scrollbar::-webkit-scrollbar
+  {
+    width: 4px;
+    background-color: #fefefe;
   }
-  ::-moz-placeholder { /* Firefox 19+ */
-    color: #b3afc0;
-    opacity: 1;
+
+  #scrollbar::-webkit-scrollbar-thumb
+  {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #252a3e;
   }
-  :-moz-placeholder { /* Firefox 4 - 18 */
-    color: #b3afc0;
-    opacity: 1;
-  }
+
 </style>

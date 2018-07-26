@@ -6,11 +6,11 @@
       :imageName="item.imageName"
       :caption="item.caption"
       :comments="item.comments"
-      />
+      :userInfo="{userid, 'username': username}"/>
 
-    <uploader
-      @save="save"
-    />
+    <uploader 
+      :send="sendPhoto({wisid, userid, username})"
+      @state="init"/>
   </div>
 </template>
 
@@ -20,8 +20,8 @@
 
   // helper
   import webliteHandler from './helper/function/weblite.api'
-  import requestHandler from './helper/function/requestHandler'
-  const { W } = window
+  import {savePhoto, deletePhoto, getAll} from './helper/function/requestHandler'
+  const { W, R } = window
 
 
 export default {
@@ -30,109 +30,44 @@ export default {
   data() {
     return {
       wisid: (W && W.wisid) || '1',
-      userid: 1,
+      userid: '1',
       username: "amirhe",
-      phlicoz: [
-        {
-          imageName: "1532522975980.jpg",
-          caption: {
-            likes: 11,
-            username: "amirhe",
-            text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod" ,
-          },
-          comments:
-            [{
-            author: "@mirhe",
-            time: 'Feb 2, 2018 22:30pm',
-            text: "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n",
-            },
-            {
-            author: "@mirhe",
-            time: 'Feb 2, 2018 22:30pm',
-            text: "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n",
-            },
-              {
-                author: "@mirhe",
-                time: 'Feb 2, 2018 22:30pm',
-                text: "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n",
-              },
-              {
-                author: "@mirhe",
-                time: 'Feb 2, 2018 22:30pm',
-                text: "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n",
-              },
-              {
-                author: "@mirhe",
-                time: 'Feb 2, 2018 22:30pm',
-                text: "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n",
-              },
-              {
-                author: "@mirhe",
-                time: 'Feb 2, 2018 22:30pm',
-                text: "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n",
-              }]
-        },
-        {
-          imageName: "1532522765665.jpg",
-          caption: {
-            likes: 11,
-            username: "amirhe",
-            text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod" ,
-          },
-          comments:
-            [{
-              author: "@mirhe",
-              time: 'Feb 2, 2018 22:30pm',
-              text: "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n",
-            },
-              {
-                author: "@mirhe",
-                time: 'Feb 2, 2018 22:30pm',
-                text: "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n",
-              },
-              {
-                author: "@mirhe",
-                time: 'Feb 2, 2018 22:30pm',
-                text: "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n",
-              },
-              {
-                author: "@mirhe",
-                time: 'Feb 2, 2018 22:30pm',
-                text: "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n",
-              },
-              {
-                author: "@mirhe",
-                time: 'Feb 2, 2018 22:30pm',
-                text: "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n",
-              },
-              {
-                author: "@mirhe",
-                time: 'Feb 2, 2018 22:30pm',
-                text: "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n",
-              }]
-        }
-      ],
+      phlicoz: [],
     }
   },
+  
   created: function() { W && webliteHandler(this) },
   mounted: function() { this.init() },
 
   methods: {
     init: function() {
-      requestHandler.getAll(this.wisid)
+      getAll(this.wisid)
+        .then((body) => {
+          // const likes = R.length(R.uniq((body.likes)))
+          const likes = (body && body.likes && body.likes.length) || 0
+          
+          this.phlicoz = body.map(item => ({
+            imageName: item.imagename,
+            comments: item.comments,
+            caption: {
+              username: item.username,
+              likes: likes,
+              text: item.caption,
+            },
+          }))
+        })
+        .catch(err => console.log(err))
     },
 
-    save: function(info) {
-      requestHandler.savePhoto({
-        ...info,
-        wisid: this.wisid,
-        userid: this.userid,
-        username: this.username,
-      })
-    }
-  //  get all thing from data base and make them acceptable for phlico
-  //   update phlico and weblite.api
+    sendPhoto: function(info) {
+      return photo => {
+        savePhoto(info, photo)
+          .then(() => this.init())
+          .catch((err) => console.log(err))
+      }
+    },
   },
+
   components: {
     uploader,
     phlico

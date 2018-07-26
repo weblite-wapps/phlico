@@ -11,27 +11,8 @@
           class="comment-text"></textarea>
       <button
         class="btn"
-        @click="submitFile()">Send</button>
+        @click="submitFile">Send</button>
     </div>
-    <!--<form-->
-    <!--ref='uploadForm'-->
-    <!--id='uploadForm'-->
-    <!--action='http://localhost:3000/upload'-->
-    <!--method='post'-->
-    <!--encType="multipart/form-data">-->
-    <!--<input type="file" accept="image/*" name="image" id="uploader" class="input-file" @change="getFile"/>-->
-    <!--<textarea-->
-    <!--name="caption"-->
-    <!--value="no Caption"-->
-    <!--placeholder="Add Your Caption"-->
-    <!--v-model="caption"-->
-    <!--class="comment-text"></textarea>-->
-    <!--<label tabindex="0" for="uploader" class="btn">Select a file...</label>-->
-    <!--</form>-->
-    <!--<button-->
-      <!--class="btn"-->
-    <!--@click="submitFile()">Send</button>-->
-
   </div>
 </template>
 
@@ -48,15 +29,22 @@ export default {
   },
 
   methods: {
-  	getFile(event) {
+  	getFile: function(event) {
   		this.file = event.target.files[0]
   		console.log(this.file)
   	},
 
-  	submitFile() {
-      this.$emit('save', {'file': this.file, 'caption': this.caption})
+  	submitFile: function() {
+  	  const file = this.file
+      const caption = this.caption
+  	  this.send({'file': file, 'caption': caption})
+      this.$emit('state', 'update')
   	}
   },
+
+  props: {
+    send: Function,
+  }
 
 }
 </script>

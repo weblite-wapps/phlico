@@ -6,40 +6,46 @@ const Phlico = require('./models/index')
 
 /*Database handlers*/
 exports.connect = name => {
-	mongoose.connect(`mongodb://localhost/${name}`)
+	mongoose.connect(`mongodb://localhost:27017/${name}`)
 
 	const db = mongoose.connection
 	db.on('error', console.log)
 	db.once('open', () => {
 		console.log('Connection to database successfully is made ...')
 		// Test
-		db.db.dropDatabase()
+		// db.db.dropDatabase()
 	})
 }
 
 
-exports.savePhoto = (photoInfo) => {
-	/*configur file name concatenation of filename+time+userid.extension*/
-	return new Phlico(photoInfo).save()
-}
-
-/*Test*/
-exports.getAll = () => Phlico.find().exec()
+exports.savePhoto = photoInfo => new Phlico(photoInfo).save()
+/*configur file name concatenation of filename+time+userid.extension*/
 
 exports.getAllPhoto = wisid =>  Phlico
 	.find({ wisid })
 	.exec()
 
+exports.getSinglePhoto = imagename =>  Phlico
+  .find({ imagename })
+  .exec()
 
 
-/*photoInfo = {wisid, picture:{id} ;; comment: {[Comment]} */
-exports.saveComment = (photoInfo, comment) => new Phlico({
-  ...photoInfo,
-  _id: photoInfo.id,
-  // comments: R.append(comment, photoInfo.comments)
-}).save()
+exports.addComment = (photoInfo, comment, like) => {
 
+  if (like) {
+    Phlico.update({...photoInfo},
+      {$push: {comments: comment, likes: photoInfo.userid}}, function (err) {
+        if (err) console.log("Cant Update Doc", err)
+      })
+  }
+  else {
+    Phlico.update({...photoInfo},
+      {$push: {comments: comment}}, function (err) {
+        if (err) console.log("Cant Update Doc", err)
+      })
+  }
 
+}
 // exports.anotherLogics = () => null;
 
 /*export const loadNote = async id => Note

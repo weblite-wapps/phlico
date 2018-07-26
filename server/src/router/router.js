@@ -21,7 +21,7 @@ router.use('/static', express.static('./public/images/'))
 router.use(bodyParser.json())
 router.use((req, res,next) => {
 	// set base rule for this hole route
-	res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080')
+	res.setHeader('Access-Control-Allow-Origin', '*')
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
   res.setHeader('Access-Control-Allow-Credentials', true)
@@ -35,24 +35,23 @@ router.post('/upload', upload.single('image'), function (req, res) {
     res.send({ success: false })
   }
   else {
-    const domain = `${req.protocol}://${req.hostname}:3000/img/`
+    const PORT = 3000
+    const domain = `${req.protocol}://${req.hostname}:${PORT}/img/`
 
-    console.log('domain', domain)
     //  image reshape here
     Image.saveMiniSize(domain, req.file.filename)
     Image.saveHighResolution(domain, req.file.filename, req.file.size)
 
-  //  Database
+    //  Database
     const doc = {
       wisid: req.body.wisid,
-      username: req.body.username,
       userid: req.body.userid,
+      username: req.body.username,
       caption: req.body.caption,
       imagename: req.file.filename,
       comments: [],
       likes: [],
     }
-    console.log("doco:", doc)
     database
       .savePhoto(doc)
       .then(() => console.log("Photo saved successfully"))
@@ -60,35 +59,40 @@ router.post('/upload', upload.single('image'), function (req, res) {
   }
   res.send({ success: true })
 })
+router.post('/addComment', function (req, res) {
+  const comment = {
+    author: req.body.author,
+    opinion: req.body.opinion,
+    date: req.body.date,
+  }
+  const info = {
+    userid: req.body.userid,
+    imagename: req.body.imagename,
+  }
 
+  database
+    .addComment(info, comment, req.body.like)
+    .then(response => res.send(response))
+    .catch(err => console.log(err))
+})
 
 // GET
 router.get('/img/:name', ({params: {name}}, res) => {
-  console.log("indownload page with name of=", name)
+  console.log("download page with name of=", name)
   res.download(`./public/images/${name}`, (err) => {
     if(err) console.log("Download Err", err)
   })
 })
-
-/*Test*/
-router.get('/load', (req, res) => {
-  database.getAll()
-    .then((photos) => res.send(photos))
-    .catch((err) => console.log(err))
-  // res.send({"name": 123})
-})
-
-
-router.get('/load/:wisid', ({params: {wisid}}, res) => {
+router.get('/load/all/:wisid', ({params: {wisid}}, res) => {
   database.getAllPhoto(wisid)
-    .then((photos) => res.send(photos))
-    .catch((err) => console.log(err))
+    .then(photos => res.send(photos))
+    .catch(err => console.log(err))
 })
-
-  // loadNote(id)
-  // { params: { id } }
-  //   .then((note) => res.send(note))
-  //   .catch((err) => res.send(err)))
+router.get('/load/single/:imagename', ({params: {imagename}}, res) => {
+  database.getSinglePhoto(imagename)
+    .then((photo)=> res.send(photo[0]))
+    .catch(err => console.log(err))
+})
 
 
 module.exports = router

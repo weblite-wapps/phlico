@@ -8,8 +8,8 @@ const PORT = process.env.PORT || 3000
 
 
 const app = express()
-database.connect('d')
-// database.connect('instalite_db')
+// database.connect('d')
+database.connect('instalite_db')
 app.use('', router)
 
 app.listen(PORT, () => {

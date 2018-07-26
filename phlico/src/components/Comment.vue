@@ -1,15 +1,13 @@
 <template>
   <div class="comment">
     <div class="comment-box">
-      <!-- :class="{'like': (like)}" -->
-      <!--<div class="comment-like"><span v-if="!like">⚪</span><span v-else>🔴</span></div>-->
       <div class="comment-text">
-        {{comment.text}}
+        {{comment.opinion}}
       </div>
       <div class="comment-footer">
         <div class="comment-info">
           <span class="comment-autor"><a href="">{{ comment.author }}</a></span>
-            <span class="comment-date">2fev</span>
+            <span class="comment-date">{{ comment.date }}</span>
         </div>
       </div>
     </div>
@@ -19,22 +17,6 @@
 <script>
 export default {
   name: 'comment',
-  data() {
-    return {
-      like: true,
-    }
-  },
-
-  methods: {
-    comment_time: function() {
-      const t = Date().split(' ').splice(1, 4)
-      return `${t[0]} ${t[1]}, ${t[2]} ${t[3]}`
-    }
-  },
-
-  created() {
-    //  all data from database should be catch and re store
-  },
 
   props: {
     comment: Object,
@@ -49,6 +31,7 @@ export default {
     box-shadow: 0 1px 1px rgba(0, 0, 0, .15);
     /*min-height: 60px;*/
     padding: 15px;
+    overflow-x: hidden;
   }
   .comment-text {
     color: #e8dfe8;
@@ -67,6 +50,7 @@ export default {
   .comment-info {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
     align-items: center;
   }
   .comment-date {

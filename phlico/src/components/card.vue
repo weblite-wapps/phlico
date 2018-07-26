@@ -4,18 +4,14 @@
     <!--Heart-->
     <span
       id="heart"
-      @click="liked = !liked"
+      @click="changeLikeState"
       :class="{'unlike': (!liked), 'like': (liked)}">❤</span>
     <!--Notification-->
     <span class="nav-pop-ups">
-      <!--Click emmit to show add comment page-->
-      <img
-        src="../assets/logo/commentBox.png"
-        :class="['logo', {'pop-up': (popupCommentBox)}]">
       <img
         src="../assets/logo/comment.png"
         class="comment pop-up"
-        @click="changeState()">
+        @click="changeState">
     </span>
   </div>
 </template>
@@ -53,9 +49,13 @@ export default {
       return `${domain}Sqr_${this.name}`
   	},
     changeState: function() {
-  	  console.log("clicked")
       this.$emit('state', 'comments')
     },
+    changeLikeState: function() {
+      this.liked = !this.liked
+      const like = this.liked
+      this.$emit('like', like)
+    }
 
   },
 
@@ -102,7 +102,7 @@ export default {
   .nav-pop-ups {
     width: 90%;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     position: relative;
     bottom: -350px;
@@ -123,6 +123,9 @@ export default {
     width: 30px;
     height: auto;
     cursor: pointer;
+    background-color: rgba(255, 255, 255, .5);
+    border: 2px solid rgba(255, 255, 255, .8);
+    border-radius: 100px;
   }
 
 </style>

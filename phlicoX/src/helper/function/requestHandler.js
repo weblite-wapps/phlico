@@ -1,32 +1,41 @@
 const request = require('superagent')
 const config = require('../../config')
 
-const domain = 'http://localhost:3000'
 
-exports.getAll = (wisid) => {
-	request
-		.get(config.server + `/${wisid}`)
+export const getAll = wisid => request
+		.get(config.default.server + `/load/all/${wisid}`)
 		.then(res => res.body)
 		.catch(err => console.log(err))
-}
 
-exports.savePhoto = (info) => {
+export const deletePhoto = imagename => request
+    .delete(config.default.server + `/img/${imagename}`)
+    .then(() => console.log('Photo deleted'))
+    .catch(err => console.log("cant delete photo", err))
+
+export const savePhoto = (info, photo) => {
   const formData = new FormData();
-  const domain = 'http://localhost:3000'
+  const domain = config.default.server
 
   formData.append("wisid", info.wisid);
   formData.append("userid", info.userid);
   formData.append("username", info.username);
+  formData.append("caption", photo.caption);
+  formData.append("image", photo.file);
 
-  formData.append("caption", info.caption);
-  formData.append("image", info.file);
-
-  request
+  return request
     .post(domain + '/upload')
     .send(formData)
+}
+
+export const addComment = (info, comment) => {
+  const domain = config.default.server
+  
+  return request
+    .post(domain + '/addComment')
+    .send({...info, ...comment})
     .then(() => {
       //Do thing show an animation or check thing play sound
-      console.log('photo sent')
+      console.log('comment sent')
     })
     .catch((err) => {
       //Do opposite

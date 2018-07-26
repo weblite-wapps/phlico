@@ -31,7 +31,7 @@ router.use((req, res,next) => {
 // POST
 router.post('/upload', upload.single('image'), function (req, res) {
   if (!req.file) {
-    console.log('No file recived!')
+    console.log('No File received in router')
     res.send({ success: false })
   }
   else {
@@ -54,10 +54,10 @@ router.post('/upload', upload.single('image'), function (req, res) {
     }
     database
       .savePhoto(doc)
-      .then(() => console.log("Photo saved successfully"))
+      .then(() => res.send({ success: true }))
       .catch(err => console.log(err))
   }
-  res.send({ success: true })
+
 })
 router.post('/addComment', function (req, res) {
   const comment = {

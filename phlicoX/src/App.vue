@@ -6,11 +6,12 @@
       :imageName="item.imageName"
       :caption="item.caption"
       :comments="item.comments"
-      :userInfo="{userid, 'username': username}"/>
+      :userInfo="{userid,  username}"/>
 
     <uploader 
       :send="sendPhoto({wisid, userid, username})"
       @state="init"/>
+
   </div>
 </template>
 
@@ -21,58 +22,61 @@
   // helper
   import webliteHandler from './helper/function/weblite.api'
   import {savePhoto, deletePhoto, getAll} from './helper/function/requestHandler'
-  const { W, R } = window
+  const { R } = window
 
 
-export default {
-  name: 'App',
+  export default {
+    name: 'App',
 
-  data() {
-    return {
-      wisid: (W && W.wisid) || '1',
-      userid: '1',
-      username: "amirhe",
-      phlicoz: [],
-    }
-  },
-  
-  created: function() { W && webliteHandler(this) },
-  mounted: function() { this.init() },
-
-  methods: {
-    init: function() {
-      getAll(this.wisid)
-        .then((body) => {
-          // const likes = R.length(R.uniq((body.likes)))
-          const likes = (body && body.likes && body.likes.length) || 0
-          
-          this.phlicoz = body.map(item => ({
-            imageName: item.imagename,
-            comments: item.comments,
-            caption: {
-              username: item.username,
-              likes: likes,
-              text: item.caption,
-            },
-          }))
-        })
-        .catch(err => console.log(err))
-    },
-
-    sendPhoto: function(info) {
-      return photo => {
-        savePhoto(info, photo)
-          .then(() => this.init())
-          .catch((err) => console.log(err))
+    data() {
+      return {
+        wisid: (W && W.wisid) || '1',
+        userid: '1',
+        username: "amirhe",
+        phlicoz: [],
       }
     },
-  },
+    
+    created: function() { W && webliteHandler(this) },
 
-  components: {
-    uploader,
-    phlico
+    mounted: function() { this.init() },
+
+    methods: {
+
+      init: function() {
+        /*-rm*/
+        console.log("ramda", R)
+
+        getAll(this.wisid)
+          .then((body) => {
+            this.phlicoz = R.map(item => ({
+              imageName: item.imagename,
+              comments: item.comments,
+              caption: {
+                username: item.username,
+                likes: R.length(R.uniq((item.likes))),
+                text: item.caption,
+              },
+            }), body)
+          })
+          .catch(err => console.log("X-getAll-APP", err))
+      },
+
+      sendPhoto: function(info) {
+        return photo => {
+          savePhoto(info, photo)
+            /*Fix Promise Working for load initialization*/
+            .then(() => this.init())
+            .catch((err) => console.log(err))
+        }
+      },
+    },
+
+    components: {
+      uploader,
+      phlico
+    }
   }
-}
 </script>
 
 <style scoped>
@@ -83,6 +87,7 @@ export default {
 		border: 1px solid #ccc;
     overflow: auto;
 	}
+  /* scrollbar */
   #app::-webkit-scrollbar-track
   {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);

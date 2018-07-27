@@ -3,28 +3,42 @@
     <div :style="card">
 
       <div class="logos">
-        <div class="top">
+        <div class="flex">
           <a :href="getOriginalPhoto()">
             <img
             src="../assets/icons/download.png"
             alt="downlaod-logo"
             class="logo">
           </a>
+    
+          <img 
+            v-if="canDelete"
+            src="../assets/icons/delete.png"
+            class="logo"
+            id="delete"
+            alt="delete icon"
+            @click="removePhoto">
+
           <span
+            v-else
             id="heart"
             @click="changeLikeState"
             :class="{'unlike': (!liked), 'like': (liked)}">❤</span>
         </div> <!-- top -->
 
-        <div class="bot">
+        <div class="flex bot">
           <img
             src="../assets/icons/comment.png"
-            class="logo comment"
+            class="logo"
+            id="comment"
             alt="comment logo"
             @click="changeState">
+
           <img
-            src="../assets/icons/send.png" alt="send logo"
-            class="send">
+            src="../assets/icons/send.png" 
+            alt="send logo"
+            class="logo"
+            id="send">
         </div> <!-- bot -->
       </div> <!--logos-->
 
@@ -79,12 +93,18 @@
           this.liked = true
           this.$emit('like')
         }
-      }
+      },
+  
+      removePhoto: function() {
+          this.$emit('del')
+      },
+
     },
 
     props: {
       imageName: String,
       likeState: Boolean,
+      canDelete: Boolean
     }
   }
 </script>
@@ -98,12 +118,7 @@
   .logo {
     margin: 5px 5px 0 0;
     width: 25px;
-    float: right;
-    transition: transform .3s ease-in-out;
-    transform: scale(1);
-  }
-  .logo:hover {
-    transform: scale(1.1);
+    cursor: pointer;
   }
   #heart {
     display: flex;
@@ -138,28 +153,28 @@
     opacity: 1;
   }
   .logos {
-    width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
   }
-  .bot {
+  .flex {
     display: flex;
     flex-direction:  row-reverse;
     justify-content: space-between;
   }
-  .comment {
+
+  #comment {
     margin-bottom: 5px;
     align-self: flex-end;
   }
-  .send {
+  #send {
     width: 40px;
     align-self: flex-start;
-    transition: transform .3s ease-in-out;
-    transform: scale(1);
   }
-  .send:hover {
-    transform: scale(1.1);
+  #delete {
+    width: 20px;
+    height: 20px;
+    margin: 5px 0 0 5px;
   }
 </style>

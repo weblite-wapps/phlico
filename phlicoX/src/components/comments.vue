@@ -13,9 +13,9 @@
     <!-- Get Comment -->
     <get-comments
       :send="send"
-      :deleteShow="caption.username === user"
-      @state="changeState"/>
-
+      :deleteShow="caption.username === user"/>
+    <!-- @state="changeState" -->
+    
     <!-- Comments -->
     <div v-if="hasComment">
         <comment

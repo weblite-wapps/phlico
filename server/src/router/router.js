@@ -83,7 +83,7 @@ router.post('/addComment', function (req, res) {
 
   database
     .addComment(info, comment)
-    .then(response => res.send(response))
+    .then(response => res.send({comment}))
     .catch(err => console.log("addComment --Err:",err))
 })
 
@@ -95,6 +95,18 @@ router.post('/addLike', function (req, res) {
   database
     .addLike(info, req.body.userid)
     .then(response => res.send(response))
+    .catch(err => console.log("addComment --Err:",err))
+})
+
+router.post('/remove', function (req, res) {
+  const info = {
+    imagename: req.body.imagename,
+    userid: req.body.userid
+  }
+
+  database
+    .removePhoto(info)
+    .then(response => res.send({'imagename': info.imagename}))
     .catch(err => console.log("addComment --Err:",err))
 })
 

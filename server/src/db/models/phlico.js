@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 // Definition of all fields
 const definition = {
   wisid: String,
-	userid: Number,
+	userid: String,
   username: String,
   imagename: String,
   caption: String,

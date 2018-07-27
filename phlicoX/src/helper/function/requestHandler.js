@@ -8,11 +8,6 @@ export const getAll = wisid => request
 		.then(res => res.body)
 		.catch(err => console.log(err))
 
-export const deletePhoto = imagename => request
-    .delete(domain + `/img/${imagename}`)
-    .then(() => console.log('Photo deleted'))
-    .catch(err => console.log("cant delete photo", err))
-
 export const savePhoto = (info, photo) => {
   const formData = new FormData();
 
@@ -30,14 +25,7 @@ export const savePhoto = (info, photo) => {
 export const addComment = (info, comment) => request
   .post(domain + '/addComment')
   .send({...info, ...comment})
-  .then(() => {
-    //Do thing show an animation or check thing play sound
-    console.log('comment sent')
-  })
-  .catch((err) => {
-    //Do opposite
-    console.log(err)
-  })
+
 
 export const sendLike = info => request
   .post(domain + '/addLike')
@@ -48,3 +36,7 @@ export const sendLike = info => request
   .catch(err => {
     console.log(err)
   })
+
+export const deletePhoto = info => request
+  .post(domain + '/remove')
+  .send({...info})

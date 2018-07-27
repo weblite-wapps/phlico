@@ -4,15 +4,17 @@
       :imageName="imageName"
       v-if="state === 'card'"
       :likeState="likeState"
+      :canDelete="userInfo.username === caption.username"
+      @del="del({'userid': userInfo.userid, 'imagename': imageName})"
       @like="sendLike({'userid': userInfo.userid, 'imagename': imageName})"
       @state="changeState"/>
+
 
     <comments
       v-else-if="state === 'comments'"
       @state="changeState"
-      :comments="comments"
+      :comments="photoComments"
       :caption="caption"
-      :user="userInfo.username"
       :send="sendComment({like, 'userid': userInfo.userid, 'author': userInfo.username, 'imagename': imageName})"/>
 
   </div>
@@ -21,7 +23,8 @@
 <script>
   import card from './card'
   import comments from './comments'
-  import { addComment, sendLike } from '../helper/function/requestHandler'
+  import { addComment, sendLike, deletePhoto } from '../helper/function/requestHandler'
+  const { R } = window
 
   export default {
     name: "phlico",
@@ -30,8 +33,11 @@
       return {
         state: 'card',
         like: false,
+        photoComments: [],
       }
     },
+
+    mounted() {this.photoComments = this.$props.comments},
 
     methods: {
       changeState(event) {
@@ -41,12 +47,16 @@
       sendComment: function(info) {
         return comment => {
           addComment(info, comment)
+          .then(({body: {comment}}) => { this.photoComments = R.append(comment, this.photoComments)})
+            .catch((err) => console.log(err))
         }
       },
 
       sendLike: function(info) {
         sendLike(info)
       }
+
+
     },
 
     components: {
@@ -60,6 +70,7 @@
       caption: Object,
       userInfo: Object,
       likeState: Boolean,
+      del: Function,
     }
   }
 </script>

@@ -8,9 +8,10 @@
       :caption="item.caption"
       :comments="item.comments"
       :userInfo="{userid, username}"
-      :likeState="item.likeState"/>
+      :likeState="item.likeState"
+      :del="deletePhoto"/>
 
-    <spliter>upload</spliter> 
+    <spliter v-if="hasPhoto">upload</spliter> 
 
     <uploader 
       :send="sendPhoto({wisid, userid, username})"
@@ -39,18 +40,19 @@
         userid: '1',
         username: "amirhe",
         phlicoz: [],
+        hasPhoto: false,
       }
     },
     
+
     created: function() { W && webliteHandler(this) },
 
     mounted: function() { this.init() },
 
+
     methods: {
 
       init: function() {
-        /*-rm*/
-        console.log("ramda", R)
 
         getAll(this.wisid)
           .then((body) => {
@@ -63,8 +65,9 @@
                 likes: R.length(R.uniq((item.likes))),
                 text: item.caption,
               },
-              likeState: R.findIndex(R.equals(item.userid), item.likes) !== -1,
+              likeState: R.findIndex(R.equals(this.userid), item.likes) !== -1,
             }), body)
+            this.hasPhoto = (R.length(this.phlicoz) !== 0)
           })
           .catch(err => console.log("Xmode[A]-getAll[F]-APP[vue]", err))
       },
@@ -72,10 +75,22 @@
       sendPhoto: function(info) {
         return photo => {
           savePhoto(info, photo)
-            .then((res) => { this.phlicoz = R.append(res.body.doc, this.phlicoz) })
+            .then((res) => { 
+              this.phlicoz = R.append(res.body.doc, this.phlicoz)
+              this.hasPhoto = true })
             .catch((err) => console.log(err))
         }
       },
+
+      deletePhoto: function(info) {
+        deletePhoto(info)
+          .then(({body: {imagename}}) => {
+            console.log('photo deleted')
+            this.phlicoz = R.remove(0, R.propEq('imagename', imagename), this.phlicoz)
+            this.hasPhoto = (R.length(this.phlicoz) !== 0)
+          })
+          .catch((err) => console.log(err))
+      }
     },
 
     components: {

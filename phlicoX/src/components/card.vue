@@ -8,7 +8,8 @@
             <img
             src="../assets/icons/download.png"
             alt="downlaod-logo"
-            class="logo">
+            class="logo"
+            id="download">
           </a>
     
           <img 
@@ -164,17 +165,21 @@
     justify-content: space-between;
   }
 
-  #comment {
-    margin-bottom: 5px;
-    align-self: flex-end;
-  }
-  #send {
-    width: 40px;
-    align-self: flex-start;
-  }
   #delete {
     width: 20px;
     height: 20px;
-    margin: 5px 0 0 5px;
+    margin: 8px;
+  }
+  #download {
+    margin: 8px;
+  }
+  #comment {
+    margin: 8px;
+    align-self: flex-end;
+  }
+  #send {
+    align-self: flex-start;
+    margin: 8px;
   }
 </style>
+

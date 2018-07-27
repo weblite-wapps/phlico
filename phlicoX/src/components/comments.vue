@@ -2,12 +2,16 @@
   <div class="comments">
 
     <!-- Caption -->
+    <!-- class="my-caption" -->
+     <!-- class="user-info" -->
     <div class="my-caption">
-      <div class="user-info">
-        <span>{{caption.username}}</span>
-        <span>{{caption.likes}} ❤</span>
+        <span class="bigger">{{caption.username}}</span>
+      <div>
+        <p>{{caption.text}}</p>
+        <span 
+          class="bigger"
+          id="like">{{likes}} ❤</span>
       </div>
-      <p>{{caption.text}}</p>
     </div>
 
     <!-- Get Comment -->
@@ -45,7 +49,12 @@
       comment,
       loading,
       'get-comments': getComments,
+    },
 
+    computed: {
+      likes: function() {
+        return this.caption.likes || ''
+      }
     },
 
     methods: {
@@ -79,11 +88,11 @@
     border-radius: 4px;
     box-shadow: 0 1px 1px rgba(0, 0, 0, .15);
   }
-  .user-info {
-    display:flex;
-    justify-content: space-between;
-    align-items: center;
-    margin:0 5px;
+  .bigger {
+    font-size: 12px;
+  }
+  #like {
+    color: #FC3939;
   }
   .comments {
     width: 320px;

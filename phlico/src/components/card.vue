@@ -5,64 +5,65 @@
     <span
       id="heart"
       @click="changeLikeState"
-      :class="{'unlike': (!liked), 'like': (liked)}">❤</span>
+      :class="{'unlike': (!liked), 'like': (liked)}"><i>favorite</i></span>
     <!--Notification-->
     <span class="nav-pop-ups">
       <img
         src="../assets/logo/comment.png"
-        class="comment pop-up"
+        id="comment-icon"
         @click="changeState">
     </span>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'card',
-  data() {
-  	return {
-      name: '',
-      card: {},
-      liked: false,
-  	  popupCommentBox: true,
-      popupAddComment: true,
-  	}
-  },
-
-  created() {
-    this.name = this.$props.imageName
-    this.card = {
-      'backgroundImage': `url('${this.getPhoto()}')`,
-      'backgroundSize': 'Contain',
-      'backgroundRepeat': 'no-repeat',
-      'backgroundColor': 'rgb(255,50,39)',
-      'width': '400px',
-      'height': '400px',
-      'margin': '10px 0',
-      'boxShadow': '0 2px 1px rgba(0,0,0, .3)'
-    }
-  },
-
-  methods: {
-  	getPhoto: function() {
-      const domain = "http://localhost:3000/img/"
-      return `${domain}Sqr_${this.name}`
-  	},
-    changeState: function() {
-      this.$emit('state', 'comments')
+  export default {
+    name: 'card',
+    
+    props: {
+      imageName: String,
     },
-    changeLikeState: function() {
-      this.liked = !this.liked
-      const like = this.liked
-      this.$emit('like', like)
-    }
 
-  },
+    data() {
+      return {
+        name: '',
+        card: {},
+        liked: false,
+        popupCommentBox: true,
+        popupAddComment: true,
+      }
+    },
 
-  props: {
-    imageName: String,
+    created() {
+      this.name = this.$props.imageName
+      this.card = {
+        'backgroundImage': `url('${this.getPhoto()}')`,
+        'backgroundSize': 'Contain',
+        'backgroundRepeat': 'no-repeat',
+        'backgroundColor': 'rgb(255,50,39)',
+        'width': '400px',
+        'height': '400px',
+        'margin': '10px 0',
+        'boxShadow': '0 2px 1px rgba(0,0,0, .3)'
+      }
+    },
+
+    methods: {
+      getPhoto: function() {
+        const domain = "http://localhost:3000/img/"
+        return `${domain}Sqr_${this.name}`
+      },
+      changeState: function() {
+        this.$emit('state', 'comments')
+      },
+      changeLikeState: function() {
+        this.liked = !this.liked
+        const like = this.liked
+        this.$emit('like', like)
+      }
+    },
+
   }
-}
 </script>
 
 <style scoped>
@@ -80,7 +81,7 @@ export default {
     opacity: 1;
   }
   .unlike {
-    border: 2px solid white;
+    border: 1.3px solid #F7F7F7;
     border-radius: 100px;
     width: 40px;
     height: 40px;
@@ -100,7 +101,7 @@ export default {
     opacity: 1;
   }
   .nav-pop-ups {
-    width: 90%;
+    width: 100%;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -108,24 +109,18 @@ export default {
     bottom: -350px;
     margin: 0 auto;
   }
-  .logo {
+    #heart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 15px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all .3s;
+  }
+  #comment-icon {
     width: 40px;
-    height: auto;
-    transition: all .3s ease-in-out;
-    opacity: 0;
+    margin-right: 10px;
     cursor: pointer;
   }
-  .pop-up {
-    opacity: 1;
-  }
-
-  .comment {
-    width: 30px;
-    height: auto;
-    cursor: pointer;
-    background-color: rgba(255, 255, 255, .5);
-    border: 2px solid rgba(255, 255, 255, .8);
-    border-radius: 100px;
-  }
-
 </style>

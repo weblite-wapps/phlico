@@ -123,7 +123,7 @@
     opacity: 1;
   }
   .unlike {
-    border: 2px solid white;
+    border: 1.3px solid white;
     border-radius: 100px;
     width: 30px;
     height: 30px;

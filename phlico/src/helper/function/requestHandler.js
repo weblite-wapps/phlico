@@ -1,5 +1,6 @@
 const request = require('superagent')
 const config = require('../../config')
+const domain = config.default.server
 
 
 
@@ -8,18 +9,16 @@ export const getSinglePhotoData = imagename => request
     .then((res) => res.body)
     .catch((err) => console.log(err))
 
-export const addComment = (info, comment) => {
-  const domain = config.default.server
+export const addComment = (info, comment) => request
+  .post(domain + '/addComment')
+  .send({...info, ...comment})
 
-  return request
-    .post(domain + '/addComment')
-    .send({...info, ...comment})
-    .then((res) => {
-      //Do thing show an animation or check thing play sound
-      console.log('comment sent', res)
-    })
-    .catch((err) => {
-      //Do opposite
-      console.log(err)
-    })
-}
+export const sendLike = info => request
+  .post(domain + '/addLike')
+  .send({...info})
+  .then(() => {
+    console.log('like state saved')
+  })
+  .catch(err => {
+    console.log(err)
+  })

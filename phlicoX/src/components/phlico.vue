@@ -44,19 +44,17 @@
         this.state = event
       },
 
-      sendComment: function(info) {
+      sendComment(info) {
         return comment => {
           addComment(info, comment)
           .then(({body: {comment}}) => { this.photoComments = R.append(comment, this.photoComments)})
-            .catch((err) => console.log(err))
+            .catch((err) => console.log("In addComment", err))
         }
       },
 
-      sendLike: function(info) {
+      sendLike(info) {
         sendLike(info)
       }
-
-
     },
 
     components: {

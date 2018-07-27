@@ -43,17 +43,20 @@
         hasPhoto: false,
       }
     },
-    
 
-    created: function() { W && webliteHandler(this) },
+    components: {
+      uploader,
+      phlico,
+      spliter
+    },    
 
-    mounted: function() { this.init() },
+    created() { W && webliteHandler(this) },
+
+    mounted() { this.init() },
 
 
     methods: {
-
       init: function() {
-
         getAll(this.wisid)
           .then((body) => {
             console.log("body", body)
@@ -72,7 +75,7 @@
           .catch(err => console.log("Xmode[A]-getAll[F]-APP[vue]", err))
       },
 
-      sendPhoto: function(info) {
+      sendPhoto(info) {
         return photo => {
           savePhoto(info, photo)
             .then((res) => { 
@@ -82,33 +85,24 @@
         }
       },
 
-      deletePhoto: function(info) {
+      deletePhoto(info) {
         deletePhoto(info)
           .then(({body: {imagename}}) => {
-            // this.phlicoz = R.remove(0, R.propEq('imagename', imagename), this.phlicoz)
             this.phlicoz.splice(R.indexOf(R.propEq('imagename', imagename), this.phlicoz), 1)
             this.hasPhoto = (R.length(this.phlicoz) !== 0) })
           .catch((err) => console.log(err))
-      }
+      },
     },
-
-    components: {
-      uploader,
-      phlico,
-      spliter
-    }
   }
 </script>
 
 <style scoped>
 	#app {
-		/* sizing */
 		width:  350px;
 		height: 100%;
 		border: 1px solid #ccc;
     overflow: auto;
 	}
-  /* scrollbar */
   #app::-webkit-scrollbar-track
   {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);

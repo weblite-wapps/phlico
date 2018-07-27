@@ -18,18 +18,24 @@
 <script>
   export default {
     name: 'getComments',
+ 
+    props: {
+      send: Function,
+    },
+
     data() {
       return {
         opinion: '',
       }
     },
+
     methods: {
-      changeState: function() {
+      changeState() {
         this.$emit('state', 'card')
       },
-      submit: function() {
-        const t = Date().split(' ').splice(1, 4)
-        const date = `${t[0]} ${t[1]}, ${t[2]} ${t[3]}`
+      submit() {
+        const time = Date().split(' ').splice(1, 4)
+        const date = `${time[0]} ${time[1]}, ${time[2]} ${time[3]}`
         if (this.opinion === '') alert('Comment is empty')
         else {
           const opinion = this.opinion
@@ -38,10 +44,6 @@
         this.opinion = ''
       }
     },
-
-    props: {
-      send: Function,
-    }
   }
 </script>
 
@@ -49,7 +51,6 @@
   #comment {
     width: 300px;
     margin: 0 auto 2px auto;
-    /*background-color: rgba(45, 71, 42, 0.19);*/
     display: flex;
     flex-direction: column;
     justify-content: center;

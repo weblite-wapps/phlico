@@ -1,8 +1,17 @@
 <template>
   <div id="container">
     <div>
-      <label tabindex="0" for="uploader" class="btn">Select a file...</label>
-      <input type="file" accept="image/*" name="image" id="uploader" class="input-file" @change="getFile"/>
+      <label 
+        tabindex="0" 
+        for="uploader" 
+        class="btn">{{ buttonText }}</label>
+      <input 
+        type="file" 
+        accept="image/*" 
+        name="image" 
+        id="uploader" 
+        class="input-file" 
+        @change="getFile"/>
       <textarea
           name="caption"
           value="no Caption"
@@ -25,13 +34,14 @@ export default {
   	return {
   		file: '',
       caption: '',
+      buttonText: 'Select a file ...'
   	}
   },
 
   methods: {
   	getFile: function(event) {
   		this.file = event.target.files[0]
-  		console.log(this.file)
+      this.buttonText = (this.file.name.length > 30) ? this.file.name.slice(0,30) + '...' : this.file.name
   	},
 
   	submitFile: function() {
@@ -39,6 +49,7 @@ export default {
       const caption = this.caption
   	  this.send({'file': file, 'caption': caption})
       this.$emit('state', 'update')
+      this.caption=""
   	}
   },
 
@@ -63,6 +74,9 @@ export default {
     visibility: hidden;
     padding: 14px 0;
     cursor: pointer;
+  }
+  .has-contnet {
+    background-color: #;
   }
   .input-file:hover,
   .input-file:focus {
@@ -109,11 +123,11 @@ export default {
   }
 	.btn {
     display: block;
-    background-color: #555f77;
     border:  none;
     border-radius: 4px;
     box-shadow: 0 2px 2px rgba(0, 0, 0, .15);
     color: #fff;
+    background-color: #34495E;
     cursor: pointer;
     margin: 5px auto;
     outline: none;

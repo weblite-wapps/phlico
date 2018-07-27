@@ -4,14 +4,14 @@
     <!--Heart-->
     <span
       id="heart"
-      @click="changeLikeState"
-      :class="{'unlike': (!liked), 'like': (liked)}"><i>favorite</i></span>
+      @click="changeState('like')"
+      :class="heartClass"><i>favorite</i></span>
     <!--Notification-->
     <span class="nav-pop-ups">
       <img
         src="../assets/logo/comment.png"
         id="comment-icon"
-        @click="changeState">
+        @click="changeState('comments')">
     </span>
   </div>
 </template>
@@ -22,20 +22,27 @@
     
     props: {
       imageName: String,
+      likeState: {
+        type: Boolean,
+        required: true,
+      }
     },
 
     data() {
       return {
         name: '',
         card: {},
-        liked: false,
-        popupCommentBox: true,
-        popupAddComment: true,
       }
     },
 
+    computed: {
+      heartClass() {
+        return this.likeState ? 'like': 'unlike'
+      }
+    },    
+
     created() {
-      this.name = this.$props.imageName
+      this.name = this.imageName
       this.card = {
         'backgroundImage': `url('${this.getPhoto()}')`,
         'backgroundSize': 'Contain',
@@ -49,18 +56,14 @@
     },
 
     methods: {
-      getPhoto: function() {
+      getPhoto() {
         const domain = "http://localhost:3000/img/"
         return `${domain}Sqr_${this.name}`
       },
-      changeState: function() {
-        this.$emit('state', 'comments')
+      changeState(event) {
+        if (event === 'like' && !this.likeState) this.$emit('like')
+        if (event === 'comments') this.$emit('state', event)
       },
-      changeLikeState: function() {
-        this.liked = !this.liked
-        const like = this.liked
-        this.$emit('like', like)
-      }
     },
 
   }

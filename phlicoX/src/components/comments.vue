@@ -2,8 +2,6 @@
   <div class="comments">
 
     <!-- Caption -->
-    <!-- class="my-caption" -->
-     <!-- class="user-info" -->
     <div class="my-caption">
         <span class="bigger">{{caption.username}}</span>
       <div>

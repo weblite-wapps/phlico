@@ -15,7 +15,7 @@
       @state="changeState"
       :comments="photoComments"
       :caption="caption"
-      :send="sendComment({like, 'userid': userInfo.userid, 'author': userInfo.username, 'imagename': imageName})"/>
+      :send="sendComment({'userid': userInfo.userid, 'author': userInfo.username, 'imagename': imageName})"/>
 
   </div>
 </template>
@@ -32,7 +32,6 @@
     data() {
       return {
         state: 'card',
-        like: false,
         photoComments: [],
       }
     },

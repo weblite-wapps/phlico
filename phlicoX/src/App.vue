@@ -101,6 +101,7 @@
 		width:  350px;
 		height: 100%;
 		border: 1px solid #ccc;
+    background-color: #F0E8FB;
     overflow: auto;
 	}
   #app::-webkit-scrollbar-track

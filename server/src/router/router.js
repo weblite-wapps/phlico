@@ -2,17 +2,20 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const multer = require('multer')
+const crypto = require('crypto')
 const path = require('path')
 const Image = require('../helper/index')['Image']
 const File =  require('../helper/index')['File']
 const database = require('../db/index')
 
-
 const storage = multer.diskStorage({
   destination: './public/images',
   filename: function (req, file, callback) {
-  	callback(null, Date.now().toString() + path.extname(file.originalname))
-  	// callback(null, file.originalname)
+    crypto.randomBytes(16, function(err, buffer) {
+      const token = buffer.toString('hex');
+
+      callback(null, token + '_' + Date.now().toString() + path.extname(file.originalname))
+    })
   }
 })
 const upload = multer({ storage })
@@ -78,7 +81,6 @@ router.post('/addComment', function (req, res) {
     date: req.body.date,
   }
   const info = {
-    userid: req.body.userid,
     imagename: req.body.imagename,
   }
 
@@ -130,6 +132,7 @@ router.get('/load/all/:wisid', ({params: {wisid}}, res) => {
     .catch(err => console.log(err))
 })
 router.get('/load/single/:imagename', ({params: {imagename}}, res) => {
+  console.log("imagename:=", imagename)
   database.getSinglePhoto(imagename)
     .then((photo)=> res.send(photo[0]))
     .catch(err => console.log(err))

@@ -5,7 +5,7 @@ const domain = config.default.server
 
 
 export const getSinglePhotoData = imagename => request
-    .get(config.default.server + `/load/single/${imagename}`)
+    .get(domain + `/load/single/${imagename}`)
     .then((res) => res.body)
     .catch((err) => console.log(err))
 
@@ -13,7 +13,7 @@ export const addComment = (info, comment) => request
   .post(domain + '/addComment')
   .send({...info, ...comment})
 
-export const sendLike = info => request
+export const addLike = info => request
   .post(domain + '/addLike')
   .send({...info})
   .then(() => {

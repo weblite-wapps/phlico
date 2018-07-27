@@ -5,10 +5,13 @@
       alt="close logo"
       class="top-left"
       @click="changeState">
+   
     <get-comment
       :caption="caption"
       @state="changeState"
       :send="send"/>
+
+    <spliter>Commments</spliter>
 
     <comment
         v-for="(comment, index) in comments"
@@ -18,17 +21,12 @@
 </template>
 
 <script>
-  import comment from './comment.vue'
-  import getComment from './getComment.vue'
+  import comment from './comment'
+  import spliter from './spliter'
+  import getComment from './getComment'
 
   export default {
     name: "comments",
-
-    methods: {
-      changeState: function() {
-        this.$emit('state', 'card')
-      }
-    },
 
     props: {
       comments:Array,
@@ -38,14 +36,21 @@
 
     components: {
       comment,
+      spliter,
       'get-comment': getComment,
+    },
+
+    methods: {
+      changeState() {
+        this.$emit('state', 'card')
+      }
     },
   }
 </script>
 
 <style scoped>
   .top-left {
-    width: 25px;
+    width: 40px;
     position: absolute;
     transition: opacity .3s ease;
     opacity: .3;

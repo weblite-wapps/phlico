@@ -66,7 +66,7 @@
     },
 
     methods: {
-      getPhoto: function() {
+      getPhoto() {
         const domain = "http://localhost:3000/img/"
         return `${domain}Sqr_${this.imageName}`
       },
@@ -76,18 +76,18 @@
         return `${domain}${this.imageName}`
       },
 
-      changeState: function() {
+      changeState() {
         this.$emit('state', 'comments')
       },
 
-      changeLikeState: function() {
+      changeLikeState() {
         if (!this.liked) {
           this.liked = true
           this.$emit('like')
         }
       },
   
-      removePhoto: function() {
+      removePhoto() {
           this.$emit('del')
       },
 
@@ -96,7 +96,7 @@
     props: {
       imageName: String,
       likeState: Boolean,
-      canDelete: Boolean
+      canDelete: Boolean,
     }
   }
 </script>
@@ -147,7 +147,7 @@
     justify-content: space-between;
     width: 250px;
     margin-bottom: 5px;
-    color: #A7A7A7;
+    color: #7D7878;
   }
   .right {
     display: flex;
@@ -159,7 +159,7 @@
   }
   .icons a {
     text-decoration: none;
-    color: #A7A7A7;
+    color: #7D7878;
   }
   .row {
     display: flex;

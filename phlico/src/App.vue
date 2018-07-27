@@ -2,7 +2,7 @@
   <div id="app">
     <card
       v-if="state === 'card'"
-      :imageName="imagename"
+      :imageName="imageName"
       :likeState="likeState"
       @like="sendLike({userid, 'imagename': imageName})"
       @state="changeState"/>
@@ -10,9 +10,9 @@
     <comments
       v-else-if="state === 'comments'"
       @state="changeState"
-      :send="sendComment({ userid, imagename, like, 'author': username})"
-      :comments="comments"
-      :caption="caption"/>
+      :comments="photoComments"
+      :caption="caption"
+      :send="sendComment({'author': username, 'imagename': imageName})"/>
 
   </div>
 </template>
@@ -22,7 +22,7 @@
   import comments from './components/comments.vue'
   // helper
   import webliteHandler from './helper/function/weblite.api'
-  import {addComment, getSinglePhotoData} from './helper/function/requestHandler'
+  import {addComment, getSinglePhotoData, addLike} from './helper/function/requestHandler'
   const { W, R } = window
 
   export default {
@@ -31,21 +31,22 @@
     data() {
       return {
         wisid: (W && W.wisid) || '1',
-        imagename: '1532682836256.jpg',
+        imageName: 'e69775f649cc32386bc1a39e6c7c004d_1532706926202.png',
         userid: '1',
         username: "amirhe",
         state: 'card',
-        like: false,
-        comments: [],
-        caption: {}
+        photoComments: [],
+        caption: {},
+        likeState: false,
       }
     },
 
     components: {
       card,
-      comments
+      comments,
     },
 
+      
     created() { W && webliteHandler(this) },
 
     mounted() { this.init() },
@@ -57,14 +58,15 @@
       },
 
       init() {
-        getSinglePhotoData(this.imagename)
-          .then(body => {
-            this.comments = body.comments
+        getSinglePhotoData(this.imageName)
+          .then((body) => {
+            this.photoComments = body.comments
             this.caption = {
               username: body.username,
+              likes: R.length(R.uniq((body.likes))),
               text: body.caption,
-              likes: body.likes.length
             }
+            this.likeState = R.findIndex(R.equals(this.userid), body.likes) !== -1
           })
           .catch((err) => console.log("mode[A]-getAll[F]-APP[vue]", err))
       },
@@ -72,17 +74,15 @@
       sendComment(info) {
         return comment => {
           addComment(info, comment)
-          .then(({body: {comment}}) => { this.comments = R.append(comment, this.comments)})
+          .then(({body: {comment}}) => { 
+            this.photoComments = R.append(comment, this.photoComments)})
             .catch((err) => console.log('In addComment', err))
         }
       },
 
-      changeLikeState(likeState) {
-        this.like = likeState
-      },
-
       sendLike(info) {
-        sendLike(info)
+        this.likeState = true
+        addLike(info)
       }
     },
   }

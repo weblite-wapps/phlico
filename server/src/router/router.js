@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const multer = require('multer')
 const path = require('path')
 const Image = require('../helper/index')['Image']
+const File =  require('../helper/index')['File']
 const database = require('../db/index')
 
 
@@ -105,9 +106,14 @@ router.post('/remove', function (req, res) {
   }
 
   // in database promise resolve removing files form public/src
+  
   database
     .removePhoto(info)
-    .then(response => res.send({'imagename': info.imagename}))
+    .then(response => {
+      res.send({'imagename': info.imagename})
+      File.remove(info.imagename)
+      File.remove(`Sqr_${info.imagename}`)
+    })
     .catch(err => console.log("addComment --Err:",err))
 })
 

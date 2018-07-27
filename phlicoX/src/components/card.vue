@@ -46,6 +46,7 @@
 
     created() {
       this.imageName = this.imageName
+      this.liked = this.likeState
       this.card = {
         'backgroundImage': `url('${this.getPhoto()}')`,
         'backgroundSize': 'Contain',
@@ -74,14 +75,16 @@
       },
 
       changeLikeState: function() {
-        this.liked = !this.liked
-        const like = this.liked
-        this.$emit('like', like)
+        if (!this.liked) {
+          this.liked = true
+          this.$emit('like')
+        }
       }
     },
 
     props: {
       imageName: String,
+      likeState: Boolean,
     }
   }
 </script>

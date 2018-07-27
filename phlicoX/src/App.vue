@@ -1,12 +1,16 @@
 <template>
   <div id="app">
+    
     <phlico
       v-for="(item, index) in phlicoz"
       :key="index"
       :imageName="item.imageName"
       :caption="item.caption"
       :comments="item.comments"
-      :userInfo="{userid, username}"/>
+      :userInfo="{userid, username}"
+      :likeState="item.likeState"/>
+
+    <spliter>upload</spliter> 
 
     <uploader 
       :send="sendPhoto({wisid, userid, username})"
@@ -18,6 +22,7 @@
 <script>
   import phlico from './components/phlico'
   import uploader from './components/uploader'
+  import spliter from './components/spliter'
 
   // helper
   import webliteHandler from './helper/function/weblite.api'
@@ -49,6 +54,7 @@
 
         getAll(this.wisid)
           .then((body) => {
+            console.log("body", body)
             this.phlicoz = R.map(item => ({
               imageName: item.imagename,
               comments: item.comments,
@@ -57,6 +63,7 @@
                 likes: R.length(R.uniq((item.likes))),
                 text: item.caption,
               },
+              likeState: R.findIndex(R.equals(item.userid), item.likes) !== -1,
             }), body)
           })
           .catch(err => console.log("Xmode[A]-getAll[F]-APP[vue]", err))
@@ -65,10 +72,7 @@
       sendPhoto: function(info) {
         return photo => {
           savePhoto(info, photo)
-            /*Fix Promise Working for load initialization*/
-            .then((res) => {
-              this.phlicoz = R.append(res.body.doc, this.phlicoz)
-            })
+            .then((res) => { this.phlicoz = R.append(res.body.doc, this.phlicoz) })
             .catch((err) => console.log(err))
         }
       },
@@ -76,7 +80,8 @@
 
     components: {
       uploader,
-      phlico
+      phlico,
+      spliter
     }
   }
 </script>

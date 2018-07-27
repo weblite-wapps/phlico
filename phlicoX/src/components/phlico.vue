@@ -3,7 +3,8 @@
     <card
       :imageName="imageName"
       v-if="state === 'card'"
-      @like="changeLikeState"
+      :likeState="likeState"
+      @like="sendLike({'userid': userInfo.userid, 'imagename': imageName})"
       @state="changeState"/>
 
     <comments
@@ -20,7 +21,7 @@
 <script>
   import card from './card'
   import comments from './comments'
-  import { addComment } from '../helper/function/requestHandler'
+  import { addComment, sendLike } from '../helper/function/requestHandler'
 
   export default {
     name: "phlico",
@@ -43,8 +44,8 @@
         }
       },
 
-      changeLikeState: function(likeState) {
-        this.like = likeState
+      sendLike: function(info) {
+        sendLike(info)
       }
     },
 
@@ -58,6 +59,7 @@
       comments: Array,
       caption: Object,
       userInfo: Object,
+      likeState: Boolean,
     }
   }
 </script>

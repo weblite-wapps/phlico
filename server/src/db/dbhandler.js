@@ -30,21 +30,24 @@ exports.getSinglePhoto = imagename =>  Phlico
   .exec()
 
 
-exports.addComment = (photoInfo, comment, like) => {
-
-  if (like) {
-    Phlico.update({...photoInfo},
-      {$push: {comments: comment, likes: photoInfo.userid}}, function (err) {
-        if (err) console.log("can not update phlico document --Err:", err)
-      })
-  }
-  else {
+exports.addComment = (photoInfo, comment) => {
+  //
+  // if (like) {
+  //   Phlico.update({...photoInfo},
+  //     {$push: {comments: comment, likes: photoInfo.userid}}, function (err) {
+  //       if (err) console.log("can not update phlico document --Err:", err)
+  // }
     Phlico.update({...photoInfo},
       {$push: {comments: comment}}, function (err) {
         if (err) console.log("can not update phlico document --Err:", err)
       })
-  }
+}
 
+exports.addLike = (photoInfo, userid) => {
+  Phlico.update({...photoInfo},
+    {$push: {likes: userid}}, function (err) {
+      if (err) console.log("can not update phlico document --Err:", err)
+    })
 }
 // exports.anotherLogics = () => null;
 

@@ -61,7 +61,8 @@ router.post('/upload', upload.single('image'), function (req, res) {
               username: doc.username,
               likes: doc.likes.length,
               text: doc.caption,
-            }
+            },
+            likeState: false,
           }
         }))
         .catch(err => console.log(err))
@@ -81,7 +82,18 @@ router.post('/addComment', function (req, res) {
   }
 
   database
-    .addComment(info, comment, req.body.like)
+    .addComment(info, comment)
+    .then(response => res.send(response))
+    .catch(err => console.log("addComment --Err:",err))
+})
+
+router.post('/addLike', function (req, res) {
+  const info = {
+    imagename: req.body.imagename,
+  }
+
+  database
+    .addLike(info, req.body.userid)
     .then(response => res.send(response))
     .catch(err => console.log("addComment --Err:",err))
 })

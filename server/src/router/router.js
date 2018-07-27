@@ -104,6 +104,7 @@ router.post('/remove', function (req, res) {
     userid: req.body.userid
   }
 
+  // in database promise resolve removing files form public/src
   database
     .removePhoto(info)
     .then(response => res.send({'imagename': info.imagename}))

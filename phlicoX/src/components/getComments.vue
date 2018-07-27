@@ -9,9 +9,8 @@
     </div>
 
     <div class="row">
-      <button @click="submit">Submit</button>
-      <button @click="changeState('card')">return</button>
-      <button v-if="deleteShow" @click="changeState('delete')" id="del">Delete</button>
+      <button @click="submit">Post</button>
+      <button @click="changeState">Back</button>
     </div>
   </div>
 </template>
@@ -25,8 +24,8 @@
       }
     },
     methods: {
-      changeState: function(e) {
-        this.$emit('state', e)
+      changeState: function() {
+        this.$emit('state', 'card')
       },
       submit: function() {
         const t = Date().split(' ').splice(1, 4)
@@ -36,13 +35,12 @@
           const opinion = this.opinion
           this.send({opinion, date})
         }
-        this.$emit('state')
+        this.opinion = ''
       }
     },
 
     props: {
       send: Function,
-      deleteShow: Boolean,
     }
   }
 </script>

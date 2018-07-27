@@ -1,49 +1,41 @@
 <template>
   <div class="card">
     <div :style="card">
+      <span
+        v-if="!canDelete"
+        id="heart"
+        @click="changeLikeState"
+        :class="{'unlike': (!liked), 'like': (liked)}"><i id="heart">favorite</i></span>
+    </div> <!-- card -->
 
-      <div class="logos">
-        <div class="flex">
-          <a :href="getOriginalPhoto()">
-            <img
-            src="../assets/icons/download.png"
-            alt="downlaod-logo"
-            class="logo"
-            id="download">
-          </a>
-    
-          <img 
-            v-if="canDelete"
-            src="../assets/icons/delete.png"
-            class="logo"
-            id="delete"
-            alt="delete icon"
-            @click="removePhoto">
+    <div  class="icons">      
+      <div class="row">
+        <div
+          id="send">
+            <i>send</i>
+        </div>
 
-          <span
-            v-else
-            id="heart"
-            @click="changeLikeState"
-            :class="{'unlike': (!liked), 'like': (liked)}">❤</span>
-        </div> <!-- top -->
+        <div 
+          id="comment"
+          @click="changeState">
+            <i>insert_comment</i>
+        </div>
 
-        <div class="flex bot">
-          <img
-            src="../assets/icons/comment.png"
-            class="logo"
-            id="comment"
-            alt="comment logo"
-            @click="changeState">
-
-          <img
-            src="../assets/icons/send.png" 
-            alt="send logo"
-            class="logo"
-            id="send">
-        </div> <!-- bot -->
-      </div> <!--logos-->
+        <div 
+          v-if="canDelete"
+          @click="removePhoto"
+          id="delete">
+            <i>delete</i>
+        </div>
+        <a 
+          id="download"
+          :href="getOriginalPhoto()">
+            <i>get_app</i>
+        </a>
+      </div>
 
     </div>
+
   </div>
 </template>
 
@@ -69,7 +61,6 @@
         'backgroundColor': 'rgb(255,50,39)',
         'width': '320px',
         'height': '320px',
-        'boxShadow': '0 1px 1px rgba(0,0,0, .3)',
         'margin': '10px 0',
       }
     },
@@ -113,20 +104,18 @@
 <style scoped>
   .card {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-  }
-  .logo {
-    margin: 5px 5px 0 0;
-    width: 25px;
-    cursor: pointer;
+    box-shadow: 0 1px 1px rgba(0,0,0, .3);
+
   }
   #heart {
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 15px;
-    font-size: 15px;
+    font-size: 16px;
     cursor: pointer;
     transition: all .3s;
   }
@@ -145,7 +134,7 @@
     text-shadow: 0 1.5px 0 rgba(0,0,0, .7);
   }
   .like {
-    border: 1px solid white;
+    border: none;
     text-shadow: 1px 2px 1px rgba(208, 208, 208, .5);
     border-radius: 100px;
     width: 0px;
@@ -153,33 +142,53 @@
     color: #F70A31;
     opacity: 1;
   }
-  .logos {
-    height: 100%;
+  .icons {
     display: flex;
-    flex-direction: column;
     justify-content: space-between;
+    width: 250px;
+    margin-bottom: 5px;
+    color: #A7A7A7;
   }
-  .flex {
+  .right {
     display: flex;
-    flex-direction:  row-reverse;
-    justify-content: space-between;
-  }
-
-  #delete {
-    width: 20px;
-    height: 20px;
-    margin: 8px;
-  }
-  #download {
-    margin: 8px;
-  }
-  #comment {
-    margin: 8px;
     align-self: flex-end;
   }
+  .left {
+    display: flex;
+    align-self: flex-start; 
+  }
+  .icons a {
+    text-decoration: none;
+    color: #A7A7A7;
+  }
+  .row {
+    display: flex;
+    width: 100%;
+    justify-content: space-between
+  }
+  #delete {
+    transition: color .3s ease;
+  }
+  #delete:hover {
+    color: #F93C2E;
+  }
   #send {
-    align-self: flex-start;
-    margin: 8px;
+    transition: color .3s ease;
+  }
+  #send:hover {
+    color: #09832B;
+  }
+  #download {
+    transition: color .3s ease;
+  }
+  #download:hover {
+    color: #0A77B6;
+  }
+  #comment {
+    transition: color .3s ease;
+  }
+  #comment:hover {
+    color: #E17B0E;
   }
 </style>
 

@@ -15,8 +15,8 @@
 
     <uploader 
       :send="sendPhoto({wisid, userid, username})"
-      @state="init"/>
-
+      />
+<!-- @state="init" -->
   </div>
 </template>
 
@@ -85,10 +85,9 @@
       deletePhoto: function(info) {
         deletePhoto(info)
           .then(({body: {imagename}}) => {
-            console.log('photo deleted')
-            this.phlicoz = R.remove(0, R.propEq('imagename', imagename), this.phlicoz)
-            this.hasPhoto = (R.length(this.phlicoz) !== 0)
-          })
+            // this.phlicoz = R.remove(0, R.propEq('imagename', imagename), this.phlicoz)
+            this.phlicoz.splice(R.indexOf(R.propEq('imagename', imagename), this.phlicoz), 1)
+            this.hasPhoto = (R.length(this.phlicoz) !== 0) })
           .catch((err) => console.log(err))
       }
     },

@@ -17,18 +17,16 @@
     <!-- Get Comment -->
     <get-comments
       :send="send"
+      @state="changeState"
       :deleteShow="caption.username === user"/>
     <!-- @state="changeState" -->
     
     <!-- Comments -->
-    <div v-if="hasComment">
-        <comment
-          v-for="(item, index) in this.comments"
-          :key="index"
-          :comment="item"/>
-    </div>
-    <!-- if it has no comment-->
-    <loading v-else/>
+      <comment
+        v-for="(item, index) in this.comments"
+        :key="index"
+        :comment="item"/>
+      <loading v-if="!hasComment"/>
   </div>
 </template>
 
@@ -39,10 +37,12 @@
 
   export default {
     name: "comments",
-    data() {
-      return {
-        hasComment: true,
-      }
+    
+    props: {
+      comments: Array,
+      caption: Object,
+      user: String,
+      send: Function,
     },
 
     components: {
@@ -51,28 +51,22 @@
       'get-comments': getComments,
     },
 
-    computed: {
-      likes: function() {
-        return this.caption.likes || ''
-      }
-    },
-
     methods: {
-      changeState: function(event) {
+      changeState(event) {
         this.$emit('state', event)
       },
     },
 
-    created: function() {
-        this.hasComment =  (this.comments.length !== 0)
+    computed:{
+      hasComment() {
+        return this.comments.length !== 0
+      },
+
+      likes() {
+        return this.caption.likes || ''
+      },
     },
 
-    props: {
-      comments: Array,
-      caption: Object,
-      user: String,
-      send: Function,
-    }
   }
 </script>
 
@@ -96,7 +90,7 @@
   }
   .comments {
     width: 320px;
-    height: 320px;
+    height: 348px;
     margin: 10px auto;
     overflow: auto;
     box-shadow: 0 1px 1px rgba(0,0,0, .3);

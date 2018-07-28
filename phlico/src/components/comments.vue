@@ -5,7 +5,7 @@
       alt="close logo"
       class="top-left"
       @click="changeState">
-   
+
     <get-comment
       :caption="caption"
       @state="changeState"

@@ -16,7 +16,6 @@ exports.saveMiniSize = (url, filename) => new Promise(resolve => {
         }
         else
           console.log("square resolution image gm.write --Err:", err)
-
       })
     })
 })

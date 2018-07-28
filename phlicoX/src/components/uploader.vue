@@ -50,6 +50,7 @@ export default {
   	  this.send({'file': file, 'caption': caption})
       this.$emit('state', 'update')
       this.caption=""
+      this.buttonText = 'Select a file ...'
   	}
   },
 

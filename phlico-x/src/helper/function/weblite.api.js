@@ -1,5 +1,5 @@
 // W && R
-const { W, R } = window
+const { W } = window
 
 
 export default (vueRoot) => {

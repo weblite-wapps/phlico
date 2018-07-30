@@ -5,6 +5,7 @@
         class="comment-text"
         id="scrollbar"
         placeholder="Add comment..."
+        @keyup.ctrl.enter="submit"
         v-model="opinion"></textarea>
     </div>
 
@@ -67,11 +68,11 @@
     width: 300px;
   }
   .row  button {
-    background-color: #555f77;
+    background-color: #c0b3a0;
     border:  none;
     border-radius: 4px;
     box-shadow: 0 1px 1px rgba(0, 0, 0, .15);
-    color: #fff;
+    color: black;
     cursor: pointer;
     display: block;
     margin: 0 auto;
@@ -79,9 +80,9 @@
     font-size: 10px;
     padding: 6px 15px;
   }
-  .row .comment-text:focus,
   .row button:hover{
-    box-shadow: 0 2px 6px rgb(83, 94, 105);
+    background-color: #E14F60;
+    box-shadow: 0 1px 2px rgb(51, 56, 67);
   }
   .row {
     width: 100%;
@@ -97,20 +98,18 @@
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
     border-radius: 1px;
     width: 5px;
-    background-color: #F5F5F5;
+    background-color: #2c3e50;
   }
-
   #scrollbar::-webkit-scrollbar
   {
     width: 4px;
-    background-color: #fefefe;
+    background-color: #2c3e50;
   }
-
   #scrollbar::-webkit-scrollbar-thumb
   {
     border-radius: 10px;
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-    background-color: #252a3e;
+    background-color: #CACACA;
   }
   #del {
     background-color: #E82D2D;

@@ -47,11 +47,9 @@
         'backgroundImage': `url('${this.getPhoto()}')`,
         'backgroundSize': 'Contain',
         'backgroundRepeat': 'no-repeat',
-        'backgroundColor': 'rgb(255,50,39)',
+        'backgroundColor': 'rgb(94,94,94)',
         'width': '400px',
         'height': '400px',
-        'margin': '10px 0',
-        'boxShadow': '0 2px 1px rgba(0,0,0, .3)'
       }
     },
 

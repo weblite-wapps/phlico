@@ -1,19 +1,19 @@
 <template>
-	<div class="on-the-line">
-		<slot></slot>
-	</div>
+  <div class="on-the-line">
+    <slot></slot>
+  </div>
 </template>
 
 <script>
-	export default {
-	  name: 'spliter',
+  export default {
+    name: 'spliter',
 
-	  data() {
-	    return {
+    data() {
+      return {
 
-	    }
-	  },
-	}
+      }
+    },
+  }
 </script>
 
 <style scoped>
@@ -21,16 +21,15 @@
   font-size: 21px;
   font-family: 'sans-serif';
   margin: 20px 0;
-  color: #252a3e;
+  color: #fff;
   text-align: center;
 }
 .on-the-line::after,
 .on-the-line::before {
-  border-top: solid 1.3px #252a3e;
+  border-top: solid 1.3px #97989D;
   content: '';
   display: inline-block;
   margin: 0 12px 3px;
   width: 30%;
-  color: #252a3e;
 }
 </style>

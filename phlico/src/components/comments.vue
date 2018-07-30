@@ -50,10 +50,11 @@
 
 <style scoped>
   .top-left {
-    width: 40px;
+    width: 20px;
     position: absolute;
     transition: opacity .3s ease;
-    opacity: .3;
+    opacity: .6;
+    margin: 5px 0 0 5px;
   }
   .top-left:hover {
     opacity: 1;
@@ -62,7 +63,9 @@
     height: 400px;
     width: 400px;
     overflow: auto;
-    background-color: rgba(45, 71, 42, 0.19);
+    background-color: #22252c;
+
+    /* background-color: rgba(45, 71, 42, 0.19); */
   }
 
   .comments::-webkit-scrollbar-track

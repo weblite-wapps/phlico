@@ -40,15 +40,17 @@
 </template>
 
 <script>
+  import config from '../config'
+
   export default {
     name: 'card',
 
     data() {
-    	return {
+      return {
         liked: false,
         name: '',
-    	  card: {},
-    	}
+        card: {},
+      }
     },
 
     created() {
@@ -58,7 +60,7 @@
         'backgroundImage': `url('${this.getPhoto()}')`,
         'backgroundSize': 'Contain',
         'backgroundRepeat': 'no-repeat',
-        'backgroundColor': 'rgb(255,50,39)',
+        'backgroundColor': 'rgb(94,94,94)',
         'width': '320px',
         'height': '320px',
         'margin': '10px 0',
@@ -67,12 +69,12 @@
 
     methods: {
       getPhoto() {
-        const domain = "http://localhost:3000/img/"
+        const domain = config.server + '/img/'
         return `${domain}Sqr_${this.imageName}`
       },
 
       getOriginalPhoto() {
-        const domain = "http://localhost:3000/img/"
+        const domain = config.server + '/img/'
         return `${domain}${this.imageName}`
       },
 
@@ -107,7 +109,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 1px 1px rgba(0,0,0, .3);
+    box-shadow: 0 0 1px rgba(255,255,255, .6);
+    margin-bottom: 15px;
 
   }
   #heart {

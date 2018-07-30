@@ -7,6 +7,7 @@ const path = require('path')
 const Image = require('../helper/index')['Image']
 const File =  require('../helper/index')['File']
 const database = require('../db/index')
+const domain = 'http://localhost:3000'
 
 const storage = multer.diskStorage({
   destination: './public/images',
@@ -24,12 +25,12 @@ const router = express.Router()
 router.use('/static', express.static('./public/images/'))
 router.use(bodyParser.json())
 router.use((req, res,next) => {
-	// set base rule for this hole route
-	res.setHeader('Access-Control-Allow-Origin', '*')
+  // set base rule for this hole route
+  res.setHeader('Access-Control-Allow-Origin', '*')
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
   res.setHeader('Access-Control-Allow-Credentials', true)
-	next()
+  next()
 })
 
 // POST
@@ -39,12 +40,13 @@ router.post('/upload', upload.single('image'), function (req, res) {
     res.send({ success: false })
   }
   else {
-    const PORT = 3000
-    const domain = `${req.protocol}://${req.hostname}:${PORT}/img/`
-
+    const url = domain + '/img/'
     //  image reshape here
-    Image.saveHighResolution(domain, req.file.filename, req.file.size)
-    Image.saveMiniSize(domain, req.file.filename)
+    console.log('in router.js', req.file)
+    Image.saveHighResolution(url, req.file.filename, req.file.size)
+    .then(() => console.log('saveHighResolution finished'))
+    .catch(err => console.log(err))
+    Image.saveMiniSize(url, req.file.filename)
     .then(() => {
       //  Database
       const doc = {
@@ -52,14 +54,14 @@ router.post('/upload', upload.single('image'), function (req, res) {
         userid: req.body.userid,
         username: req.body.username,
         caption: req.body.caption,
-        imagename: req.file.filename,
+        imageName: req.file.filename,
         comments: [],
         likes: [],
       }
       database
         .savePhoto(doc)
         .then(() => res.send({doc: {
-            imageName: doc.imagename,
+            imageName: doc.imageName,
             comments: doc.comments,
             caption: {
               username: doc.username,
@@ -81,7 +83,7 @@ router.post('/addComment', function (req, res) {
     date: req.body.date,
   }
   const info = {
-    imagename: req.body.imagename,
+    imageName: req.body.imageName,
   }
 
   database
@@ -92,7 +94,7 @@ router.post('/addComment', function (req, res) {
 
 router.post('/addLike', function (req, res) {
   const info = {
-    imagename: req.body.imagename,
+    imageName: req.body.imageName,
   }
 
   database
@@ -103,7 +105,7 @@ router.post('/addLike', function (req, res) {
 
 router.post('/remove', function (req, res) {
   const info = {
-    imagename: req.body.imagename,
+    imageName: req.body.imageName,
     userid: req.body.userid
   }
 
@@ -112,9 +114,9 @@ router.post('/remove', function (req, res) {
   database
     .removePhoto(info)
     .then(response => {
-      res.send({'imagename': info.imagename})
-      File.remove(info.imagename)
-      File.remove(`Sqr_${info.imagename}`)
+      res.send({'imageName': info.imageName})
+      File.remove(info.imageName)
+      File.remove(`Sqr_${info.imageName}`)
     })
     .catch(err => console.log("addComment --Err:",err))
 })
@@ -131,9 +133,9 @@ router.get('/load/all/:wisid', ({params: {wisid}}, res) => {
     .then(photos => res.send(photos))
     .catch(err => console.log(err))
 })
-router.get('/load/single/:imagename', ({params: {imagename}}, res) => {
-  console.log("imagename:=", imagename)
-  database.getSinglePhoto(imagename)
+router.get('/load/single/:imageName', ({params: {imageName}}, res) => {
+  console.log("imageName:=", imageName)
+  database.getSinglePhoto(imageName)
     .then((photo)=> res.send(photo[0]))
     .catch(err => console.log(err))
 })

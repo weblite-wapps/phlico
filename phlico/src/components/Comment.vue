@@ -55,7 +55,7 @@ export default {
   }
   .comment-date {
     margin: 0 10px;
-    color: rgb(129, 158, 240);
+    color: rgb(149, 174, 172)
 
   }
   .comment {

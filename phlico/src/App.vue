@@ -31,7 +31,7 @@
     data() {
       return {
         wisid: (W && W.wisid) || '1',
-        imageName: '2ec835a09343261e43a74c43f830d224_1532790171500.gif',
+        imageName: 'fff9d212d281a412502171a2969ebb9d_1532954670768.gif',
         userid: '1',
         username: "amirhe",
         state: 'card',

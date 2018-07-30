@@ -4,9 +4,9 @@ const domain = config.default.server
 
 
 export const getAll = wisid => request
-		.get(domain + `/load/all/${wisid}`)
-		.then(res => res.body)
-		.catch(err => console.log(err))
+    .get(domain + `/load/all/${wisid}`)
+    .then(res => res.body)
+    .catch(err => err)
 
 export const savePhoto = (info, photo) => {
   const formData = new FormData();
@@ -30,12 +30,6 @@ export const addComment = (info, comment) => request
 export const sendLike = info => request
   .post(domain + '/addLike')
   .send({...info})
-  .then(() => {
-    console.log('like state saved')
-  })
-  .catch(err => {
-    console.log(err)
-  })
 
 export const deletePhoto = info => request
   .post(domain + '/remove')

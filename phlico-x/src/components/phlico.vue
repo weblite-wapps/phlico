@@ -5,8 +5,8 @@
       v-if="state === 'card'"
       :likeState="likeState"
       :canDelete="userInfo.username === caption.username"
-      @del="del({'userid': userInfo.userid, 'imagename': imageName})"
-      @like="sendLike({'userid': userInfo.userid, 'imagename': imageName})"
+      @del="del({'userid': userInfo.userid, imageName})"
+      @like="sendLike({'userid': userInfo.userid, imageName})"
       @state="changeState"/>
 
 
@@ -15,7 +15,7 @@
       @state="changeState"
       :comments="photoComments"
       :caption="caption"
-      :send="sendComment({'userid': userInfo.userid, 'author': userInfo.username, 'imagename': imageName})"/>
+      :send="sendComment({'userid': userInfo.userid, 'author': userInfo.username, imageName})"/>
 
   </div>
 </template>
@@ -23,7 +23,7 @@
 <script>
   import card from './card'
   import comments from './comments'
-  import { addComment, sendLike, deletePhoto } from '../helper/function/requestHandler'
+  import { addComment, sendLike } from '../helper/function/requestHandler'
   const { R } = window
 
   export default {
@@ -36,7 +36,7 @@
       }
     },
 
-    mounted() {this.photoComments = this.$props.comments},
+    mounted() {this.photoComments = this.comments},
 
     methods: {
       changeState(event) {
@@ -47,7 +47,7 @@
         return comment => {
           addComment(info, comment)
           .then(({body: {comment}}) => { this.photoComments = R.append(comment, this.photoComments)})
-            .catch((err) => console.log("In addComment", err))
+            .catch((err) => err)
         }
       },
 

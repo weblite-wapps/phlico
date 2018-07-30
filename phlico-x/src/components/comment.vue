@@ -23,13 +23,6 @@
       }
     },
 
-    methods: {
-      comment_time: function(time) {
-        const t = time.split(' ').splice(1, 4)
-        return `${t[0]} ${t[1]}, ${t[2]} ${t[3]}`
-      }
-    },
-
     props: {
       comment: Object,
     }
@@ -41,7 +34,6 @@
     background-color: rgb(76, 84, 91);
     border-radius: 4px;
     box-shadow: 0 1px 1px rgba(0, 0, 0, .15);
-    /*min-height: 60px;*/
     padding: 5px;
     overflow-x: hidden;
   }

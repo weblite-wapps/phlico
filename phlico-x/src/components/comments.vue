@@ -17,7 +17,6 @@
       :send="send"
       @state="changeState"
       :deleteShow="caption.username === user"/>
-    <!-- @state="changeState" -->
     
     <!-- Comments -->
       <comment
@@ -73,12 +72,14 @@
     text-align: center;
     width: 300px;
     margin: 0 auto 15px auto;
-    color: #252a3e;
+    color: #D6D6D6;
     font-size: 11px;
     font-family: sans-serif;
     background-color: rgba(91, 83, 84, 0.14);
     border-radius: 4px;
     box-shadow: 0 1px 1px rgba(0, 0, 0, .15);
+    flex-wrap: wrap;
+    overflow-x: hidden;
   }
   .bigger {
     font-size: 12px;
@@ -87,28 +88,29 @@
     color: #FC3939;
   }
   .comments {
-    width: 320px;
+    width: 100%;
     height: 348px;
     margin: 10px auto;
     overflow: auto;
-    box-shadow: 0 1px 1px rgba(0,0,0, .3);
+    box-shadow: 0 0 1px rgba(255,255,255, .6);
+    
   }
   .comments::-webkit-scrollbar-track
   {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
     border-radius: 1px;
     width: 5px;
-    background-color: #F5F5F5;
+    background-color: #2c3e50;
   }
   .comments::-webkit-scrollbar
   {
     width: 4px;
-    background-color: #fefefe;
+    background-color: #2c3e50;
   }
   .comments::-webkit-scrollbar-thumb
   {
     border-radius: 10px;
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-    background-color: #252a3e;
+    background-color: #CACACA;
   }
 </style>

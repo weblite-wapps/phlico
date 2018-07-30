@@ -3,7 +3,6 @@ const config = require('../../config')
 const domain = config.default.server
 
 
-
 export const getSinglePhotoData = imagename => request
     .get(domain + `/load/single/${imagename}`)
     .then((res) => res.body)

@@ -6,21 +6,22 @@
       </div>
 
       <div class="bot">
-        <span>{{likes}} <span id="like">❤</span></span>
+        <span id="like">{{likes}} ❤</span>
         <span class="username">{{caption.username}}</span>
       </div>
     </div>
 
 
-    <div class="frow">
+    <div class="row">
       <textarea
         class="comment-text"
         id="scrollbar"
         placeholder=" Add comment..."
+        @keyup.ctrl.enter="submit"
         v-model="opinion"></textarea>
     </div>
-    <div class="frow">
-      <button @click="submit">Submit</button>
+    <div class="row">
+      <button @click="submit">Post</button>
     </div>
   </div>
 </template>
@@ -42,6 +43,7 @@ export default {
 
   methods: {
     submit() {
+      console.log(this.caption)
       const time = Date().split(' ').splice(1, 4)
       const date = `${time[0]} ${time[1]}, ${time[2]} ${time[3]}`
       if (this.opinion === '') alert('Comment is empty')
@@ -67,8 +69,10 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    background-color: rgb(42, 44, 50);
+    border-radius: 5px;
     width: 90%;
-    margin: 15px 0;
+    margin: 30px 0;
   }
   .bot {
     display: flex;
@@ -91,9 +95,11 @@ export default {
   .caption-text {
     /*display: inline-block;*/
     display: flex;
+    justify-content: center;
     word-wrap: break-word;
-    color: #333333;
+    color: #D6D6D6;
     text-align: center;
+    overflow-x: hidden;
   }
 
   #get-comment {
@@ -105,63 +111,62 @@ export default {
     justify-content: center;
     align-items: center;
   }
-  .frow .comment-text {
+  .row .comment-text {
    background-color: rgba(49, 58, 67, 0.84);
    border: none;
    border-radius: 4px;
    box-shadow: 0 1px 1px rgba(0, 0, 0, .15);
    color: #cbc7e5;
-   font-size: 14px;
+   font-size: 12px;
    padding: 5px 10px;
    outline: none;
    width: 340px;
   }
-  .frow  input[type=submit],
-  .frow  button {
-    background-color: #555f77;
+
+
+  .row  button {
+    background-color: #c0b3a0;
+    color: #22252c;
     border:  none;
     border-radius: 4px;
     box-shadow: 0 1px 1px rgba(0, 0, 0, .15);
-    color: #fff;
     cursor: pointer;
     display: block;
     margin: 5px auto;
     outline: none;
     padding: 6px 15px;
   }
-  .frow .comment-text:focus,
-  .frow input[type=submit]:hover,
-  .frow button:hover{
-    box-shadow: 0 2px 6px rgb(83, 94, 105);
-  }
-  .frow {
+  .row {
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px
   }
+  
+  .row button:hover {
+    background-color: #E14F60;
+  }
+
   .comment-text {
     min-height: 60px;
     overflow: auto;
   }
   #scrollbar::-webkit-scrollbar-track
   {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
     border-radius: 1px;
     width: 5px;
-    background-color: #F5F5F5;
+    background-color: #2c3e50;
   }
-
   #scrollbar::-webkit-scrollbar
   {
     width: 4px;
-    background-color: #fefefe;
+    background-color: #2c3e50;
   }
 
   #scrollbar::-webkit-scrollbar-thumb
   {
     border-radius: 10px;
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-    background-color: #252a3e;
+    background-color: #CACACA;
   }
 
 </style>

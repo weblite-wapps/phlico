@@ -17,7 +17,7 @@
           value="no Caption"
           placeholder="Add Your Caption"
           v-model="caption"
-          class="comment-text"></textarea>
+          class="caption-text"></textarea>
       <button
         class="btn"
         @click="submitFile">Send</button>
@@ -31,27 +31,43 @@ export default {
   name: 'Upload',
 
   data() {
-  	return {
-  		file: '',
+    return {
+      file: '',
       caption: '',
       buttonText: 'Select a file ...'
-  	}
+    }
   },
 
   methods: {
-  	getFile: function(event) {
-  		this.file = event.target.files[0]
-      this.buttonText = (this.file.name.length > 30) ? this.file.name.slice(0,30) + '...' : this.file.name
-  	},
+    getFile(event) {
+      this.file = event.target.files[0]
+      this.buttonText = (this.file.name.length > 30) ? this.file.name.slice(0,30) + '.. .' : this.file.name
+    },
 
-  	submitFile: function() {
-  	  const file = this.file
+    submitFile() {
+      const file = this.file
+      if (file === '') return alert('Please Select Image!')
+
       const caption = this.caption
-  	  this.send({'file': file, 'caption': caption})
-      this.$emit('state', 'update')
-      this.caption=""
-      this.buttonText = 'Select a file ...'
-  	}
+      
+      /* type cheking in front*/
+      const allowedExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
+      const extension = file.name.split('.').pop()
+      const isAcceptable = allowedExtension.indexOf(extension) !== -1;
+
+      if (isAcceptable) {
+        this.send({'file': file, 'caption': caption})
+        this.$emit('state', 'update')
+        this.caption = ''
+        this.buttonText = 'Select a file ...'
+        this.file = ''
+      }
+      else {
+        alert(`Sorry we don't support this type of *.${extension} Files yet!`)
+        this.buttonText = 'Select a file ...'
+        this.file = ''
+      }
+    }
   },
 
   props: {
@@ -76,37 +92,26 @@ export default {
     padding: 14px 0;
     cursor: pointer;
   }
-  .has-contnet {
-    background-color: #;
-  }
-  .input-file:hover,
-  .input-file:focus {
-    background: #34495E;
-    color: #39D2B4;
-  }
-	.file-input + label  {
-	  font-size: 1em;
+  .input-file + label  {
+    font-size: 1em;
     font-weight: 700;
     color: white;
-    background-color: black;
     width: 85%;
-	}
-  .comment-text {
-    background-color: rgba(49, 58, 67, 0.84);
+  }
+  .caption-text {
+    background-color: rgb(46, 55, 63);
+    
     border: none;
     border-radius: 5px;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, .15);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
     color: #cbc7e5;
     font-size: 14px;
     width: 85%;
     padding: 5px 10px;
     outline: none;
     min-height: 70px;
-    margin: 10px;
+    margin: 10px auto;
     overflow: hidden;
-  }
-  .comment-text:focus {
-    box-shadow: 0 2px 6px rgba(121, 137, 148, 1);
   }
   ::-webkit-input-placeholder { /* Chrome */
     color: #b3afc0;
@@ -122,20 +127,20 @@ export default {
     color: #b3afc0;
     opacity: 1;
   }
-	.btn {
+  .btn {
     display: block;
     border:  none;
     border-radius: 4px;
     box-shadow: 0 2px 2px rgba(0, 0, 0, .15);
-    color: #fff;
-    background-color: #34495E;
+    background-color: #c0b3a0;
+    color: #22252c;
     cursor: pointer;
     margin: 5px auto;
     outline: none;
     padding: 6px 15px;
-	}
-	.btn:hover {
-		background-color: #475077;
+  }
+  .btn:hover {
+    background-color: #E14F60;
     box-shadow: 0 1px 2px rgb(51, 56, 67);
-	}
+  }
 </style>

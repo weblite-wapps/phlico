@@ -16,7 +16,6 @@
     <uploader 
       :send="sendPhoto({wisid, userid, username})"
       />
-<!-- @state="init" -->
   </div>
 </template>
 
@@ -56,23 +55,24 @@
 
 
     methods: {
-      init: function() {
+      init() {
         getAll(this.wisid)
           .then((body) => {
-            console.log("body", body)
-            this.phlicoz = R.map(item => ({
-              imageName: item.imagename,
-              comments: item.comments,
-              caption: {
-                username: item.username,
-                likes: R.length(R.uniq((item.likes))),
-                text: item.caption,
-              },
-              likeState: R.findIndex(R.equals(this.userid), item.likes) !== -1,
-            }), body)
-            this.hasPhoto = (R.length(this.phlicoz) !== 0)
+            if (body) {
+              this.phlicoz = R.map(item => ({
+                imageName: item.imageName,
+                comments: item.comments,
+                caption: {
+                  username: item.username,
+                  likes: R.length(R.uniq((item.likes))),
+                  text: item.caption,
+                },
+                likeState: R.findIndex(R.equals(this.userid), item.likes) !== -1,
+              }), body)
+              this.hasPhoto = (R.length(this.phlicoz) !== 0)
+            }
           })
-          .catch(err => console.log("Xmode[A]-getAll[F]-APP[vue]", err))
+          .catch(err => err)
       },
 
       sendPhoto(info) {
@@ -81,29 +81,29 @@
             .then((res) => { 
               this.phlicoz = R.append(res.body.doc, this.phlicoz)
               this.hasPhoto = true })
-            .catch((err) => console.log(err))
+            .catch((err) => err)
         }
       },
 
       deletePhoto(info) {
         deletePhoto(info)
-          .then(({body: {imagename}}) => {
-            this.phlicoz.splice(R.indexOf(R.propEq('imagename', imagename), this.phlicoz), 1)
+          .then(({body: {imageName}}) => {
+            this.phlicoz.splice(R.indexOf(R.propEq('imageName', imageName), this.phlicoz), 1)
             this.hasPhoto = (R.length(this.phlicoz) !== 0) })
-          .catch((err) => console.log(err))
+          .catch((err) => err)
       },
     },
   }
 </script>
 
 <style scoped>
-	#app {
-		width:  350px;
-		height: 100%;
-		border: 1px solid #ccc;
-    background-color: #F0E8FB;
+  #app {
+    width:  350px;
+    height: 100%;
+    border: 1px solid #ccc;
+    background-color: #22252c;
     overflow: auto;
-	}
+  }
   #app::-webkit-scrollbar-track
   {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
@@ -111,13 +111,11 @@
     width: 5px;
     background-color: #F5F5F5;
   }
-
   #app::-webkit-scrollbar
   {
     width: 4px;
     background-color: #fefefe;
   }
-
   #app::-webkit-scrollbar-thumb
   {
     border-radius: 10px;

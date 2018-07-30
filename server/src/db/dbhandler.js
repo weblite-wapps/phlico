@@ -12,21 +12,18 @@ exports.connect = name => {
 	db.on('error', console.log)
 	db.once('open', () => {
 		console.log('Connection to database successfully is made ...')
-		// Test
-		// db.db.dropDatabase()
 	})
 }
 
 
 exports.savePhoto = photoInfo => new Phlico(photoInfo).save()
-/*configur file name concatenation of filename+time+userid.extension*/
 
 exports.getAllPhoto = wisid =>  Phlico
 	.find({ wisid })
 	.exec()
 
-exports.getSinglePhoto = imagename =>  Phlico
-  .find({ imagename })
+exports.getSinglePhoto = imageName =>  Phlico
+  .find({ imageName })
   .exec()
 
 
@@ -40,12 +37,3 @@ exports.addLike = (photoInfo, userid) => Phlico
 
 exports.removePhoto = (info) => Phlico
   .remove({...info})
-// exports.anotherLogics = () => null;
-
-/*export const loadNote = async id => Note
-  .findOne({ id })
-  .exec()
-
-export const saveNote = async (id, text) => Note
-  .findOneAndUpdate({ id }, { id, text }, { upsert: true });
-*/

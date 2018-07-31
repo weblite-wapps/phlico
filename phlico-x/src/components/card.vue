@@ -5,37 +5,40 @@
         v-if="!canDelete"
         id="heart"
         @click="changeLikeState"
-        :class="{'unlike': (!liked), 'like': (liked)}"><i id="heart">favorite</i></span>
-    </div> <!-- card -->
+        :class="{ unlike: !liked, like: liked }"
+      >
+        <i id="heart">favorite</i>
+      </span>
+    </div>
 
-    <div  class="icons">      
+    <div class="icons">
       <div class="row">
-        <div
-          id="send">
+        <div id="send">
             <i>send</i>
         </div>
 
-        <div 
+        <div
           id="comment"
-          @click="changeState">
-            <i>insert_comment</i>
+          @click="changeState"
+        >
+          <i>insert_comment</i>
         </div>
 
-        <div 
+        <div
           v-if="canDelete"
           @click="removePhoto"
-          id="delete">
-            <i>delete</i>
+          id="delete"
+        >
+          <i>delete</i>
         </div>
-        <a 
+        <a
           id="download"
-          :href="getOriginalPhoto()">
-            <i>get_app</i>
+          :href="getOriginalPhoto()"
+        >
+          <i>get_app</i>
         </a>
       </div>
-
     </div>
-
   </div>
 </template>
 
@@ -45,42 +48,38 @@
   export default {
     name: 'card',
 
+    props: {
+      imageName: String,
+      likeState: Boolean,
+      canDelete: Boolean,
+    },
+
     data() {
       return {
         liked: false,
-        name: '',
         card: {},
       }
     },
 
     created() {
-      this.imageName = this.imageName
       this.liked = this.likeState
       this.card = {
-        'backgroundImage': `url('${this.getPhoto()}')`,
-        'backgroundSize': 'Contain',
-        'backgroundRepeat': 'no-repeat',
-        'backgroundColor': 'rgb(94,94,94)',
-        'width': '320px',
-        'height': '320px',
-        'margin': '10px 0',
+        backgroundImage: `url('${this.getPhoto()}')`,
+        backgroundSize: 'Contain',
+        backgroundRepeat: 'no-repeat',
+        backgroundColor: 'rgb(94,94,94)',
+        width: '320px',
+        height: '320px',
+        margin: '10px 0',
       }
     },
 
     methods: {
-      getPhoto() {
-        const domain = config.server + '/img/'
-        return `${domain}Sqr_${this.imageName}`
-      },
+      getPhoto() { return `${config.server}/img/Sqr_${this.imageName}` },
 
-      getOriginalPhoto() {
-        const domain = config.server + '/img/'
-        return `${domain}${this.imageName}`
-      },
+      getOriginalPhoto() { return `${config.server}/img/${this.imageName}` },
 
-      changeState() {
-        this.$emit('state', 'comments')
-      },
+      changeState() { this.$emit('state', 'comments') },
 
       changeLikeState() {
         if (!this.liked) {
@@ -88,18 +87,9 @@
           this.$emit('like')
         }
       },
-  
-      removePhoto() {
-          this.$emit('del')
-      },
 
+      removePhoto() { this.$emit('del') },
     },
-
-    props: {
-      imageName: String,
-      likeState: Boolean,
-      canDelete: Boolean,
-    }
   }
 </script>
 
@@ -158,7 +148,7 @@
   }
   .left {
     display: flex;
-    align-self: flex-start; 
+    align-self: flex-start;
   }
   .icons a {
     text-decoration: none;
@@ -194,4 +184,3 @@
     color: #E17B0E;
   }
 </style>
-

@@ -1,43 +1,49 @@
 <template>
   <div class="comments">
-
     <!-- Caption -->
-    <div class="my-caption">
-        <span class="bigger">{{caption.userName}}</span>
+    <div class="caption">
+      <span class="bigger">{{creator}}</span>
       <div>
-        <p>{{caption.text}}</p>
-        <span 
+        <p>{{caption}}</p>
+        <span
           class="bigger"
-          id="like">{{likes}} ❤</span>
+          id="like"
+        >
+          {{likes}} ❤
+        </span>
       </div>
     </div>
 
     <!-- Get Comment -->
-    <get-comments
+    <add-comment
       :send="send"
       @state="changeState"
-      :deleteShow="caption.userName === user"/>
-    
+      :deleteShow="creator === user"
+    />
+
     <!-- Comments -->
-      <comment
-        v-for="(item, index) in this.comments"
-        :key="index"
-        :comment="item"/>
-      <loading v-if="!hasComment"/>
+    <comment
+      v-for="(item, index) in this.comments"
+      :key="index"
+      :comment="item"
+    />
+    <loading v-if="!hasComment"/>
   </div>
 </template>
 
 <script>
   import comment from './comment'
-  import loading from './loading'
-  import getComments from './getComments'
+  import addComment from './addComment'
+  import loading from '../helper/components/loading'
 
   export default {
     name: "comments",
-    
+
     props: {
       comments: Array,
-      caption: Object,
+      caption: String,
+      likes: Number,
+      creator: String,
       user: String,
       send: Function,
     },
@@ -45,30 +51,22 @@
     components: {
       comment,
       loading,
-      'get-comments': getComments,
+      addComment,
     },
 
     methods: {
-      changeState(event) {
-        this.$emit('state', event)
-      },
+      changeState(event) { this.$emit('state', event) },
     },
 
     computed:{
-      hasComment() {
-        return this.comments.length !== 0
-      },
-
-      likes() {
-        return this.caption.likes || ''
-      },
+      hasComment() { return this.comments.length !== 0 },
     },
 
   }
 </script>
 
 <style scoped>
-  .my-caption {
+  .caption {
     text-align: center;
     width: 300px;
     margin: 0 auto 15px auto;
@@ -93,7 +91,7 @@
     margin: 10px auto;
     overflow: auto;
     box-shadow: 0 0 1px rgba(255,255,255, .6);
-    
+
   }
   .comments::-webkit-scrollbar-track
   {

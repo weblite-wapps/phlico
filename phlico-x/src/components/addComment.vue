@@ -1,5 +1,5 @@
 <template>
-  <div id="comment">  
+  <div id="comment">
     <div class="row">
       <textarea
         class="comment-text"
@@ -18,8 +18,8 @@
 
 <script>
   export default {
-    name: 'getComments',
- 
+    name: 'addComment',
+
     props: {
       send: Function,
     },

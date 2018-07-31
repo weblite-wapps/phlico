@@ -4,19 +4,21 @@
       :imageName="imageName"
       v-if="state === 'card'"
       :likeState="likeState"
-      :canDelete="userInfo.userName === caption.userName"
-      @del="del({'userId': userInfo.userId, imageName})"
-      @like="sendLike({'userId': userInfo.userId, imageName})"
-      @state="changeState"/>
-
+      :canDelete="userInfo.userName === creator"
+      @del="del({ userId: userInfo.userId, imageName })"
+      @like="sendLike({ userId: userInfo.userId, imageName })"
+      @state="changeState"
+    />
 
     <comments
       v-else-if="state === 'comments'"
+      :caption="caption"
+      :creator="creator"
+      :likes="likes"
       @state="changeState"
       :comments="photoComments"
-      :caption="caption"
-      :send="sendComment({'userid': userInfo.userId, 'author': userInfo.userName, imageName})"/>
-
+      :send="sendComment({ userid: userInfo.userId, author: userInfo.userName, imageName })"
+    />
   </div>
 </template>
 
@@ -26,8 +28,20 @@
   import { addComment, addLike } from '../helper/function/requestHandler'
   const { R } = window
 
+
   export default {
     name: "phlico",
+
+    props: {
+      imageName: String,
+      comments: Array,
+      caption: String,
+      likes: Number,
+      creator: String,
+      userInfo: Object,
+      likeState: Boolean,
+      del: Function,
+    },
 
     data() {
       return {
@@ -36,38 +50,22 @@
       }
     },
 
-    mounted() {this.photoComments = this.comments},
+    mounted() { this.photoComments = this.comments },
 
     methods: {
-      changeState(event) {
-        this.state = event
-      },
+      changeState(event) { this.state = event },
 
       sendComment(info) {
-        return comment => {
-          addComment(info, comment)
-          .then(({body: {comment}}) => { this.photoComments = R.append(comment, this.photoComments)})
-            .catch((err) => err)
-        }
+        return comment => addComment(info, comment)
+          .then(res => { this.photoComments = R.append(res.body.comment, this.photoComments)})
       },
 
-      sendLike(info) {
-        addLike(info)
-      }
+      sendLike(info) { addLike(info) },
     },
 
     components: {
       card,
-      comments
+      comments,
     },
-
-    props: {
-      imageName: String,
-      comments: Array,
-      caption: Object,
-      userInfo: Object,
-      likeState: Boolean,
-      del: Function,
-    }
   }
 </script>

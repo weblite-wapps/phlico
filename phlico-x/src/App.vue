@@ -5,8 +5,10 @@
       :key="index"
       :imageName="item.imageName"
       :caption="item.caption"
+      :creator="item.creator"
+      :likes="item.likes"
       :comments="item.comments"
-      :userInfo="{userId, userName}"
+      :userInfo="{ userId, userName }"
       :likeState="item.likeState"
       :del="deletePhoto"
     />
@@ -20,7 +22,7 @@
 <script>
   import phlico from './components/phlico'
   import uploader from './components/uploader'
-  import spliter from './components/spliter'
+  import spliter from './helper/components/spliter'
   // helper
   import webliteHandler from './helper/function/weblite.api'
   import { savePhoto, deletePhoto, getAll, addLike } from './helper/function/requestHandler'
@@ -54,14 +56,12 @@
         getAll(this.wisId)
           .then((body) => {
             if (body) {
-              this.phlicoz = R.map(({ imageName, comments, userName, likes, caption }) => ({
+              this.phlicoz = R.map(({ imageName, comments, userName: creator, likes, caption }) => ({
                 imageName,
                 comments,
-                caption: {
-                  userName,
-                  likes: R.length(R.uniq((likes))),
-                  text: caption,
-                },
+                creator,
+                caption,
+                likes: R.length(R.uniq((likes))),
                 likeState: R.findIndex(R.equals(this.userId), likes) !== -1,
               }), body)
             }

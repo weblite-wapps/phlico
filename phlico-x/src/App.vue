@@ -26,7 +26,7 @@
 
   // helper
   import webliteHandler from './helper/function/weblite.api'
-  import {savePhoto, deletePhoto, getAll} from './helper/function/requestHandler'
+  import {savePhoto, deletePhoto, getAll, addLike} from './helper/function/requestHandler'
   const { W, R } = window
 
 

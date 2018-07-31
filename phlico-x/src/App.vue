@@ -35,8 +35,8 @@
     data() {
       return {
         wisId: (W && W.wisId) || '1',
-        userId: '2',
-        username: "ali",
+        userId: '',
+        username: '',
         phlicoz: [],
       }
     },
@@ -47,9 +47,10 @@
       spliter
     },
 
-    created() { W && webliteHandler(this) },
-
-    mounted() { this.init() },
+    created() {
+      W && webliteHandler(this)
+      !W && this.init()
+    },
 
     methods: {
       init() {

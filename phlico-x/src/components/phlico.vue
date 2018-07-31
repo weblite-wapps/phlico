@@ -57,7 +57,7 @@
 
       sendComment(info) {
         return comment => addComment(info, comment)
-          .then(res => { this.photoComments = R.append(res.body.comment, this.photoComments)})
+          .then((res) => { this.photoComments = R.append(res.body.comment, this.photoComments)})
       },
 
       sendLike(info) { addLike(info) },

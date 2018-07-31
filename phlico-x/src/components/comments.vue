@@ -18,7 +18,6 @@
     <add-comment
       :send="send"
       @state="changeState"
-      :deleteShow="creator === user"
     />
 
     <!-- Comments -->
@@ -44,7 +43,6 @@
       caption: String,
       likes: Number,
       creator: String,
-      user: String,
       send: Function,
     },
 

@@ -16,6 +16,7 @@
   </div>
 </template>
 
+
 <script>
   export default {
     name: 'addComment',
@@ -31,22 +32,20 @@
     },
 
     methods: {
-      changeState() {
-        this.$emit('state', 'card')
-      },
+      changeState() { this.$emit('state', 'card') },
+
       submit() {
         const time = Date().split(' ').splice(1, 4)
         const date = `${time[0]} ${time[1]}, ${time[2]} ${time[3]}`
-        if (this.opinion === '') alert('Comment is empty')
-        else {
-          const opinion = this.opinion
-          this.send({opinion, date})
+        if (this.opinion) {
+          this.send({ opinion: this.opinion, date })
+          this.opinion = ''
         }
-        this.opinion = ''
       }
     },
   }
 </script>
+
 
 <style scoped>
   #comment {
@@ -114,5 +113,4 @@
   #del {
     background-color: #E82D2D;
   }
-
 </style>

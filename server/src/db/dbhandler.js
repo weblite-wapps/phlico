@@ -4,7 +4,6 @@ const mongoose = require('mongoose')
 const Phlico = require('./models/index')
 
 
-/*Database handlers*/
 exports.connect = name => {
 	mongoose.connect(`mongodb://localhost:27017/${name}`)
 
@@ -15,25 +14,23 @@ exports.connect = name => {
 	})
 }
 
-
 exports.savePhoto = photoInfo => new Phlico(photoInfo).save()
 
-exports.getAllPhoto = wisid =>  Phlico
-	.find({ wisid })
+exports.getAllPhoto = wisId =>  Phlico
+	.find({ wisId })
 	.exec()
 
 exports.getSinglePhoto = imageName =>  Phlico
   .find({ imageName })
   .exec()
 
-
 exports.addComment = (photoInfo, comment) => Phlico
   .update({...photoInfo},
     {$push: {comments: comment}})
 
-exports.addLike = (photoInfo, userid) => Phlico
+exports.addLike = (photoInfo, userId) => Phlico
   .update({...photoInfo},
-    {$push: {likes: userid}})
+    {$push: {likes: userId}})
 
 exports.removePhoto = (info) => Phlico
   .remove({...info})

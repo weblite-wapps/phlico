@@ -1,12 +1,15 @@
-/* Routing logic must be added here*/
+/*Third party packages*/
 const express = require('express')
 const bodyParser = require('body-parser')
 const multer = require('multer')
 const crypto = require('crypto')
 const path = require('path')
+
+/*Project dependencies packages*/
 const Image = require('../helper/index')['Image']
 const File =  require('../helper/index')['File']
 const database = require('../db/index')
+
 const domain = 'http://localhost:3000'
 
 const storage = multer.diskStorage({
@@ -19,13 +22,13 @@ const storage = multer.diskStorage({
     })
   }
 })
-const upload = multer({ storage })
 
+const upload = multer({ storage })
 const router = express.Router()
+
 router.use('/static', express.static('./public/images/'))
 router.use(bodyParser.json())
 router.use((req, res,next) => {
-  // set base rule for this hole route
   res.setHeader('Access-Control-Allow-Origin', '*')
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
@@ -42,29 +45,30 @@ router.post('/upload', upload.single('image'), function (req, res) {
   else {
     const url = domain + '/img/'
     //  image reshape here
-    console.log('in router.js', req.file)
+    
     Image.saveHighResolution(url, req.file.filename, req.file.size)
     .then(() => console.log('saveHighResolution finished'))
     .catch(err => console.log(err))
+
     Image.saveMiniSize(url, req.file.filename)
     .then(() => {
-      //  Database
       const doc = {
-        wisid: req.body.wisid,
-        userid: req.body.userid,
-        username: req.body.username,
+        wisId: req.body.wisId,
+        userId: req.body.userId,
+        userName: req.body.userName,
         caption: req.body.caption,
         imageName: req.file.filename,
         comments: [],
         likes: [],
       }
+
       database
         .savePhoto(doc)
         .then(() => res.send({doc: {
             imageName: doc.imageName,
             comments: doc.comments,
             caption: {
-              username: doc.username,
+              userName: doc.userName,
               likes: doc.likes.length,
               text: doc.caption,
             },
@@ -85,7 +89,7 @@ router.post('/addComment', function (req, res) {
   const info = {
     imageName: req.body.imageName,
   }
-
+  console.log('info, comment:= ', info, comment)
   database
     .addComment(info, comment)
     .then(response => res.send({comment}))
@@ -96,9 +100,9 @@ router.post('/addLike', function (req, res) {
   const info = {
     imageName: req.body.imageName,
   }
-
+  console.log('info:= ', info)
   database
-    .addLike(info, req.body.userid)
+    .addLike(info, req.body.userId)
     .then(response => res.send(response))
     .catch(err => console.log("addComment --Err:",err))
 })
@@ -106,10 +110,8 @@ router.post('/addLike', function (req, res) {
 router.post('/remove', function (req, res) {
   const info = {
     imageName: req.body.imageName,
-    userid: req.body.userid
+    userId: req.body.userId
   }
-
-  // in database promise resolve removing files form public/src
   
   database
     .removePhoto(info)
@@ -123,13 +125,12 @@ router.post('/remove', function (req, res) {
 
 // GET
 router.get('/img/:name', ({params: {name}}, res) => {
-  console.log("download page with name of=", name)
   res.download(`./public/images/${name}`, (err) => {
     if(err) console.log("Download Err", err)
   })
 })
-router.get('/load/all/:wisid', ({params: {wisid}}, res) => {
-  database.getAllPhoto(wisid)
+router.get('/load/all/:wisId', ({params: {wisId}}, res) => {
+  database.getAllPhoto(wisId)
     .then(photos => res.send(photos))
     .catch(err => console.log(err))
 })

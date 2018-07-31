@@ -3,7 +3,7 @@
 
     <!-- Caption -->
     <div class="my-caption">
-        <span class="bigger">{{caption.username}}</span>
+        <span class="bigger">{{caption.userName}}</span>
       <div>
         <p>{{caption.text}}</p>
         <span 
@@ -16,7 +16,7 @@
     <get-comments
       :send="send"
       @state="changeState"
-      :deleteShow="caption.username === user"/>
+      :deleteShow="caption.userName === user"/>
     
     <!-- Comments -->
       <comment

@@ -4,9 +4,9 @@
       :imageName="imageName"
       v-if="state === 'card'"
       :likeState="likeState"
-      :canDelete="userInfo.username === caption.username"
-      @del="del({'userid': userInfo.userid, imageName})"
-      @like="sendLike({'userid': userInfo.userid, imageName})"
+      :canDelete="userInfo.userName === caption.userName"
+      @del="del({'userId': userInfo.userId, imageName})"
+      @like="sendLike({'userId': userInfo.userId, imageName})"
       @state="changeState"/>
 
 
@@ -15,7 +15,7 @@
       @state="changeState"
       :comments="photoComments"
       :caption="caption"
-      :send="sendComment({'userid': userInfo.userid, 'author': userInfo.username, imageName})"/>
+      :send="sendComment({'userid': userInfo.userId, 'author': userInfo.userName, imageName})"/>
 
   </div>
 </template>
@@ -23,7 +23,7 @@
 <script>
   import card from './card'
   import comments from './comments'
-  import { addComment, sendLike } from '../helper/function/requestHandler'
+  import { addComment, addLike } from '../helper/function/requestHandler'
   const { R } = window
 
   export default {
@@ -52,7 +52,7 @@
       },
 
       sendLike(info) {
-        sendLike(info)
+        addLike(info)
       }
     },
 

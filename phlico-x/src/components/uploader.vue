@@ -2,7 +2,6 @@
   <div id="container">
     <div>
       <label 
-        tabindex="0" 
         for="uploader" 
         class="btn">{{ buttonText }}</label>
       <input 
@@ -13,8 +12,6 @@
         class="input-file" 
         @change="getFile"/>
       <textarea
-          name="caption"
-          value="no Caption"
           placeholder="Add Your Caption"
           v-model="caption"
           class="caption-text"></textarea>

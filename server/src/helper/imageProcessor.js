@@ -28,6 +28,7 @@ exports.saveMiniSize = (url, fileName) => new Promise(resolve => {
 
 /*save high resolution*/
 exports.saveHighResolution = (url, fileName, photoSize) => new Promise(resolve => {
+  console.log('url+fileNa:= ', url+fileName)
   gm(url + fileName)
     .size(function (err, size) {
       if (err) console.log("High resolution image gm.size --Err:", err)

@@ -7,7 +7,7 @@
 
       <div class="bot">
         <span id="like">{{likes}} ❤</span>
-        <span class="username">{{caption.username}}</span>
+        <span class="username">{{caption.userName}}</span>
       </div>
     </div>
 

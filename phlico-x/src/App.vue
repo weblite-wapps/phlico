@@ -7,14 +7,14 @@
       :imageName="item.imageName"
       :caption="item.caption"
       :comments="item.comments"
-      :userInfo="{userid, username}"
+      :userInfo="{userId, userName}"
       :likeState="item.likeState"
       :del="deletePhoto"/>
 
     <spliter v-if="hasPhoto">upload</spliter> 
 
     <uploader 
-      :send="sendPhoto({wisid, userid, username})"
+      :send="sendPhoto({wisId, userId, userName})"
       />
   </div>
 </template>
@@ -35,9 +35,9 @@
 
     data() {
       return {
-        wisid: (W && W.wisid) || '1',
-        userid: '1',
-        username: "amirhe",
+        wisId: (W && W.wisId) || '1',
+        userId: '1',
+        userName: "amirhe",
         phlicoz: [],
         hasPhoto: false,
       }
@@ -56,18 +56,18 @@
 
     methods: {
       init() {
-        getAll(this.wisid)
+        getAll(this.wisId)
           .then((body) => {
             if (body) {
               this.phlicoz = R.map(item => ({
                 imageName: item.imageName,
                 comments: item.comments,
                 caption: {
-                  username: item.username,
+                  userName: item.userName,
                   likes: R.length(R.uniq((item.likes))),
                   text: item.caption,
                 },
-                likeState: R.findIndex(R.equals(this.userid), item.likes) !== -1,
+                likeState: R.findIndex(R.equals(this.userId), item.likes) !== -1,
               }), body)
               this.hasPhoto = (R.length(this.phlicoz) !== 0)
             }
@@ -79,6 +79,8 @@
         return photo => {
           savePhoto(info, photo)
             .then((res) => { 
+              console.log('res:= ', res)
+
               this.phlicoz = R.append(res.body.doc, this.phlicoz)
               this.hasPhoto = true })
             .catch((err) => err)
@@ -92,6 +94,12 @@
             this.hasPhoto = (R.length(this.phlicoz) !== 0) })
           .catch((err) => err)
       },
+
+      sendLike(info) {
+        this.likeState = true
+        addLike(info)
+      }
+
     },
   }
 </script>

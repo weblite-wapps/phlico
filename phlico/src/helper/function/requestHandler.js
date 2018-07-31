@@ -3,8 +3,8 @@ const config = require('../../config')
 const domain = config.default.server
 
 
-export const getSinglePhotoData = imagename => request
-    .get(domain + `/load/single/${imagename}`)
+export const getSinglePhotoData = imageName => request
+    .get(domain + `/load/single/${imageName}`)
     .then((res) => res.body)
     .catch((err) => console.log(err))
 

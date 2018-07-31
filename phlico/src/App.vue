@@ -4,7 +4,7 @@
       v-if="state === 'card'"
       :imageName="imageName"
       :likeState="likeState"
-      @like="sendLike({userid, 'imagename': imageName})"
+      @like="sendLike({userId, imageName})"
       @state="changeState"/>
 
     <comments
@@ -12,7 +12,7 @@
       @state="changeState"
       :comments="photoComments"
       :caption="caption"
-      :send="sendComment({'author': username, 'imagename': imageName})"/>
+      :send="sendComment({'author': userName,  imageName})"/>
 
   </div>
 </template>
@@ -30,10 +30,10 @@
    
     data() {
       return {
-        wisid: (W && W.wisid) || '1',
-        imageName: 'fff9d212d281a412502171a2969ebb9d_1532954670768.gif',
-        userid: '1',
-        username: "amirhe",
+        wisId: (W && W.wisId) || '1',
+        imageName: 'ce3d662fafa5a1ac5eafec3b19ee128a_1533015470435.jpg',
+        userId: '1',
+        userName: "amirhe",
         state: 'card',
         photoComments: [],
         caption: {},
@@ -62,13 +62,13 @@
           .then((body) => {
             this.photoComments = body.comments
             this.caption = {
-              username: body.username,
+              userName: body.userName,
               likes: R.length(R.uniq((body.likes))),
               text: body.caption,
             }
-            this.likeState = R.findIndex(R.equals(this.userid), body.likes) !== -1
+            this.likeState = R.findIndex(R.equals(this.userId), body.likes) !== -1
           })
-          .catch((err) => console.log("mode[A]-getAll[F]-APP[vue]", err))
+          .catch((err) => err)
       },
 
       sendComment(info) {
@@ -76,7 +76,7 @@
           addComment(info, comment)
           .then(({body: {comment}}) => { 
             this.photoComments = R.append(comment, this.photoComments)})
-            .catch((err) => console.log('In addComment', err))
+            .catch((err) => err)
         }
       },
 

@@ -4,11 +4,13 @@
   </div>
 </template>
 
+
 <script>
   export default {
     name: 'spliter',
   }
 </script>
+
 
 <style scoped>
 .on-the-line {
@@ -18,6 +20,7 @@
   color: #fff;
   text-align: center;
 }
+
 .on-the-line::after,
 .on-the-line::before {
   border-top: solid 1.3px #97989D;

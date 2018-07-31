@@ -12,7 +12,7 @@
       @state="changeState"
       :comments="photoComments"
       :caption="caption"
-      :send="sendComment({'author': userName,  imageName})"/>
+      :send="sendComment({'author': username,  imageName})"/>
 
   </div>
 </template>
@@ -33,7 +33,7 @@
         wisId: (W && W.wisId) || '1',
         imageName: 'ce3d662fafa5a1ac5eafec3b19ee128a_1533015470435.jpg',
         userId: '1',
-        userName: "amirhe",
+        username: "amirhe",
         state: 'card',
         photoComments: [],
         caption: {},

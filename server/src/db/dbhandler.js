@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
-// const R = require('ramda')
 // model
-const Phlico = require('./models/index')
+const Phlico = require('./models/phlico')
 
 
 exports.connect = name => {
@@ -20,17 +19,14 @@ exports.getAllPhoto = wisId =>  Phlico
 	.find({ wisId })
 	.exec()
 
-exports.getSinglePhoto = imageName =>  Phlico
+exports.getSinglePhoto = imageName => Phlico
   .find({ imageName })
   .exec()
 
 exports.addComment = (photoInfo, comment) => Phlico
-  .update({...photoInfo},
-    {$push: {comments: comment}})
+  .update({ ...photoInfo }, { $push: { comments: comment } })
 
 exports.addLike = (photoInfo, userId) => Phlico
-  .update({...photoInfo},
-    {$push: {likes: userId}})
+  .update({ ...photoInfo }, { $push: { likes: userId } })
 
-exports.removePhoto = (info) => Phlico
-  .remove({...info})
+exports.removePhoto = info => Phlico.remove({ ...info })

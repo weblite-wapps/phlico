@@ -1,24 +1,33 @@
 <template>
   <div id="container">
-    <div>
-      <label 
-        for="uploader" 
-        class="btn">{{ buttonText }}</label>
-      <input 
-        type="file" 
-        accept="image/*" 
-        name="image" 
-        id="uploader" 
-        class="input-file" 
-        @change="getFile"/>
-      <textarea
-          placeholder="Add Your Caption"
-          v-model="caption"
-          class="caption-text"></textarea>
-      <button
-        class="btn"
-        @click="submitFile">Send</button>
-    </div>
+    <label
+      for="uploader"
+      class="btn"
+    >
+      {{ buttonText }}
+    </label>
+
+    <input
+      type="file"
+      accept="image/*"
+      id="uploader"
+      class="input-file"
+      @change="getFile"
+    />
+
+    <textarea
+      placeholder="Add Your Caption"
+      v-model="caption"
+      @keyup.ctrl.enter="submitFile"
+      class="caption-text"
+    />
+
+    <button
+      class="btn"
+      @click="submitFile"
+    >
+      Send
+    </button>
   </div>
 </template>
 
@@ -27,50 +36,43 @@
 export default {
   name: 'Upload',
 
+  props: {
+    send: Function,
+  },
+
   data() {
     return {
-      file: '',
+      file: null,
       caption: '',
-      buttonText: 'Select a file ...'
     }
+  },
+
+  computed: {
+    buttonText() {
+      if (!this.file) return 'Select a file ...'
+      return (this.file.name.length > 30) ? this.file.name.slice(0,30) + '.. .' : this.file.name
+    },
+
+    isFileValid() {
+      const allowedExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp']
+      const extension = this.file.name.toLowerCase().split('.').pop()
+      return allowedExtension.indexOf(extension) !== -1
+    },
   },
 
   methods: {
-    getFile(event) {
-      this.file = event.target.files[0]
-      this.buttonText = (this.file.name.length > 30) ? this.file.name.slice(0,30) + '.. .' : this.file.name
-    },
+    getFile(event) { this.file = event.target.files[0]},
 
     submitFile() {
-      const file = this.file
-      if (file === '') return alert('Please Select Image!')
-
-      const caption = this.caption
-      
-      /* type cheking in front*/
-      const allowedExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
-      const extension = file.name.split('.').pop()
-      const isAcceptable = allowedExtension.indexOf(extension) !== -1;
-
-      if (isAcceptable) {
-        this.send({'file': file, 'caption': caption})
+      if (this.file && this.isFileValid) {
+        this.send({ file: this.file, caption: this.caption })
         this.$emit('state', 'update')
         this.caption = ''
-        this.buttonText = 'Select a file ...'
-        this.file = ''
       }
-      else {
-        alert(`Sorry we don't support this type of *.${extension} Files yet!`)
-        this.buttonText = 'Select a file ...'
-        this.file = ''
-      }
+
+      this.file = null
     }
   },
-
-  props: {
-    send: Function,
-  }
-
 }
 </script>
 
@@ -81,6 +83,7 @@ export default {
     height: auto;
     margin: 30px auto 0 auto;
   }
+
   .input-file {
     position: absolute;
     top: 0; left: 0;
@@ -89,15 +92,16 @@ export default {
     padding: 14px 0;
     cursor: pointer;
   }
+
   .input-file + label  {
     font-size: 1em;
     font-weight: 700;
     color: white;
     width: 85%;
   }
+
   .caption-text {
     background-color: rgb(46, 55, 63);
-    
     border: none;
     border-radius: 5px;
     box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
@@ -110,6 +114,7 @@ export default {
     margin: 10px auto;
     overflow: hidden;
   }
+
   ::-webkit-input-placeholder { /* Chrome */
     color: #b3afc0;
   }
@@ -124,6 +129,7 @@ export default {
     color: #b3afc0;
     opacity: 1;
   }
+
   .btn {
     display: block;
     border:  none;
@@ -136,6 +142,7 @@ export default {
     outline: none;
     padding: 6px 15px;
   }
+
   .btn:hover {
     background-color: #E14F60;
     box-shadow: 0 1px 2px rgb(51, 56, 67);

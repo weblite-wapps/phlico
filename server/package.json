@@ -10,6 +10,7 @@
   "author": "amirhossein ebrahimi <amirhosseinebrahimi77@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.4",
     "crypto": "^1.0.1",
     "express": "^4.16.3",
     "gm": "^1.23.1",

@@ -5,7 +5,7 @@ const mongoose = require('mongoose')
 const definition = {
   wisId: String,
 	userId: String,
-  userName: String,
+  creator: String,
   imageName: String,
   caption: String,
 	comments: [{

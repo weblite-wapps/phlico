@@ -17,6 +17,7 @@
 <script>
   export default {
     name: 'comment',
+
     data() {
       return {
         like: true,

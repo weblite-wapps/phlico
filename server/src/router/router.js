@@ -5,12 +5,12 @@ const crypto = require('crypto')
 const path = require('path')
 // Project dependencies packages
 const Image = require('../helper/imageProcessor')
-const File =  require('../helper/file')
+const { imagesPath, getImagePath, remove } =  require('../helper/file')
 const database = require('../db/index')
 
 
 const storage = multer.diskStorage({
-  destination: './public/images',
+  destination: imagesPath,
   filename: function (req, file, callback) {
     crypto.randomBytes(16, function(err, buffer) {
       const token = buffer.toString('hex');
@@ -55,7 +55,7 @@ router.post(
           .savePhoto(doc)
           .then(() => res.send({
             doc: {
-                imageName,
+                imageName: doc.imageName,
                 comments: [],
                 caption: { userName, likes: 0, text: caption, },
                 likeState: false,
@@ -88,13 +88,13 @@ router.post('/remove', ({ body: { imageName, userId } }, res) => database
   .removePhoto({ imageName, userId })
   .then(response => {
     res.send({'imageName': imageName})
-    File.remove(imageName)
-    File.remove(`Sqr_${imageName}`)
+    remove(`high_${imageName}`)
+    remove(`Sqr_${imageName}`)
   })
   .catch(err => console.log("addComment --Err:", err)))
 
 router.get('/img/:name', ({params: {name}}, res) => {
-  res.download(`./public/images/${name}`, (err) => {
+  res.download(getImagePath(name), (err) => {
     if(err) console.log("Download Err", err)
   })
 })

@@ -5,7 +5,7 @@
         v-if="!canDelete"
         id="heart"
         @click="changeLikeState"
-        :class="{ unlike: !liked, like: liked }"
+        :class="{ unlike: !likeState, like: likeState }"
       >
         <i id="heart">favorite</i>
       </span>
@@ -50,19 +50,20 @@
 
     props: {
       imageName: String,
-      likeState: Boolean,
+      likeState:{
+        default:false,
+        type:Boolean
+      },
       canDelete: Boolean,
     },
 
     data() {
       return {
-        liked: false,
         card: {},
       }
     },
 
     created() {
-      this.liked = this.likeState
       this.card = {
         backgroundImage: `url('${this.getPhoto()}')`,
         backgroundSize: 'Contain',
@@ -82,8 +83,7 @@
       changeState() { this.$emit('state', 'comments') },
 
       changeLikeState() {
-        if (!this.liked) {
-          this.liked = true
+        if (!this.likeState) {
           this.$emit('like')
         }
       },

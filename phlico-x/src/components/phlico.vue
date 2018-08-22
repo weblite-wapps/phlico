@@ -5,8 +5,8 @@
       v-if="state === 'card'"
       :likeState="likeState"
       :canDelete="userInfo.username === creator"
-      @del="del({ userId: userInfo.userId, imageName })"
       @like="sendLike({ userId: userInfo.userId, imageName })"
+      @del="del({ userId: userInfo.userId, imageName })"
       @state="changeState"
     />
 
@@ -40,6 +40,7 @@
       creator: String,
       userInfo: Object,
       likeState: Boolean,
+      updateLike:Function,
       del: Function,
     },
 
@@ -60,7 +61,10 @@
           .then((res) => { this.photoComments = R.append(res.body.comment, this.photoComments)})
       },
 
-      sendLike(info) { addLike(info).then() },
+      sendLike(info) {
+         this.updateLike()
+         addLike(info).then()
+       },
     },
 
     components: {

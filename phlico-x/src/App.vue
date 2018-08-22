@@ -1,8 +1,8 @@
 <template>
-  <div id="app">
+  <div id="app" ref="appref">
     <phlico
-      v-for="(item, index) in phlicoz"
-      :key="index"
+      v-for="item in phlicoz"
+      :key="item.imageName"
       :imageName="item.imageName"
       :caption="item.caption"
       :creator="item.creator"
@@ -10,6 +10,7 @@
       :comments="item.comments"
       :userInfo="{ userId, username }"
       :likeState="item.likeState"
+      :updateLike="updateLike(item)"
       :del="deletePhoto"
     />
 
@@ -49,7 +50,7 @@
 
     created() {
       W && webliteHandler(this)
-      !W && this.init()
+      this.init()
     },
 
     methods: {
@@ -71,9 +72,13 @@
 
       addPhoto(photo) {
         const info = { wisId: this.wisId, userId: this.userId, creator: this.username }
+        this.$refs.appref.scrollTop = 0;
 
         savePhoto(info, photo)
-          .then((res) => this.phlicoz = R.append(res.body.doc, this.phlicoz))
+          .then((res) => {
+            this.phlicoz = R.concat([res.body.doc], this.phlicoz)
+
+          })
           .catch(console.log)
       },
 
@@ -83,6 +88,12 @@
             this.phlicoz = R.reject(R.propEq('imageName', res.body.imageName), this.phlicoz)
           })
       },
+      updateLike(phlico)  {
+        return () =>{
+           phlico.likeState = true
+           phlico.likes = phlico.likes + 1
+        }
+      }
     },
   }
 </script>

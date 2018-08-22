@@ -1,23 +1,22 @@
 const mongoose = require('mongoose')
-// model
+//  model
 const Phlico = require('./models/phlico')
 
 
-exports.connect = name => {
-	mongoose.connect(`mongodb://localhost:27017/${name}`)
-
-	const db = mongoose.connection
-	db.on('error', console.log)
-	db.once('open', () => {
-		console.log('Connection to database successfully is made ...')
-	})
+exports.connect = (name) => {
+  mongoose.connect(`mongodb://localhost:27017/${name}`)
+  const db = mongoose.connection
+  db.on('error', console.log)
+  db.once('open', () => {
+    console.log('Connection to database successfully is made ...')
+  })
 }
 
-exports.savePhoto = photoInfo => new Phlico(photoInfo).save()
+exports.savePhoto = photoInfo => new Phlico({ ...photoInfo, date: new Date() }).save()
 
-exports.getAllPhoto = wisId =>  Phlico
-	.find({ wisId })
-	.exec()
+exports.getAllPhoto = wisId => Phlico
+  .find({ wisId })
+  .exec()
 
 exports.getSinglePhoto = imageName => Phlico
   .find({ imageName })

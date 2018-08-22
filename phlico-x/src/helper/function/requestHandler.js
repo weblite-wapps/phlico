@@ -10,7 +10,7 @@ export const getAll = wisId => request
 export const savePhoto = (info, photo) => {
   const formData = new FormData()
 
-  console.log('info, photo:= ', info, photo)
+  // console.log('info, photo:= ', info, photo)
   formData.append("wisId", info.wisId)
   formData.append("userId", info.userId)
   formData.append("creator", info.creator)

@@ -83,9 +83,7 @@
       changeState() { this.$emit('state', 'comments') },
 
       changeLikeState() {
-        if (!this.likeState) {
-          this.$emit('like')
-        }
+        if (!this.likeState) {this.$emit('like')}
       },
 
       removePhoto() { this.$emit('del') },

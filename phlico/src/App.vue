@@ -27,7 +27,7 @@
 
   export default {
     name: 'App',
-   
+
     data() {
       return {
         wisId: (W && W.wisId) || '1',
@@ -46,7 +46,7 @@
       comments,
     },
 
-      
+
     created() { W && webliteHandler(this) },
 
     mounted() { this.init() },
@@ -74,7 +74,7 @@
       sendComment(info) {
         return comment => {
           addComment(info, comment)
-          .then(({body: {comment}}) => { 
+          .then(({body: {comment}}) => {
             this.photoComments = R.append(comment, this.photoComments)})
             .catch((err) => err)
         }

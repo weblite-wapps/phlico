@@ -50,7 +50,7 @@
 
     created() {
       W && webliteHandler(this)
-      this.init()
+      !W && this.init()
     },
 
     methods: {
@@ -72,11 +72,13 @@
 
       addPhoto(photo) {
         const info = { wisId: this.wisId, userId: this.userId, creator: this.username }
+        console.log(`${info.creator} Has added new image =)`)
+        W.sendNotificationToAll('Phlico', `${info.creator} Has added new image =)`)
         this.$refs.appref.scrollTop = 0;
 
         savePhoto(info, photo)
           .then((res) => {
-            this.phlicoz = R.concat([res.body.doc], this.phlicoz)
+            this.phlicoz = R.prepend(res.body.doc, this.phlicoz)
 
           })
           .catch(console.log)

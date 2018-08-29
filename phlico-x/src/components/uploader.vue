@@ -1,9 +1,8 @@
 <template>
-  <div id="container" >
+  <div id="container">
     <label
       for="uploader"
       class="btn"
-
     >
       {{ buttonText }}
     </label>

@@ -11,6 +11,7 @@
       :userInfo="{ userId, username }"
       :likeState="item.likeState"
       :updateLike="updateLike(item)"
+      :sendToChat="sendToChat"
       :del="deletePhoto"
     />
 
@@ -28,7 +29,6 @@
   import webliteHandler from './helper/function/weblite.api'
   import { savePhoto, deletePhoto, getAll, addLike } from './helper/function/requestHandler'
   const { W, R } = window
-
 
   export default {
     name: 'App',
@@ -72,7 +72,6 @@
 
       addPhoto(photo) {
         const info = { wisId: this.wisId, userId: this.userId, creator: this.username }
-        console.log(`${info.creator} Has added new image =)`)
         W.sendNotificationToAll('Phlico', `${info.creator} Has added new image =)`)
         this.$refs.appref.scrollTop = 0;
 
@@ -90,11 +89,19 @@
             this.phlicoz = R.reject(R.propEq('imageName', res.body.imageName), this.phlicoz)
           })
       },
+
       updateLike(phlico)  {
         return () =>{
            phlico.likeState = true
            phlico.likes = phlico.likes + 1
         }
+      },
+      
+      sendToChat(imageName) {
+        W.sendMessageToCurrentChat('wapp', {
+          wappId: '',
+          customize: { imageName },
+        })
       }
     },
   }

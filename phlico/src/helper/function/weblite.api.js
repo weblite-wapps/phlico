@@ -1,14 +1,15 @@
 // W && R
-const { W, R } = window
+const { W } = window
 
-
-export default (vueRoot) => {
+export default vueRoot => {
   /* Load Data */
-  // // get user
-  W.loadData().then(({ user: { name}}) => {
+  // get user
+  W.loadData().then(({ user: { name, id }, customize: { imageName } }) => {
+    vueRoot.userId = id
     vueRoot.username = name
-  })
+    vueRoot.imageName = imageName
 
-  // start
-  W.start()
+    vueRoot.init()
+    W.start()
+  })
 }

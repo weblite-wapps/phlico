@@ -31,9 +31,9 @@
     data() {
       return {
         wisId: (W && W.wisId) || '1',
-        imageName: 'ce3d662fafa5a1ac5eafec3b19ee128a_1533015470435.jpg',
-        userId: '1',
-        username: "amirhe",
+        imageName: '',
+        userId: '',
+        username: "",
         state: 'card',
         photoComments: [],
         caption: {},
@@ -45,7 +45,6 @@
       card,
       comments,
     },
-
 
     created() { W && webliteHandler(this) },
 
@@ -83,7 +82,9 @@
       sendLike(info) {
         this.likeState = true
         addLike(info)
-      }
+      },
+
+   
     },
   }
 </script>
@@ -92,5 +93,6 @@
   #app {
     width: 400px;
     height: 400px;
+    /* border: 2px black solid; */
   }
 </style>

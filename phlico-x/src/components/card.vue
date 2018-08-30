@@ -2,7 +2,6 @@
   <div class="card">
     <div :style="card">
       <span
-        v-if="!canDelete"
         id="heart"
         @click="changeLikeState"
         :class="{ unlike: !likeState, like: likeState }"
@@ -13,8 +12,11 @@
 
     <div class="icons">
       <div class="row">
-        <div id="send">
-            <i>send</i>
+        <div
+          id="send"
+          @click="sendToChat(imageName)"
+        >
+          <i>send</i>
         </div>
 
         <div
@@ -55,6 +57,7 @@
         type:Boolean
       },
       canDelete: Boolean,
+      sendToChat: Function,
     },
 
     data() {

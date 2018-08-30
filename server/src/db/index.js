@@ -1,3 +1,3 @@
-const dbhandler = require('./dbhandler')
+const dbhandler = require("./dbhandler")
 
 module.exports = dbhandler

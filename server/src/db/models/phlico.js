@@ -1,5 +1,5 @@
 // module
-const mongoose = require('mongoose')
+const mongoose = require("mongoose")
 
 // Definition of all fields
 const definition = {
@@ -9,11 +9,13 @@ const definition = {
   imageName: String,
   caption: String,
   date: Number,
-  comments: [{
-    author: String,
-    opinion: String,
-    date: String,
-  }],
+  comments: [
+    {
+      author: String,
+      opinion: String,
+      date: String,
+    },
+  ],
   likes: [String],
 }
 
@@ -21,4 +23,4 @@ const definition = {
 const schema = new mongoose.Schema(definition)
 
 //  export that
-module.exports = mongoose.model('Phlico', schema)
+module.exports = mongoose.model("Phlico", schema)

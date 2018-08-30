@@ -11,6 +11,7 @@
       :userInfo="{ userId, username }"
       :likeState="item.likeState"
       :updateLike="updateLike(item)"
+      :sendToChat="sendToChat"
       :del="deletePhoto"
     />
 
@@ -82,13 +83,11 @@ export default {
         userId: this.userId,
         creator: this.username,
       }
-      console.log(`${info.creator} Has added new image =)`)
       W.sendNotificationToAll(
         "Phlico",
         `${info.creator} Has added new image =)`,
       )
       this.$refs.appref.scrollTop = 0
-
       savePhoto(info, photo)
         .then(res => {
           this.phlicoz = R.prepend(res.body.doc, this.phlicoz)
@@ -104,11 +103,19 @@ export default {
         )
       })
     },
+
     updateLike(phlico) {
       return () => {
         phlico.likeState = true
         phlico.likes = phlico.likes + 1
       }
+    },
+
+    sendToChat(imageName) {
+      W.sendMessageToCurrentChat("wapp", {
+        wappId: "",
+        customize: { imageName },
+      })
     },
   },
 }

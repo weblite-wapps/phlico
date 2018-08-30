@@ -35,9 +35,9 @@ export default {
   data() {
     return {
       wisId: (W && W.wisId) || "1",
-      imageName: "ce3d662fafa5a1ac5eafec3b19ee128a_1533015470435.jpg",
-      userId: "1",
-      username: "amirhe",
+      imageName: "",
+      userId: "",
+      username: "",
       state: "card",
       photoComments: [],
       caption: {},
@@ -80,9 +80,11 @@ export default {
 
     sendComment(info) {
       return comment => {
-        addComment(info, comment).then(({ body: { comment } }) => {
-          this.photoComments = R.append(comment, this.photoComments)
-        })
+        addComment(info, comment)
+          .then(({ body: { comment } }) => {
+            this.photoComments = R.append(comment, this.photoComments)
+          })
+          .catch(err => err)
       }
     },
 

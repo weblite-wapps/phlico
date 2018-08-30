@@ -55,7 +55,7 @@
 
     methods: {
       getPhoto() {
-        const domain = "http://localhost:3000/img/"
+        const domain = "https://localhost:3094/img/"
         return `${domain}Sqr_${this.name}`
       },
       changeState(event) {
@@ -68,6 +68,10 @@
 </script>
 
 <style scoped>
+
+  .card {
+    
+  }
   #heart {
     display: flex;
     align-items: center;

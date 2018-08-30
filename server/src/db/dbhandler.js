@@ -6,9 +6,9 @@ exports.connect = name => {
   mongoose.connect(`mongodb://localhost:27017/${name}`)
   const db = mongoose.connection
   db.on("error", console.log)
-  db.once("open", () => {
-    console.log("Connection to database successfully is made ...")
-  })
+  db.once("open", () =>
+    console.log("Connection to database successfully is made ..."),
+  )
 }
 
 exports.savePhoto = photoInfo =>

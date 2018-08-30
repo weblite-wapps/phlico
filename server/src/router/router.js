@@ -116,9 +116,7 @@ router.get("/load/single/:imageName", ({ params: { imageName } }, res) => {
   console.log("imageName:=", imageName)
   database
     .getSinglePhoto(imageName)
-    .then(photo => {
-      res.send(photo[0])
-    })
+    .then(photo => res.send(photo[0]))
     .catch(console.log)
 })
 

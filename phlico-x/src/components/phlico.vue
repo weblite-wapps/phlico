@@ -1,12 +1,13 @@
 <template>
   <div>
     <card
-      :imageName="imageName"
       v-if="state === 'card'"
+      :imageName="imageName"
       :likeState="likeState"
       :canDelete="userInfo.username === creator"
-      @del="del({ userId: userInfo.userId, imageName })"
+      :sendToChat="sendToChat"
       @like="sendLike({ userId: userInfo.userId, imageName })"
+      @del="del({ userId: userInfo.userId, imageName })"
       @state="changeState"
     />
 
@@ -15,9 +16,9 @@
       :caption="caption"
       :creator="creator"
       :likes="likes"
-      @state="changeState"
       :comments="photoComments"
       :send="sendComment({ userid: userInfo.userId, author: userInfo.username, imageName })"
+      @state="changeState"
     />
   </div>
 </template>
@@ -40,7 +41,9 @@
       creator: String,
       userInfo: Object,
       likeState: Boolean,
+      updateLike:Function,
       del: Function,
+      sendToChat: Function,
     },
 
     data() {
@@ -60,7 +63,10 @@
           .then((res) => { this.photoComments = R.append(res.body.comment, this.photoComments)})
       },
 
-      sendLike(info) { addLike(info).then() },
+      sendLike(info) {
+         this.updateLike()
+         addLike(info).then()
+       },
     },
 
     components: {

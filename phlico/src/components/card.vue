@@ -19,7 +19,7 @@
 <script>
   export default {
     name: 'card',
-    
+
     props: {
       imageName: String,
       likeState: {
@@ -39,7 +39,7 @@
       heartClass() {
         return this.likeState ? 'like': 'unlike'
       }
-    },    
+    },
 
     created() {
       this.name = this.imageName
@@ -55,7 +55,7 @@
 
     methods: {
       getPhoto() {
-        const domain = "http://localhost:3000/img/"
+        const domain = "https://localhost:3094/img/"
         return `${domain}Sqr_${this.name}`
       },
       changeState(event) {
@@ -68,6 +68,7 @@
 </script>
 
 <style scoped>
+
   #heart {
     display: flex;
     align-items: center;

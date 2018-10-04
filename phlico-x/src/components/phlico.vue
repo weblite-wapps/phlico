@@ -6,7 +6,7 @@
       :likeState="likeState"
       :canDelete="userInfo.username === creator"
       :sendToChat="sendToChat"
-      @like="sendLike({ userId: userInfo.userId, imageName })"
+      @like="sendLike({ username:userInfo.username, userId: userInfo.userId, imageName })"
       @del="del({ userId: userInfo.userId, imageName })"
       @state="changeState"
     />
@@ -59,14 +59,21 @@
       changeState(event) { this.state = event },
 
       sendComment(info) {
-        return comment => addComment(info, comment)
-          .then((res) => { this.photoComments = R.append(res.body.comment, this.photoComments)})
+        const { author } = info
+        return comment =>
+          addComment(info, comment).then(res => {
+            this.photoComments = R.append(res.body.comment, this.photoComments)
+            W.sendNotificationToAll("Phlico", `new comment from ${username}`)
+          })
       },
 
       sendLike(info) {
-         this.updateLike()
-         addLike(info).then()
-       },
+        const { username, ...other } = info
+        this.updateLike()
+        addLike(other).then()
+        W.sendNotificationToAll("Phlico", `${username} Has liked your image ❤️`)
+      },
+
     },
 
     components: {

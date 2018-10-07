@@ -4,7 +4,7 @@
       v-if="state === 'card'"
       :imageName="imageName"
       :likeState="likeState"
-      @like="sendLike({username, userId, imageName})"
+      @like="sendLike({ username, userId, imageName})"
       @state="changeState"/>
 
     <comments
@@ -12,7 +12,7 @@
       @state="changeState"
       :comments="photoComments"
       :caption="caption"
-      :send="sendComment({'author': username,  imageName})"/>
+      :send="sendComment({'author': username, userId, imageName})"/>
 
   </div>
 </template>
@@ -79,12 +79,13 @@ export default {
     },
 
     sendComment(info) {
-      const { author } = info
+      const { userId, ...other } = info
+      const { author } = other
       return comment => {
-        addComment(info, comment)
+        addComment(other, comment)
           .then(({ body: { comment } }) => {
             this.photoComments = R.append(comment, this.photoComments)
-            W.sendNotificationToAll("Phlico", `new comment from ${username}`)
+            W.sendNotificationToUsers("Phlico", `new comment from ${author}`, "", [userId])
           })
           .catch(err => err)
       }
@@ -92,9 +93,11 @@ export default {
 
     sendLike(info) {
       const { username, ...other } = info
+      const { userId } = other
       this.likeState = true
       addLike(other)
-      W.sendNotificationToAll("Phlico", `${username} Has liked your image ❤️`)
+      W.sendNotificationToUsers("Phlico", `${username} Has liked your image ❤️`, "", [userId])
+
     },
   },
 }

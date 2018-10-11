@@ -1,6 +1,6 @@
-const request = require("superagent")
-const config = require("../../config")
-const domain = config.default.server
+import request from "superagent"
+import config from "../../config"
+const domain = config.server
 
 export const getSinglePhotoData = imageName =>
   request

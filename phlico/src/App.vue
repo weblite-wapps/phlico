@@ -52,10 +52,7 @@ export default {
 
   created() {
     W && webliteHandler(this)
-  },
-
-  mounted() {
-    this.init()
+    if(!W) this.init()
   },
 
   methods: {

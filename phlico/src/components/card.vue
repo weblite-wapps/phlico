@@ -17,6 +17,10 @@
 </template>
 
 <script>
+  import config from "../config"
+
+  const domain = config.server
+
   export default {
     name: 'card',
 
@@ -30,37 +34,41 @@
 
     data() {
       return {
-        name: '',
-        card: {},
+        card: {
+          'backgroundSize': 'Contain',
+          'backgroundRepeat': 'no-repeat',
+          'backgroundColor': 'rgb(94,94,94)',
+          'width': '400px',
+          'height': '400px',
+        },
       }
     },
 
     computed: {
-      heartClass() {
-        return this.likeState ? 'like': 'unlike'
-      }
+      heartClass() { return this.likeState ? 'like': 'unlike' },
     },
 
-    created() {
-      this.name = this.imageName
-      this.card = {
-        'backgroundImage': `url('${this.getPhoto()}')`,
-        'backgroundSize': 'Contain',
-        'backgroundRepeat': 'no-repeat',
-        'backgroundColor': 'rgb(94,94,94)',
-        'width': '400px',
-        'height': '400px',
-      }
-    },
+    created() {  },
 
     methods: {
-      getPhoto() {
-        const domain = "https://localhost:3094/img/"
-        return `${domain}Sqr_${this.name}`
-      },
+      getPhoto() {  return `${domain}/img/Sqr_${this.imageName}` },
+
       changeState(event) {
         if (event === 'like' && !this.likeState) this.$emit('like')
         if (event === 'comments') this.$emit('state', event)
+      },
+    },
+
+    watch: {
+      imageName() {
+        this.card = {
+          'backgroundImage': `url('${this.getPhoto()}')`,
+          'backgroundSize': 'Contain',
+          'backgroundRepeat': 'no-repeat',
+          'backgroundColor': 'rgb(94,94,94)',
+          'width': '400px',
+          'height': '400px',
+        }
       },
     },
 

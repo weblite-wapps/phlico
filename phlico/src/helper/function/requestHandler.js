@@ -1,5 +1,5 @@
-import request from "superagent"
-import config from "../../config"
+import request from 'superagent'
+import config from '../../config'
 const domain = config.server
 
 export const getSinglePhotoData = imageName =>
@@ -9,10 +9,10 @@ export const getSinglePhotoData = imageName =>
     .catch(console.log)
 
 export const addComment = (info, comment) =>
-  request.post(domain + "/addComment").send({ ...info, ...comment })
+  request.post(domain + '/addComment').send({ ...info, ...comment })
 
 export const addLike = info =>
   request
-    .post(domain + "/addLike")
+    .post(domain + '/addLike')
     .send({ ...info })
     .catch(console.log)

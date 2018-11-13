@@ -1,27 +1,30 @@
 <template>
-  <div class="comments">
+  <div :class="commentsClass"> 
     <img
       src="../assets/logo/close.png"
       alt="close logo"
       class="top-left"
-      @click="changeState">
+      @click="changeState"
+    />
 
     <get-comment
       :caption="caption"
       @state="changeState"
-      :send="send"/>
+      :send="send"
+    />
 
     <spliter>Commments</spliter>
 
     <comment
-        v-for="(comment, index) in comments"
-        :key="index"
-        :comment="comment"></comment>
+      v-for="(comment, index) in comments"
+      :key="index"
+      :comment="comment"
+    />
   </div>
 </template>
 
 <script>
-  import comment from './comment'
+  import comment from './Comment'
   import spliter from './spliter'
   import getComment from './getComment'
 
@@ -32,12 +35,17 @@
       comments:Array,
       caption: Object,
       send: Function,
+      mode: String,
     },
 
     components: {
       comment,
       spliter,
       'get-comment': getComment,
+    },
+
+    computed: {
+      commentsClass() { return this.mode === 'inline' ? 'commentsInline': 'commentsFullscreen' },
     },
 
     methods: {
@@ -59,7 +67,7 @@
   .top-left:hover {
     opacity: 1;
   }
-  .comments {
+  .commentsInline {
     height: 400px;
     width: 400px;
     overflow: auto;
@@ -68,7 +76,16 @@
     /* background-color: rgba(45, 71, 42, 0.19); */
   }
 
-  .comments::-webkit-scrollbar-track
+  .commentsFullscreen {
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    background-color: #22252c;
+
+    /* background-color: rgba(45, 71, 42, 0.19); */
+  }
+
+  .commentsInline .commentsFullscreen::-webkit-scrollbar-track
   {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
     border-radius: 1px;
@@ -76,13 +93,13 @@
     background-color: #F5F5F5;
   }
 
-  .comments::-webkit-scrollbar
+  .commentsInline .commentsFullscreen::-webkit-scrollbar
   {
     width: 4px;
     background-color: #fefefe;
   }
 
-  .comments::-webkit-scrollbar-thumb
+  .commentsInline .commentsFullscreen::-webkit-scrollbar-thumb
   {
     border-radius: 10px;
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);

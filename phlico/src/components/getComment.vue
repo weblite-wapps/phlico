@@ -2,12 +2,12 @@
   <div id="get-comment">
     <div id="caption">
       <div class="caption-text">
-        <p>{{caption.text}}</p>
+        <p>{{ caption.text }}</p>
       </div>
 
       <div class="bot">
-        <span id="like">{{likes}} ❤</span>
-        <span class="username">{{caption.userName}}</span>
+        <span id="like">{{ likes }} ❤</span>
+        <span class="username">{{ caption.userName }}</span>
       </div>
     </div>
 
@@ -18,7 +18,8 @@
         id="scrollbar"
         placeholder=" Add comment..."
         @keyup.ctrl.enter="submit"
-        v-model="opinion"></textarea>
+        v-model="opinion"
+      />
     </div>
     <div class="row">
       <button @click="submit">Post</button>

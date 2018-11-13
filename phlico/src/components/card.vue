@@ -29,7 +29,8 @@
       likeState: {
         type: Boolean,
         required: true,
-      }
+      },
+      mode: String,
     },
 
     data() {
@@ -38,8 +39,8 @@
           'backgroundSize': 'Contain',
           'backgroundRepeat': 'no-repeat',
           'backgroundColor': 'rgb(94,94,94)',
-          'width': '400px',
-          'height': '400px',
+          'width': this.mode == 'inline' ? '400px' : '100%',
+          'height': this.mode == 'inline' ? '400px' : '100%',
         },
       }
     },
@@ -66,8 +67,8 @@
           'backgroundSize': 'Contain',
           'backgroundRepeat': 'no-repeat',
           'backgroundColor': 'rgb(94,94,94)',
-          'width': '400px',
-          'height': '400px',
+          'width': this.mode == 'inline' ? '400px' : '100%',
+          'height': this.mode == 'inline' ? '400px' : '100%',
         }
       },
     },
@@ -116,7 +117,7 @@
     justify-content: flex-end;
     align-items: center;
     position: relative;
-    bottom: -350px;
+    bottom: -85%;
     margin: 0 auto;
   }
     #heart {

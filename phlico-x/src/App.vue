@@ -31,7 +31,7 @@ import {
   savePhoto,
   deletePhoto,
   getAll,
-  addLike,
+  // addLike,
 } from "./helper/function/requestHandler"
 const { W, R } = window
 
@@ -83,7 +83,7 @@ export default {
         userId: this.userId,
         creator: this.username,
       }
-      W.sendNotificationToAll(
+      W && W.sendNotificationToAll(
         "Phlico",
         `${info.creator} Has added new image =)`,
       )

@@ -2,12 +2,12 @@
   <div class="comment">
     <div class="comment-box">
       <div class="comment-text">
-        {{comment.opinion}}
+        {{ comment.opinion }}
       </div>
       <div class="comment-footer">
         <div class="comment-info">
           <span class="comment-autor"><a href="">{{ comment.author }}</a></span>
-            <span class="comment-date">{{ comment.date }}</span>
+          <span class="comment-date">{{ comment.date }}</span>
         </div>
       </div>
     </div>

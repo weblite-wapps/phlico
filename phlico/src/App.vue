@@ -1,19 +1,22 @@
 <template>
-  <div id="app">
+  <div id="app" :class="appClass">
     <card
       v-if="state === 'card'"
       :imageName="imageName"
       :likeState="likeState"
-      @like="sendLike({ username, userId, imageName})"
-      @state="changeState"/>
+      :mode="mode"
+      @like="sendLike({ username, userId, imageName })"
+      @state="changeState"
+    />
 
     <comments
       v-else-if="state === 'comments'"
-      @state="changeState"
       :comments="photoComments"
       :caption="caption"
-      :send="sendComment({'author': username, userId, imageName})"/>
-
+      :send="sendComment({ 'author': username, userId, imageName })"
+      :mode="mode"
+      @state="changeState"
+    />
   </div>
 </template>
 
@@ -42,6 +45,7 @@ export default {
       photoComments: [],
       caption: {},
       likeState: false,
+      mode: "fullscreen",
     }
   },
 
@@ -53,6 +57,10 @@ export default {
   created() {
     W && webliteHandler(this)
     if(!W) this.init()
+  },
+
+  computed: {
+    appClass() { return this.mode === 'inline' ? 'appInline': 'appFullscreen' },
   },
 
   methods: {
@@ -94,15 +102,19 @@ export default {
       this.likeState = true
       addLike(other)
       W.sendNotificationToUsers("Phlico", `${username} Has liked your image ❤️`, "", [userId])
-
     },
   },
 }
 </script>
 
 <style>
-#app {
+.appInline {
   width: 400px;
   height: 400px;
 }
-</style>
+
+.appFullscreen {
+  width: 100%;
+  height: 100%;
+}
+

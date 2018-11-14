@@ -45,7 +45,7 @@ export default {
       photoComments: [],
       caption: {},
       likeState: false,
-      mode: "fullscreen",
+      mode: "fullsceen",
     }
   },
 
@@ -117,4 +117,4 @@ export default {
   width: 100%;
   height: 100%;
 }
-
+</style>

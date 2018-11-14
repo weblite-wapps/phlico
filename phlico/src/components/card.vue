@@ -7,7 +7,7 @@
       @click="changeState('like')"
       :class="heartClass"><i>favorite</i></span>
     <!--Notification-->
-    <span class="nav-pop-ups">
+    <span :class="navPopUpsClass"> 
       <img
         src="../assets/logo/comment.png"
         id="comment-icon"
@@ -47,6 +47,7 @@
 
     computed: {
       heartClass() { return this.likeState ? 'like': 'unlike' },
+      navPopUpsClass() { return this.mode === 'inline' ? 'navInline': 'navFullscreen' },
     },
 
     created() {  },
@@ -111,13 +112,22 @@
     color: #F70A31;
     opacity: 1;
   }
-  .nav-pop-ups {
+  .navInline {
     width: 100%;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     position: relative;
     bottom: -85%;
+    margin: 0 auto;
+  }
+  .navFullscreen {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    position: relative;
+    bottom: -92%;
     margin: 0 auto;
   }
     #heart {

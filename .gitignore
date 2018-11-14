@@ -1,0 +1,36 @@
+# Logs
+*.log
+
+# Coverage directory used by tools like istanbul
+coverage
+
+# Optional npm cache directory
+.npm
+.cache
+
+# Optional eslint cache
+.eslintcache
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env
+
+# node_modules
+node_modules/
+
+# build
+build/
+
+# DS_Store
+.DS_Store
+
+# WebStorm
+.idea/
+
+# VS Code
+.vscode

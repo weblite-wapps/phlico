@@ -30,9 +30,11 @@ router.post(
   "/upload",
   upload.single("image"),
   ({ body: { wisId, userId, creator, caption }, file }, res) => {
+    console.log("kindo")
     if (!file) {
       res.send({ success: false })
     } else {
+      console.log("shit")
       Image.saveHighResolution(file.filename, file.size).catch(console.log)
 
       Image.saveMiniSize(file.filename).then(() => {

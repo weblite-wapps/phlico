@@ -4,7 +4,7 @@
   "description": "a server side of phlico",
   "main": "app.js",
   "scripts": {
-    "start": "node .\\node_modules\\nodemon\\bin\\nodemon.js src/app.js",
+    "start": "nodemon src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "amirhossein ebrahimi <amirhosseinebrahimi77@gmail.com>",

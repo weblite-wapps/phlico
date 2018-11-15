@@ -27,7 +27,7 @@
   import card from './card'
   import comments from './comments'
   import { addComment, addLike } from '../helper/function/requestHandler'
-  const { R } = window
+  const { W, R } = window
 
 
   export default {

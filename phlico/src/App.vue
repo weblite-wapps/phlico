@@ -45,7 +45,7 @@ export default {
       photoComments: [],
       caption: {},
       likeState: false,
-      mode: "fullsceen",
+      mode: "inline",
     }
   },
 

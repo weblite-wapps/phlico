@@ -1,13 +1,12 @@
 <template>
-  <div
-    :style="card">
+  <div :style="card" @click.self="switchMode">
     <!--Heart-->
     <span
       id="heart"
       @click="changeState('like')"
       :class="heartClass"><i>favorite</i></span>
     <!--Notification-->
-    <span :class="navPopUpsClass"> 
+    <span :class="navPopUpsClass">
       <img
         src="../assets/logo/comment.png"
         id="comment-icon"
@@ -20,6 +19,7 @@
   import config from "../config"
 
   const domain = config.server
+  const { W } = window
 
   export default {
     name: 'card',
@@ -47,18 +47,23 @@
 
     computed: {
       heartClass() { return this.likeState ? 'like': 'unlike' },
+
       navPopUpsClass() { return this.mode === 'inline' ? 'navInline': 'navFullscreen' },
-    },
+
+      getPhoto() { return this.mode === 'inline' ? `${domain}/img/Sqr_${this.imageName}` : `${domain}/img/high_${this.imageName}` }
+    }, 
 
     created() {  },
 
     methods: {
-      getPhoto() {  return `${domain}/img/Sqr_${this.imageName}` },
-
       changeState(event) {
         if (event === 'like' && !this.likeState) this.$emit('like')
         if (event === 'comments') this.$emit('state', event)
       },
+ 
+      switchMode() {
+        W && W.changeModeTo('fullscreen')
+      }
     },
 
     watch: {

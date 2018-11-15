@@ -69,7 +69,7 @@
     watch: {
       imageName() {
         this.card = {
-          'backgroundImage': `url('${this.getPhoto()}')`,
+          'backgroundImage': `url('${this.getPhoto}')`,
           'backgroundSize': 'Contain',
           'backgroundRepeat': 'no-repeat',
           'backgroundColor': 'rgb(94,94,94)',

@@ -3,6 +3,7 @@
   "id": "5bbf571656852737c7286218",
   "searchable": false,
   "instancable": true,
+  "fullscreen": true,
   "customizeArray": [],
   "creator": false,
   "inline": true,
@@ -13,6 +14,6 @@
   "servIndexes": {
     "inline": "index",
     "main": "index",
-    "customize": "index"
+    "fullscreen": "index"
   }
 }

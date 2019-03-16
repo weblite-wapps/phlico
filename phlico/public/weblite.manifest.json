@@ -2,7 +2,7 @@
   "name": "phlico-inline",
   "id": "5bbf571656852737c7286218",
   "searchable": false,
-  "instancable": true,
+  "instantiable": true,
   "fullscreen": true,
   "customizeArray": [],
   "creator": false,

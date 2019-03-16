@@ -1,7 +1,7 @@
 {
   "name": "phlico",
   "id": "5b60670c0c9e390e6c58395c",
-  "instancable": true,
+  "instantiable": true,
   "creator": false,
   "inline": false,
   "shareDB": false,

@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-process.env.WEBLITE_WAPPS_DIR = "/Users/parsa/Desktop/WebLite/servers";
+
 const filesPath = path.resolve(process.env.WEBLITE_WAPPS_DIR, "phlico");
 
 const imagesPath = path.resolve(filesPath, "images");

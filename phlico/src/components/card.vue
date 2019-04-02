@@ -32,7 +32,6 @@ export default {
   data() {
     return {
       card: {
-        backgroundImage: `url('${this.getPhoto}')`,
         backgroundSize: "Contain",
         backgroundRepeat: "no-repeat",
         backgroundColor: "rgb(94,94,94)",
@@ -72,15 +71,18 @@ export default {
   },
 
   watch: {
-    imageName() {
-      this.card = {
-        backgroundImage: `url('${this.getPhoto}')`,
-        backgroundSize: "Contain",
-        backgroundRepeat: "no-repeat",
-        backgroundColor: "rgb(94,94,94)",
-        width: this.mode == "inline" ? "400px" : "100%",
-        height: this.mode == "inline" ? "400px" : "100%"
-      };
+    imageName: {
+      handler() {
+        this.card = {
+          backgroundImage: `url('${this.getPhoto}')`,
+          backgroundSize: "Contain",
+          backgroundRepeat: "no-repeat",
+          backgroundColor: "rgb(94,94,94)",
+          width: this.mode == "inline" ? "400px" : "100%",
+          height: this.mode == "inline" ? "400px" : "100%"
+        };
+      },
+      immediate: true
     }
   }
 };

@@ -25,6 +25,7 @@
 import phlico from "./components/phlico"
 import uploader from "./components/uploader"
 import spliter from "./helper/components/spliter"
+import { mapState } from 'vuex'
 // helper
 import webliteHandler from "./helper/function/weblite.api"
 import {
@@ -91,6 +92,7 @@ export default {
       savePhoto(info, photo)
         .then(res => {
           this.phlicoz = R.prepend(res.body.doc, this.phlicoz)
+          this.loading = false
         })
         .catch(console.log)
     },
@@ -117,6 +119,9 @@ export default {
         customize: { imageName },
       })
     },
+  },
+  computed: {
+    ...mapState(['loading']),
   },
 }
 </script>

@@ -1,6 +1,9 @@
 <template>
   <div class="card">
-    <div :style="card">
+    <div class="loading" v-if="loadingData">
+        <div class="ring"></div>
+    </div>
+    <div :style="card" v-else>
       <span
         id="heart"
         @click="changeLikeState"
@@ -46,7 +49,8 @@
 
 <script>
 import config from "../config"
-
+import { mapState } from 'vuex'
+ 
 export default {
   name: "card",
 
@@ -58,6 +62,7 @@ export default {
     },
     canDelete: Boolean,
     sendToChat: Function,
+    loadingData: Boolean,
   },
 
   data() {
@@ -67,6 +72,7 @@ export default {
   },
 
   created() {
+    console.log(this.loadingData)
     this.card = {
       backgroundImage: `url('${this.getPhoto()}')`,
       backgroundSize: "Contain",
@@ -190,5 +196,26 @@ export default {
 }
 #comment:hover {
   color: #e17b0e;
+}
+
+.ring {
+    width: 40px;
+    height: 40px;
+    margin: 0 auto;
+    padding: 10px;
+    border: 5px dashed #4b9cdb;
+    border-radius: 100%;
+}
+
+.loading .ring {animation: loadingD 1.5s .3s cubic-bezier(.17,.37,.43,.67) infinite;}
+
+@keyframes loadingD {
+    0% {transform: rotate(0deg);}
+    50% {transform: rotate(180deg);}
+    100% {transform: rotate(360deg);}
+}
+
+.loading {
+  margin: 150px 0px;
 }
 </style>

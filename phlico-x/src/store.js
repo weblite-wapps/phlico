@@ -6,12 +6,12 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    loading: false
+    loadingData: true
   },
 
   mutations: {
-    changeLoading(state, loading) {
-      state.loading = loading;
+    changeLoadingData(state, loadingData) {
+      state.loadingData = loadingData;
     }, 
   },
 });

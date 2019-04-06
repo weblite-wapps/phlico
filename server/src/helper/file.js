@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const filesPath = path.resolve(process.env.WEBLITE_WAPPS_DIR, "phlico");
+const filesPath = path.resolve(process.env.WEBLITE_WAPPS_DIR || "C:\\Users\\mostafa\\Desktop\\phlico", "phlico");
 
 const imagesPath = path.resolve(filesPath, "images");
 

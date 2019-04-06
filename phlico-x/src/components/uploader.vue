@@ -1,9 +1,5 @@
 <template>
   <div id="container">
-    <div class="loading" v-if="loading">
-      <div class="ring"></div>
-    </div>
-
     <label for="uploader" class="btn">{{ buttonText }}</label>
 
     <input type="file" accept="image/*" id="uploader" class="input-file" @change="getFile">
@@ -15,18 +11,22 @@
       class="caption-text"
     />
 
-    <button class="btn" @click="submitFile">Send</button>
+    <div class="footer">
+      <button class="btn" @click="submitFile">Send</button>
+      <div class="loading" v-if="loading">
+        <div class="ring"></div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
-
 export default {
   name: "Upload",
 
   props: {
-    send: Function
+    send: Function,
+    loading: Boolean
   },
 
   data() {
@@ -37,7 +37,6 @@ export default {
   },
 
   computed: {
-    ...mapState(["loading"]),
     buttonText() {
       if (!this.file) return "Select a file ...";
       return this.file.name.length > 30
@@ -62,7 +61,6 @@ export default {
 
     submitFile() {
       if (this.file && this.isFileValid) {
-        this.loading = true;
         this.send({ file: this.file, caption: this.caption });
         this.$emit("state", "update");
         this.caption = "";
@@ -141,7 +139,7 @@ export default {
   background-color: #c0b3a0;
   color: #22252c;
   cursor: pointer;
-  margin: 5px auto;
+  margin: 5px 0px;
   outline: none;
   padding: 6px 15px;
 }
@@ -152,11 +150,11 @@ export default {
 }
 
 .ring {
-    width: 70px;
-    height: 70px;
+    width: 7px;
+    height: 7px;
     margin: 0 auto;
     padding: 10px;
-    border: 7px dashed #4b9cdb;
+    border: 2px dashed #4b9cdb;
     border-radius: 100%;
 }
 
@@ -169,6 +167,14 @@ export default {
 }
 
 .loading {
-  margin-bottom: 20px;
+  margin-top: 5px;
+  margin-left: 10px;
 }
+
+.footer {
+  display: flex;
+  justify-content: center;
+}
+
+
 </style>

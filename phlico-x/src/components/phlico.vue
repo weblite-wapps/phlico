@@ -9,6 +9,7 @@
       @like="sendLike({ username: userInfo.username, userId: userInfo.userId, imageName })"
       @del="del({ userId: userInfo.userId, imageName })"
       @state="changeState"
+      :loadingData="loadingData"
     />
 
     <comments
@@ -44,6 +45,7 @@
       updateLike:Function,
       del: Function,
       sendToChat: Function,
+      loadingData: Boolean,
     },
 
     data() {

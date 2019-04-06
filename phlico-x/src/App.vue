@@ -13,11 +13,12 @@
       :updateLike="updateLike(item)"
       :sendToChat="sendToChat"
       :del="deletePhoto"
+      :loadingData="loadingData"
     />
 
-    <spliter v-if="this.phlicoz.length">upload</spliter>
+    <spliter v-if="this.phlicoz.length">Upload</spliter>
 
-    <uploader :send="addPhoto" />
+    <uploader :send="addPhoto" :loading="loading" />
   </div>
 </template>
 
@@ -25,7 +26,6 @@
 import phlico from "./components/phlico"
 import uploader from "./components/uploader"
 import spliter from "./helper/components/spliter"
-import { mapState } from 'vuex'
 // helper
 import webliteHandler from "./helper/function/weblite.api"
 import {
@@ -45,6 +45,8 @@ export default {
       userId: "",
       username: "",
       phlicoz: [],
+      loading: false,
+      loadingData: true,
     }
   },
 
@@ -75,6 +77,7 @@ export default {
             body,
           )
         }
+        this.loadingData = false
       })
     },
 
@@ -88,11 +91,12 @@ export default {
         "Phlico",
         `${info.creator} Has added new image =)`,
       )
-      this.$refs.appref.scrollTop = 0
+      this.loading = true
       savePhoto(info, photo)
         .then(res => {
-          this.phlicoz = R.prepend(res.body.doc, this.phlicoz)
           this.loading = false
+          this.$refs.appref.scrollTop = 0
+          this.phlicoz = R.prepend(res.body.doc, this.phlicoz)
         })
         .catch(console.log)
     },
@@ -119,10 +123,7 @@ export default {
         customize: { imageName },
       })
     },
-  },
-  computed: {
-    ...mapState(['loading']),
-  },
+  }
 }
 </script>
 

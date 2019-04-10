@@ -87,7 +87,7 @@ export default {
   padding: 0 8px;
   margin-left: 20px;
   border-radius: 20px;
-  font-size: 11px;
+  font-size: 13px;
 }
 #like {
   color: #fc3939;
@@ -117,7 +117,7 @@ export default {
   border-radius: 4px;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
   color: #cbc7e5;
-  font-size: 12px;
+  font-size: 16px;
   padding: 5px 10px;
   outline: none;
   width: 340px;

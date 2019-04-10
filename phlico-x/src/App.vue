@@ -1,5 +1,5 @@
 <template>
-  <div id="app" ref="appref">
+  <div id="app" ref="appref" v-if="phlicoz.length">
     <phlico
       v-for="item in phlicoz"
       :key="item.imageName"
@@ -20,12 +20,14 @@
 
     <uploader :send="addPhoto" :loading="loading"/>
   </div>
+  <InitialLoading v-else/>
 </template>
 
 <script>
 import phlico from "./components/phlico";
 import uploader from "./components/uploader";
 import spliter from "./helper/components/spliter";
+import InitialLoading from "./components/loading";
 // helper
 import webliteHandler from "./helper/function/weblite.api";
 import {
@@ -53,7 +55,8 @@ export default {
   components: {
     uploader,
     phlico,
-    spliter
+    spliter,
+    InitialLoading
   },
 
   created() {

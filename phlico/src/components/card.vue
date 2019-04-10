@@ -1,18 +1,27 @@
 <template>
-  <div :style="card" @click.self="switchMode">
-    <!--Heart-->
-    <span id="heart" @click="changeState('like')" :class="heartClass">
-      <i>favorite</i>
-    </span>
-    <!--Notification-->
-    <span :class="navPopUpsClass">
-      <img src="../assets/logo/comment.png" id="comment-icon" @click="changeState('comments')">
-    </span>
+  <div :style="container">
+    <div :style="card" @click.self="switchMode" v-show="isLoaded">
+      <!--Heart-->
+      <span id="heart" @click="changeState('like')" :class="heartClass">
+        <i>favorite</i>
+      </span>
+      <!--Notification-->
+      <span :class="navPopUpsClass">
+        <img
+          src="../assets/logo/comment.png"
+          v-on:load="onLoadHandler"
+          id="comment-icon"
+          @click="changeState('comments')"
+        >
+      </span>
+    </div>
+    <InitialLoading v-show="!isLoaded"/>
   </div>
 </template>
 
 <script>
 import config from "../config";
+import InitialLoading from "./loading";
 
 const domain = config.server;
 const { W } = window;
@@ -37,8 +46,13 @@ export default {
         backgroundColor: "rgb(94,94,94)",
         width: this.mode == "inline" ? "400px" : "100%",
         height: this.mode == "inline" ? "400px" : "100%"
-      }
+      },
+      isLoaded: false
     };
+  },
+
+  components: {
+    InitialLoading
   },
 
   computed: {
@@ -57,8 +71,6 @@ export default {
     }
   },
 
-  created() {},
-
   methods: {
     changeState(event) {
       if (event === "like" && !this.likeState) this.$emit("like");
@@ -67,6 +79,10 @@ export default {
 
     switchMode() {
       W && W.changeModeTo("fullscreen");
+    },
+
+    onLoadHandler() {
+      this.isLoaded = true;
     }
   },
 
@@ -79,7 +95,13 @@ export default {
           backgroundRepeat: "no-repeat",
           backgroundColor: "rgb(94,94,94)",
           width: this.mode == "inline" ? "400px" : "100%",
-          height: this.mode == "inline" ? "400px" : "100%"
+          height: this.mode == "inline" ? "400px" : "100%",
+          overflow: "hidden"
+        };
+        this.container = {
+          width: this.mode == "inline" ? "400px" : "100%",
+          height: this.mode == "inline" ? "400px" : "100%",
+          overflow: "hidden"
         };
       },
       immediate: true
@@ -99,6 +121,7 @@ export default {
   cursor: pointer;
   transition: all 0.3s;
 }
+
 .unlike:hover {
   opacity: 1;
 }

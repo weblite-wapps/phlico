@@ -18,23 +18,23 @@
 
     <spliter v-if="this.phlicoz.length">Upload</spliter>
 
-    <uploader :send="addPhoto" :loading="loading" />
+    <uploader :send="addPhoto" :loading="loading"/>
   </div>
 </template>
 
 <script>
-import phlico from "./components/phlico"
-import uploader from "./components/uploader"
-import spliter from "./helper/components/spliter"
+import phlico from "./components/phlico";
+import uploader from "./components/uploader";
+import spliter from "./helper/components/spliter";
 // helper
-import webliteHandler from "./helper/function/weblite.api"
+import webliteHandler from "./helper/function/weblite.api";
 import {
   savePhoto,
   deletePhoto,
-  getAll,
+  getAll
   // addLike,
-} from "./helper/function/requestHandler"
-const { W, R } = window
+} from "./helper/function/requestHandler";
+const { W, R } = window;
 
 export default {
   name: "App",
@@ -46,19 +46,19 @@ export default {
       username: "",
       phlicoz: [],
       loading: false,
-      loadingData: true,
-    }
+      loadingData: true
+    };
   },
 
   components: {
     uploader,
     phlico,
-    spliter,
+    spliter
   },
 
   created() {
-    W && webliteHandler(this)
-    !W && this.init()
+    W && webliteHandler(this);
+    !W && this.init();
   },
 
   methods: {
@@ -72,59 +72,60 @@ export default {
               creator,
               caption,
               likes: R.length(R.uniq(likes)),
-              likeState: R.findIndex(R.equals(this.userId), likes) !== -1,
+              likeState: R.findIndex(R.equals(this.userId), likes) !== -1
             }),
-            body,
-          )
+            body
+          );
         }
-        this.loadingData = false
-      })
+        this.loadingData = false;
+      });
     },
 
     addPhoto(photo) {
       const info = {
         wisId: this.wisId,
         userId: this.userId,
-        creator: this.username,
-      }
-      W && W.sendNotificationToAll(
-        "Phlico",
-        `${info.creator} Has added new image =)`,
-      )
-      this.loading = true
+        creator: this.username
+      };
+      W &&
+        W.sendNotificationToAll(
+          "Phlico",
+          `${info.creator} Has added new image =)`
+        );
+      this.loading = true;
       savePhoto(info, photo)
         .then(res => {
-          this.loading = false
-          this.$refs.appref.scrollTop = 0
-          this.phlicoz = R.prepend(res.body.doc, this.phlicoz)
+          this.loading = false;
+          this.$refs.appref.scrollTop = 0;
+          this.phlicoz = R.prepend(res.body.doc, this.phlicoz);
         })
-        .catch(console.log)
+        .catch(console.log);
     },
 
     deletePhoto(info) {
       deletePhoto(info).then(res => {
         this.phlicoz = R.reject(
           R.propEq("imageName", res.body.imageName),
-          this.phlicoz,
-        )
-      })
+          this.phlicoz
+        );
+      });
     },
 
     updateLike(phlico) {
       return () => {
-        phlico.likeState = true
-        phlico.likes = phlico.likes + 1
-      }
+        phlico.likeState = true;
+        phlico.likes = phlico.likes + 1;
+      };
     },
 
     sendToChat(imageName) {
       W.sendMessageToCurrentChat("wapp", {
         wappId: "5bbf571656852737c7286218",
-        customize: { imageName },
-      })
-    },
+        customize: { imageName }
+      });
+    }
   }
-}
+};
 </script>
 
 <style scoped>

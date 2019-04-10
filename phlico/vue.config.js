@@ -1,3 +1,3 @@
 module.exports = {
-  baseUrl: '/wapp/5ca1d928cc91f12c87c47ea0/',
+  baseUrl: '/wapp/5c950b8c7e208e68972d546c/',
 }

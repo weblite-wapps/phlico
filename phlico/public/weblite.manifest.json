@@ -1,6 +1,6 @@
 {
   "name": "phlico-inline",
-  "id": "5ca1d928cc91f12c87c47ea0",
+  "id": "5c950b8c7e208e68972d546c",
   "searchable": false,
   "instantiable": true,
   "fullscreen": true,
@@ -15,5 +15,6 @@
     "inline": "index",
     "main": "index",
     "fullscreen": "index"
-  }
+  },
+  "version": "0.0.5"
 }

@@ -38,7 +38,7 @@ export default {
   data() {
     return {
       wisId: (W && W.wisId) || "1",
-      imageName: "Sqr_6d5b710699eb946c64ead0114d043831_1554541226163",
+      imageName: "",
       userId: "",
       username: "",
       state: "card",

@@ -120,7 +120,7 @@ export default {
 
     sendToChat(imageName) {
       W.sendMessageToCurrentChat("wapp", {
-        wappId: "5bbf571656852737c7286218",
+        wappId: "5c950b8c7e208e68972d546c",
         customize: { imageName }
       });
     }

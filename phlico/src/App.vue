@@ -109,6 +109,8 @@ export default {
       const { userId } = other;
       this.likeState = true;
       addLike(other);
+      console.log("username ", username);
+      console.log("userId ", userId);
       W.sendNotificationToUsers(
         "Phlico",
         `${username} Has liked your image ❤️`,
@@ -122,8 +124,8 @@ export default {
 
 <style>
 .appInline {
-  width: 400px;
-  height: 400px;
+  width: 320;
+  height: 320;
 }
 
 .appFullscreen {

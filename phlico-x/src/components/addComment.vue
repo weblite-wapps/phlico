@@ -4,6 +4,7 @@
       <textarea
         class="comment-text"
         id="scrollbar"
+        dir="auto"
         placeholder="Add comment..."
         @keyup.ctrl.enter="submit"
         v-model="opinion"

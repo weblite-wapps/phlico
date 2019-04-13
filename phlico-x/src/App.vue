@@ -1,5 +1,5 @@
 <template>
-  <div id="app" ref="appref" v-if="phlicoz.length">
+  <div id="app" ref="appref" v-if="loadingData === false">
     <phlico
       v-for="item in phlicoz"
       :key="item.imageName"
@@ -14,7 +14,7 @@
       :sendToChat="sendToChat"
       :del="deletePhoto"
       :loadingData="loadingData"
-    />
+    /> 
 
     <spliter v-if="this.phlicoz.length">Upload</spliter>
 

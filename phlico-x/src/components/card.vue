@@ -49,7 +49,6 @@
 
 <script>
 import config from "../config"
-import { mapState } from 'vuex'
 const { W } = window
 
 export default {
@@ -73,7 +72,6 @@ export default {
   },
 
   created() {
-    console.log(this.loadingData)
     this.card = {
       backgroundImage: `url('${this.getPhoto()}')`,
       backgroundSize: "Contain",
@@ -91,8 +89,8 @@ export default {
     },
 
     getOriginalPhoto() {
-      return `${config.server}/img/high_${this.imageName}`
       W.analytics("DOWNLOAD_PHOTO")
+      return `${config.server}/img/high_${this.imageName}`
     },
 
     changeState() {

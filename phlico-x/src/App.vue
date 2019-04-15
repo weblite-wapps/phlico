@@ -14,7 +14,7 @@
       :sendToChat="sendToChat"
       :del="deletePhoto"
       :loadingData="loadingData"
-    /> 
+    />
 
     <spliter v-if="this.phlicoz.length">Upload</spliter>
 
@@ -103,6 +103,7 @@ export default {
           this.phlicoz = R.prepend(res.body.doc, this.phlicoz);
         })
         .catch(console.log);
+        W.analytics("UPLOAD_PHOTO")
     },
 
     deletePhoto(info) {
@@ -112,6 +113,7 @@ export default {
           this.phlicoz
         );
       });
+      W.analytics("DELETE_PHOTO")
     },
 
     updateLike(phlico) {
@@ -119,6 +121,7 @@ export default {
         phlico.likeState = true;
         phlico.likes = phlico.likes + 1;
       };
+      W.analytics("LIKE_POST")
     },
 
     sendToChat(imageName) {
@@ -126,6 +129,7 @@ export default {
         wappId: "5c950b8c7e208e68972d546c",
         customize: { imageName }
       });
+      W.analytics("SNED_TO_CHAT")
     }
   }
 };

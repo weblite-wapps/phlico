@@ -69,6 +69,7 @@ export default {
     changeState(event) {
       if (event === "comments") this.init();
       this.state = event;
+      W.analytics("CHANGE_PAGE", { to: this.state })
     },
 
     init() {
@@ -89,6 +90,7 @@ export default {
     sendComment(info) {
       const { userId, ...other } = info;
       const { author } = other;
+      W.analytics("ADD_COMMENT") // inke vase che posti hast track beshe ya na?
       return comment => {
         addComment(other, comment)
           .then(({ body: { comment } }) => {
@@ -109,14 +111,15 @@ export default {
       const { userId } = other;
       this.likeState = true;
       addLike(other);
-      console.log("username ", username);
-      console.log("userId ", userId);
+      // console.log("username ", username);
+      // console.log("userId ", userId);
       W.sendNotificationToUsers(
         "Phlico",
         `${username} Has liked your image ❤️`,
         "",
         [userId]
       );
+      W.analytics("LIKE_POST") // inke vase che posti hast track beshe ya na?
     }
   }
 };

@@ -58,11 +58,15 @@
     mounted() { this.photoComments = this.comments },
 
     methods: {
-      changeState(event) { this.state = event },
+      changeState(event) {
+        this.state = event
+        W.analytics("CHANGE_PAGE", { to: this.state })
+        },
 
       sendComment(info) {
         const { userId, ...other } = info
         const { author } = other
+        W.analytics("ADD_COMMENT") // inke vase che posti hast track beshe ya na?
         return comment =>
           addComment(other, comment).then(res => {
             this.photoComments = R.append(res.body.comment, this.photoComments)
@@ -76,6 +80,7 @@
         this.updateLike()
         addLike(other).then()
         W.sendNotificationToUsers("Phlico", `${username} Has liked your image ❤️`, "", [userId])
+        W.analytics("LIKE_POST") // inke vase che posti hast track beshe ya na?
       },
     },
 

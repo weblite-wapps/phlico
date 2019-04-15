@@ -78,7 +78,7 @@
         const { username, ...other } = info
         const { userId } = other
         this.updateLike()
-        addLike(other).then()
+        addLike(other).then() 
         W.sendNotificationToUsers("Phlico", `${username} Has liked your image ❤️`, "", [userId])
         W.analytics("LIKE_POST") // inke vase che posti hast track beshe ya na?
       },

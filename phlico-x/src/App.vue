@@ -121,7 +121,6 @@ export default {
         phlico.likeState = true;
         phlico.likes = phlico.likes + 1;
       };
-      W.analytics("LIKE_POST")
     },
 
     sendToChat(imageName) {

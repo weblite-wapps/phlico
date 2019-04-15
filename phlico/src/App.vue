@@ -90,7 +90,6 @@ export default {
     sendComment(info) {
       const { userId, ...other } = info;
       const { author } = other;
-      W.analytics("ADD_COMMENT") // inke vase che posti hast track beshe ya na?
       return comment => {
         addComment(other, comment)
           .then(({ body: { comment } }) => {
@@ -101,6 +100,7 @@ export default {
               "",
               [userId]
             );
+            W.analytics("ADD_COMMENT") // inke vase che posti hast track beshe ya na?
           })
           .catch(err => err);
       };

@@ -50,7 +50,8 @@
 <script>
 import config from "../config"
 import { mapState } from 'vuex'
- 
+const { W } = window
+
 export default {
   name: "card",
 
@@ -91,6 +92,7 @@ export default {
 
     getOriginalPhoto() {
       return `${config.server}/img/high_${this.imageName}`
+      W.analytics("DOWNLOAD_PHOTO")
     },
 
     changeState() {

@@ -79,7 +79,7 @@ export default {
 
     switchMode() {
       W && W.changeModeTo("fullscreen");
-      W.analytics("CHANGE_MODE", { to: this.mode })
+      W.analytics("CHANGE_MODE", { from: this.mode })
     },
 
     onLoadHandler() {

@@ -66,11 +66,11 @@
       sendComment(info) {
         const { userId, ...other } = info
         const { author } = other
-        W.analytics("ADD_COMMENT") // inke vase che posti hast track beshe ya na?
         return comment =>
           addComment(other, comment).then(res => {
             this.photoComments = R.append(res.body.comment, this.photoComments)
             W.sendNotificationToUsers("Phlico", `new comment from ${author}`, "", [userId])
+            W.analytics("ADD_COMMENT") // inke vase che posti hast track beshe ya na?
           })
       },
 

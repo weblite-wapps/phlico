@@ -7,8 +7,8 @@
   "customizeArray": [],
   "creator": false,
   "inline": true,
-  "width": 400,
-  "height": 400,
+  "width": 320,
+  "height": 320,
   "shareDB": false,
   "userInfo": true,
   "servIndexes": {
@@ -16,5 +16,5 @@
     "main": "index",
     "fullscreen": "index"
   },
-  "version": "0.0.5"
+  "version": "0.0.6"
 }

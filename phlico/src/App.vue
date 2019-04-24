@@ -21,108 +21,105 @@
 </template>
 
 <script>
-import card from "./components/card.vue";
-import comments from "./components/comments.vue";
+import card from './components/card.vue'
+import comments from './components/comments.vue'
 // helper
-import webliteHandler from "./helper/function/weblite.api";
+import webliteHandler from './helper/function/weblite.api'
 import {
   addComment,
   getSinglePhotoData,
-  addLike
-} from "./helper/function/requestHandler";
-const { W, R } = window;
+  addLike,
+} from './helper/function/requestHandler'
+const { W, R } = window
 
 export default {
-  name: "App",
+  name: 'App',
 
   data() {
     return {
-      wisId: (W && W.wisId) || "1",
-      imageName: "",
-      userId: "",
-      username: "",
-      state: "card",
+      wisId: (W && W.wisId) || '1',
+      imageName: '',
+      userId: '',
+      username: '',
+      state: 'card',
       photoComments: [],
       caption: {},
       likeState: false,
-      mode: (W && W.mode) || "inline"
-    };
+      mode: (W && W.mode) || 'inline',
+    }
   },
 
   components: {
     card,
-    comments
+    comments,
   },
 
   created() {
-    W && webliteHandler(this);
-    if (!W) this.init();
+    W && webliteHandler(this)
+    if (!W) this.init()
   },
 
   computed: {
     appClass() {
-      return this.mode === "inline" ? "appInline" : "appFullscreen";
-    }
+      return this.mode === 'inline' ? 'appInline' : 'appFullscreen'
+    },
   },
 
   methods: {
     changeState(event) {
-      if (event === "comments") this.init();
-      this.state = event;
-      W.analytics("CHANGE_PAGE", { to: this.state })
+      if (event === 'comments') this.init()
+      this.state = event
+      W.analytics('CHANGE_PAGE', { to: this.state })
     },
 
     init() {
       getSinglePhotoData(this.imageName)
         .then(body => {
-          this.photoComments = body.comments;
+          this.photoComments = body.comments
           this.caption = {
             userName: body.userName,
             likes: R.length(R.uniq(body.likes)),
-            text: body.caption
-          };
-          this.likeState =
-            R.findIndex(R.equals(this.userId), body.likes) !== -1;
+            text: body.caption,
+          }
+          this.likeState = R.findIndex(R.equals(this.userId), body.likes) !== -1
         })
-        .catch(err => err);
+        .catch(err => err)
     },
 
     sendComment(info) {
-      const { userId, ...other } = info;
-      const { author } = other;
+      const { userId, ...other } = info
+      const { author } = other
       return comment => {
         addComment(other, comment)
           .then(({ body: { comment } }) => {
-            this.photoComments = R.append(comment, this.photoComments);
+            this.photoComments = R.append(comment, this.photoComments)
             W.sendNotificationToUsers(
-              "Phlico",
+              'Phlico',
               `new comment from ${author}`,
-              "",
-              [userId]
-            );
-            W.analytics("ADD_COMMENT") // inke vase che posti hast track beshe ya na?
+              '',
+              [userId],
+            )
+            W.analytics('ADD_COMMENT') // inke vase che posti hast track beshe ya na?
           })
-          .catch(err => err);
-      };
+          .catch(err => err)
+      }
     },
 
     sendLike(info) {
-      const { username, ...other } = info;
-      const { userId } = other;
-      this.likeState = true;
-      addLike(other);
-      // console.log("username ", username);
-      // console.log("userId ", userId);
+      const { username, ...other } = info
+      const { userId } = other
+      this.likeState = true
+      addLike(other)
       W.sendNotificationToUsers(
-        "Phlico",
+        'Phlico',
         `${username} Has liked your image ❤️`,
-        "",
-        [userId]
-      );
-      W.analytics("LIKE_POST") // inke vase che posti hast track beshe ya na?
-    }
-  }
-};
+        '',
+        [userId],
+      )
+      W.analytics('LIKE_POST') // inke vase che posti hast track beshe ya na?
+    },
+  },
+}
 </script>
 
 <style>

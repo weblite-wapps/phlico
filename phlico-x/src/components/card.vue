@@ -1,45 +1,28 @@
 <template>
   <div class="card">
-    <div class="loading" v-if="loadingData">
-        <div class="ring"></div>
+    <div class="loading" v-if="isLoaded">
+      <div class="ring"></div>
     </div>
     <div :style="card" v-else>
-      <span
-        id="heart"
-        @click="changeLikeState"
-        :class="{ unlike: !likeState, like: likeState }"
-      >
+      <span id="heart" @click="changeLikeState" :class="{ unlike: !likeState, like: likeState }">
         <i id="heart">favorite</i>
       </span>
     </div>
 
     <div class="icons">
       <div class="row">
-        <div
-          id="send"
-          @click="sendToChat(imageName)"
-        >
+        <div id="send" @click="sendToChat(imageName)">
           <i>send</i>
         </div>
 
-        <div
-          id="comment"
-          @click="changeState"
-        >
+        <div id="comment" @click="changeState">
           <i>insert_comment</i>
         </div>
 
-        <div
-          v-if="canDelete"
-          @click="removePhoto"
-          id="delete"
-        >
+        <div v-if="canDelete" @click="removePhoto" id="delete">
           <i>delete</i>
         </div>
-        <a
-          id="download"
-          :href="getOriginalPhoto()"
-        >
+        <a id="download" :href="getOriginalPhoto()">
           <i>get_app</i>
         </a>
       </div>
@@ -48,11 +31,11 @@
 </template>
 
 <script>
-import config from "../config"
+import config from '../config'
 const { W } = window
 
 export default {
-  name: "card",
+  name: 'Card',
 
   props: {
     imageName: String,
@@ -62,7 +45,7 @@ export default {
     },
     canDelete: Boolean,
     sendToChat: Function,
-    loadingData: Boolean,
+    isLoaded: Boolean,
   },
 
   data() {
@@ -74,12 +57,12 @@ export default {
   created() {
     this.card = {
       backgroundImage: `url('${this.getPhoto()}')`,
-      backgroundSize: "Contain",
-      backgroundRepeat: "no-repeat",
-      backgroundColor: "rgb(94,94,94)",
-      width: "320px",
-      height: "320px",
-      margin: "10px 0",
+      backgroundSize: 'Contain',
+      backgroundRepeat: 'no-repeat',
+      backgroundColor: 'rgb(94,94,94)',
+      width: '320px',
+      height: '320px',
+      margin: '10px 0',
     }
   },
 
@@ -89,20 +72,20 @@ export default {
     },
 
     getOriginalPhoto() {
-      W.analytics("DOWNLOAD_PHOTO")
+      W.analytics('DOWNLOAD_PHOTO')
       return `${config.server}/img/high_${this.imageName}`
     },
 
     changeState() {
-      this.$emit("state", "comments")
+      this.$emit('state', 'comments')
     },
 
     changeLikeState() {
-      if (!this.likeState) this.$emit("like")
+      if (!this.likeState) this.$emit('like')
     },
 
     removePhoto() {
-      this.$emit("del")
+      this.$emit('del')
     },
   },
 }
@@ -199,20 +182,28 @@ export default {
 }
 
 .ring {
-    width: 40px;
-    height: 40px;
-    margin: 0 auto;
-    padding: 10px;
-    border: 5px dashed #4b9cdb;
-    border-radius: 100%;
+  width: 40px;
+  height: 40px;
+  margin: 0 auto;
+  padding: 10px;
+  border: 5px dashed #4b9cdb;
+  border-radius: 100%;
 }
 
-.loading .ring {animation: loadingD 1.5s .3s cubic-bezier(.17,.37,.43,.67) infinite;}
+.loading .ring {
+  animation: loadingD 1.5s 0.3s cubic-bezier(0.17, 0.37, 0.43, 0.67) infinite;
+}
 
 @keyframes loadingD {
-    0% {transform: rotate(0deg);}
-    50% {transform: rotate(180deg);}
-    100% {transform: rotate(360deg);}
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .loading {

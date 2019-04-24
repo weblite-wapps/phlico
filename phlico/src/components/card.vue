@@ -20,71 +20,71 @@
 </template>
 
 <script>
-import config from "../config";
-import InitialLoading from "./loading";
+import config from '../config'
+import InitialLoading from './loading'
 
-const domain = config.server;
-const { W } = window;
+const domain = config.server
+const { W } = window
 
 export default {
-  name: "card",
+  name: 'card',
 
   props: {
     imageName: String,
     likeState: {
       type: Boolean,
-      required: true
+      required: true,
     },
-    mode: String
+    mode: String,
   },
 
   data() {
     return {
       card: {
-        backgroundSize: "Contain",
-        backgroundRepeat: "no-repeat",
-        backgroundColor: "rgb(94,94,94)",
-        width: this.mode == "inline" ? "400px" : "100%",
-        height: this.mode == "inline" ? "400px" : "100%"
+        backgroundSize: 'Contain',
+        backgroundRepeat: 'no-repeat',
+        backgroundColor: 'rgb(94,94,94)',
+        width: this.mode == 'inline' ? '320px' : '100%',
+        height: this.mode == 'inline' ? '320px' : '100%',
       },
-      isLoaded: false
-    };
+      isLoaded: false,
+    }
   },
 
   components: {
-    InitialLoading
+    InitialLoading,
   },
 
   computed: {
     heartClass() {
-      return this.likeState ? "like" : "unlike";
+      return this.likeState ? 'like' : 'unlike'
     },
 
     navPopUpsClass() {
-      return this.mode === "inline" ? "navInline" : "navFullscreen";
+      return this.mode === 'inline' ? 'navInline' : 'navFullscreen'
     },
 
     getPhoto() {
-      return this.mode === "inline"
+      return this.mode === 'inline'
         ? `${domain}/img/Sqr_${this.imageName}`
-        : `${domain}/img/high_${this.imageName}`;
-    }
+        : `${domain}/img/high_${this.imageName}`
+    },
   },
 
   methods: {
     changeState(event) {
-      if (event === "like" && !this.likeState) this.$emit("like");
-      if (event === "comments") this.$emit("state", event);
+      if (event === 'like' && !this.likeState) this.$emit('like')
+      if (event === 'comments') this.$emit('state', event)
     },
 
     switchMode() {
-      W && W.changeModeTo("fullscreen");
-      W.analytics("CHANGE_MODE", { from: this.mode })
+      W && W.changeModeTo('fullscreen')
+      W.analytics('CHANGE_MODE', { from: this.mode })
     },
 
     onLoadHandler() {
-      this.isLoaded = true;
-    }
+      this.isLoaded = true
+    },
   },
 
   watch: {
@@ -92,23 +92,23 @@ export default {
       handler() {
         this.card = {
           backgroundImage: `url('${this.getPhoto}')`,
-          backgroundSize: "Contain",
-          backgroundRepeat: "no-repeat",
-          backgroundColor: "rgb(94,94,94)",
-          width: this.mode == "inline" ? "400px" : "100%",
-          height: this.mode == "inline" ? "400px" : "100%",
-          overflow: "hidden"
-        };
+          backgroundSize: 'Contain',
+          backgroundRepeat: 'no-repeat',
+          backgroundColor: 'rgb(94,94,94)',
+          width: this.mode === 'inline' ? '320px' : '100%',
+          height: this.mode === 'inline' ? '320px' : '100%',
+          overflow: 'hidden',
+        }
         this.container = {
-          width: this.mode == "inline" ? "400px" : "100%",
-          height: this.mode == "inline" ? "400px" : "100%",
-          overflow: "hidden"
-        };
+          width: this.mode === 'inline' ? '320px' : '100%',
+          height: this.mode === 'inline' ? '320px' : '100%',
+          overflow: 'hidden',
+        }
       },
-      immediate: true
-    }
-  }
-};
+      immediate: true,
+    },
+  },
+}
 </script>
 
 <style scoped>

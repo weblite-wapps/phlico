@@ -30,6 +30,6 @@
   content: '';
   display: inline-block;
   margin: 0 12px 3px;
-  width: 30%;
+  width: 20%;
 }
 </style>

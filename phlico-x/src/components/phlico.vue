@@ -67,9 +67,9 @@
         const { userId, ...other } = info
         const { author } = other
         return comment =>
-          addComment(other, comment).then(res => {
-            this.photoComments = R.append(res.body.comment, this.photoComments)
-            W.sendNotificationToUsers("Phlico", `new comment from ${author}`, "", [userId])
+          addComment(other, comment).then(res => { 
+            this.photoComments = R.append(res.body.comment, this.photoComments) 
+            W.sendNotificationToAll("Phlico", `new comment from ${author}`)
             W.analytics("ADD_COMMENT") // inke vase che posti hast track beshe ya na?
           })
       },
@@ -77,10 +77,11 @@
       sendLike(info) {
         const { username, ...other } = info
         const { userId } = other
-        this.updateLike()
-        addLike(other).then() 
-        W.sendNotificationToUsers("Phlico", `${username} Has liked your image ❤️`, "", [userId])
-        W.analytics("LIKE_POST") // inke vase che posti hast track beshe ya na?
+        addLike(other).then(res => {
+          this.updateLike()
+          W.sendNotificationToUsers("Phlico", `${username} has liked your image ❤️`, "", [userId])
+          W.analytics("LIKE_POST") // inke vase che posti hast track beshe ya na?
+        }) 
       },
     },
 

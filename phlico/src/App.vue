@@ -93,12 +93,7 @@ export default {
         addComment(other, comment)
           .then(({ body: { comment } }) => {
             this.photoComments = R.append(comment, this.photoComments)
-            W.sendNotificationToUsers(
-              'Phlico',
-              `new comment from ${author}`,
-              '',
-              [userId],
-            )
+            W.sendNotificationToAll("Phlico", `new comment from ${author}`)
             W.analytics('ADD_COMMENT') // inke vase che posti hast track beshe ya na?
           })
           .catch(err => err)
@@ -109,14 +104,15 @@ export default {
       const { username, ...other } = info
       const { userId } = other
       this.likeState = true
-      addLike(other)
-      W.sendNotificationToUsers(
-        'Phlico',
-        `${username} Has liked your image ❤️`,
-        '',
-        [userId],
-      )
-      W.analytics('LIKE_POST') // inke vase che posti hast track beshe ya na?
+      addLike(other).then(() => {
+        W.sendNotificationToUsers(
+          'Phlico',
+          `${username} Has liked your image ❤️`,
+          '',
+          [userId],
+        )
+        W.analytics('LIKE_POST') // inke vase che posti hast track beshe ya na?
+      })
     },
   },
 }

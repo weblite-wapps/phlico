@@ -112,7 +112,7 @@ export default {
           [userId],
         )
         W.analytics('LIKE_POST') // inke vase che posti hast track beshe ya na?
-      })
+      }).catch(console.log)
     },
   },
 }

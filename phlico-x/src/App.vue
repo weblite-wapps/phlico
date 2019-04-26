@@ -90,20 +90,16 @@ export default {
         userId: this.userId,
         creator: this.username,
       }
-      W &&
-        W.sendNotificationToAll(
-          'Phlico',
-          `${info.creator} Has added new image =)`,
-        )
       this.isLoading = true
       savePhoto(info, photo)
         .then(res => {
           this.isLoading = false
           this.$refs.appref.scrollTop = 0
           this.phlicoz = R.prepend(res.body.doc, this.phlicoz)
+          W && W.sendNotificationToAll('Phlico', `${info.creator} Has added new image =)`)
+          W && W.analytics('UPLOAD_PHOTO')
         })
         .catch(console.log)
-      W.analytics('UPLOAD_PHOTO')
     },
 
     deletePhoto(info) {

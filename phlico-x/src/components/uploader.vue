@@ -5,6 +5,7 @@
     <input type="file" accept="image/*" id="uploader" class="input-file" @change="getFile">
 
     <textarea
+      dir="auto"
       placeholder="Add Your Caption"
       v-model="caption"
       @keyup.ctrl.enter="submitFile"

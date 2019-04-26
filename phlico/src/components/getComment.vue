@@ -16,6 +16,7 @@
         class="comment-text"
         id="scrollbar"
         placeholder=" Add comment..."
+        dir="auto"
         @keyup.ctrl.enter="submit"
         v-model="opinion"
       />

@@ -1,7 +1,7 @@
 <template>
   <div class="comment">
     <div class="comment-box">
-      <div class="comment-text">{{ comment.opinion }}</div>
+      <div dir="auto" class="comment-text">{{ comment.opinion }}</div>
       <div class="comment-footer">
         <div class="comment-info">
           <span class="comment-autor">

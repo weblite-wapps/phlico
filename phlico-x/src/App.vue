@@ -1,6 +1,6 @@
 <template>
-  <div id="app" ref="appref" v-if="loadingData === false">
-    <phlico
+  <div id="app" ref="appref" v-if="isLoaded === false">
+    <Phlico
       v-for="item in phlicoz"
       :key="item.imageName"
       :imageName="item.imageName"
@@ -13,55 +13,55 @@
       :updateLike="updateLike(item)"
       :sendToChat="sendToChat"
       :del="deletePhoto"
-      :loadingData="loadingData"
+      :isLoaded="isLoaded"
     />
 
-    <spliter v-if="this.phlicoz.length">Upload</spliter>
+    <Splitter v-if="this.phlicoz.length">Upload</Splitter>
 
-    <uploader :send="addPhoto" :loading="loading"/>
+    <Uploader :send="addPhoto" :loading="isLoading"/>
   </div>
   <InitialLoading v-else/>
 </template>
 
 <script>
-import phlico from "./components/phlico";
-import uploader from "./components/uploader";
-import spliter from "./helper/components/spliter";
-import InitialLoading from "./components/loading";
+import Phlico from './components/phlico'
+import Uploader from './components/uploader'
+import Splitter from './helper/components/splitter'
+import InitialLoading from './components/loading'
 // helper
-import webliteHandler from "./helper/function/weblite.api";
+import webliteHandler from './helper/function/weblite.api'
 import {
   savePhoto,
   deletePhoto,
-  getAll
+  getAll,
   // addLike,
-} from "./helper/function/requestHandler";
-const { W, R } = window;
+} from './helper/function/requestHandler'
+const { W, R } = window
 
 export default {
-  name: "App",
+  name: 'App',
 
   data() {
     return {
-      wisId: (W && W.wisId) || "1",
-      userId: "",
-      username: "",
+      wisId: (W && W.wisId) || '1',
+      userId: '',
+      username: '',
       phlicoz: [],
-      loading: false,
-      loadingData: true
-    };
+      isLoading: false,
+      isLoaded: true,
+    }
   },
 
   components: {
-    uploader,
-    phlico,
-    spliter,
-    InitialLoading
+    Uploader,
+    Phlico,
+    Splitter,
+    InitialLoading,
   },
 
   created() {
-    W && webliteHandler(this);
-    !W && this.init();
+    W && webliteHandler(this)
+    !W && this.init()
   },
 
   methods: {
@@ -75,63 +75,63 @@ export default {
               creator,
               caption,
               likes: R.length(R.uniq(likes)),
-              likeState: R.findIndex(R.equals(this.userId), likes) !== -1
+              likeState: R.findIndex(R.equals(this.userId), likes) !== -1,
             }),
-            body
-          );
+            body,
+          )
         }
-        this.loadingData = false;
-      });
+        this.isLoaded = false
+      })
     },
 
     addPhoto(photo) {
       const info = {
         wisId: this.wisId,
         userId: this.userId,
-        creator: this.username
-      };
+        creator: this.username,
+      }
       W &&
         W.sendNotificationToAll(
-          "Phlico",
-          `${info.creator} Has added new image =)`
-        );
-      this.loading = true;
+          'Phlico',
+          `${info.creator} Has added new image =)`,
+        )
+      this.isLoading = true
       savePhoto(info, photo)
         .then(res => {
-          this.loading = false;
-          this.$refs.appref.scrollTop = 0;
-          this.phlicoz = R.prepend(res.body.doc, this.phlicoz);
+          this.isLoading = false
+          this.$refs.appref.scrollTop = 0
+          this.phlicoz = R.prepend(res.body.doc, this.phlicoz)
         })
-        .catch(console.log);
-        W.analytics("UPLOAD_PHOTO")
+        .catch(console.log)
+      W.analytics('UPLOAD_PHOTO')
     },
 
     deletePhoto(info) {
       deletePhoto(info).then(res => {
         this.phlicoz = R.reject(
-          R.propEq("imageName", res.body.imageName),
-          this.phlicoz
-        );
-      });
-      W.analytics("DELETE_PHOTO")
+          R.propEq('imageName', res.body.imageName),
+          this.phlicoz,
+        )
+      })
+      W.analytics('DELETE_PHOTO')
     },
 
     updateLike(phlico) {
       return () => {
-        phlico.likeState = true;
-        phlico.likes = phlico.likes + 1;
-      };
+        phlico.likeState = true
+        phlico.likes = phlico.likes + 1
+      }
     },
 
     sendToChat(imageName) {
-      W.sendMessageToCurrentChat("wapp", {
-        wappId: "5c950b8c7e208e68972d546c",
-        customize: { imageName }
-      });
-      W.analytics("SNED_TO_CHAT")
-    }
-  }
-};
+      W.sendMessageToCurrentChat('wapp', {
+        wappId: '5c950b8c7e208e68972d546c',
+        customize: { imageName },
+      })
+      W.analytics('SNED_TO_CHAT')
+    },
+  },
+}
 </script>
 
 <style scoped>

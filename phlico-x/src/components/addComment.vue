@@ -21,35 +21,35 @@
 
 <script>
 export default {
-  name: "addComment",
+  name: 'AddComment',
 
   props: {
-    send: Function
+    send: Function,
   },
 
   data() {
     return {
-      opinion: ""
-    };
+      opinion: '',
+    }
   },
 
   methods: {
     changeState() {
-      this.$emit("state", "card");
+      this.$emit('state', 'card')
     },
 
     submit() {
       const time = Date()
-        .split(" ")
-        .splice(1, 4);
-      const date = `${time[0]} ${time[1]}, ${time[2]} ${time[3]}`;
+        .split(' ')
+        .splice(1, 4)
+      const date = `${time[0]} ${time[1]}, ${time[2]} ${time[3]}`
       if (this.opinion) {
-        this.send({ opinion: this.opinion, date });
-        this.opinion = "";
+        this.send({ opinion: this.opinion, date })
+        this.opinion = ''
       }
-    }
-  }
-};
+    },
+  },
+}
 </script>
 
 

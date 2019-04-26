@@ -28,40 +28,40 @@
 
 <script>
 export default {
-  name: "getComments",
+  name: 'getComments',
   data() {
     return {
-      opinion: ""
-    };
+      opinion: '',
+    }
   },
 
   props: {
     caption: Object,
-    send: Function
+    send: Function,
   },
 
   methods: {
     submit() {
       // console.log(this.caption);
       const time = Date()
-        .split(" ")
-        .splice(1, 4);
-      const date = `${time[0]} ${time[1]}, ${time[2]} ${time[3]}`;
-      if (this.opinion === "") alert("Comment is empty");
+        .split(' ')
+        .splice(1, 4)
+      const date = `${time[0]} ${time[1]}, ${time[2]} ${time[3]}`
+      if (this.opinion === '') alert('Comment is empty')
       else {
-        const opinion = this.opinion;
-        this.send({ opinion, date });
+        const opinion = this.opinion
+        this.send({ opinion, date })
       }
-      this.opinion = "";
-    }
+      this.opinion = ''
+    },
   },
 
   computed: {
     likes() {
-      return this.caption.likes || "0";
-    }
-  }
-};
+      return this.caption.likes || '0'
+    },
+  },
+}
 </script>
 
 <style scoped>
@@ -120,7 +120,7 @@ export default {
   font-size: 16px;
   padding: 5px 10px;
   outline: none;
-  width: 340px;
+  width: 260px;
 }
 
 .row button {

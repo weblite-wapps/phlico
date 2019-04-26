@@ -24,7 +24,7 @@
 
 .sp-bars:after,
 .sp-bars:before {
-  content: "";
+  content: '';
   position: absolute;
   width: inherit;
   height: inherit;

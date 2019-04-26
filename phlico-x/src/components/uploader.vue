@@ -22,54 +22,54 @@
 
 <script>
 export default {
-  name: "Upload",
+  name: 'Upload',
 
   props: {
     send: Function,
-    loading: Boolean
+    loading: Boolean,
   },
 
   data() {
     return {
       file: null,
-      caption: ""
-    };
+      caption: '',
+    }
   },
 
   computed: {
     buttonText() {
-      if (!this.file) return "Select a file ...";
+      if (!this.file) return 'Select a file ...'
       return this.file.name.length > 30
-        ? this.file.name.slice(0, 30) + ".. ."
-        : this.file.name;
+        ? this.file.name.slice(0, 30) + '.. .'
+        : this.file.name
     },
 
     isFileValid() {
-      const allowedExtension = ["jpeg", "jpg", "png", "gif", "bmp"];
+      const allowedExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp']
       const extension = this.file.name
         .toLowerCase()
-        .split(".")
-        .pop();
-      return allowedExtension.indexOf(extension) !== -1;
-    }
+        .split('.')
+        .pop()
+      return allowedExtension.indexOf(extension) !== -1
+    },
   },
 
   methods: {
     getFile(event) {
-      this.file = event.target.files[0];
+      this.file = event.target.files[0]
     },
 
     submitFile() {
       if (this.file && this.isFileValid) {
-        this.send({ file: this.file, caption: this.caption });
-        this.$emit("state", "update");
-        this.caption = "";
+        this.send({ file: this.file, caption: this.caption })
+        this.$emit('state', 'update')
+        this.caption = ''
       }
 
-      this.file = null;
-    }
-  }
-};
+      this.file = null
+    },
+  },
+}
 </script>
 
 <style scoped>
@@ -150,20 +150,28 @@ export default {
 }
 
 .ring {
-    width: 7px;
-    height: 7px;
-    margin: 0 auto;
-    padding: 10px;
-    border: 2px dashed #4b9cdb;
-    border-radius: 100%;
+  width: 7px;
+  height: 7px;
+  margin: 0 auto;
+  padding: 10px;
+  border: 2px dashed #4b9cdb;
+  border-radius: 100%;
 }
 
-.loading .ring {animation: loadingD 1.5s .3s cubic-bezier(.17,.37,.43,.67) infinite;}
+.loading .ring {
+  animation: loadingD 1.5s 0.3s cubic-bezier(0.17, 0.37, 0.43, 0.67) infinite;
+}
 
 @keyframes loadingD {
-    0% {transform: rotate(0deg);}
-    50% {transform: rotate(180deg);}
-    100% {transform: rotate(360deg);}
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .loading {
@@ -175,6 +183,4 @@ export default {
   display: flex;
   justify-content: center;
 }
-
-
 </style>

@@ -5,7 +5,7 @@
       :imageName="imageName"
       :likeState="likeState"
       :mode="mode"
-      @like="sendLike({ username, userId, imageName })"
+      @like="sendLike({ username, userId, imageName })" 
       @state="changeState"
     />
 
@@ -41,6 +41,7 @@ export default {
       imageName: '',
       userId: '',
       username: '',
+      creatorId: '',
       state: 'card',
       photoComments: [],
       caption: {},
@@ -74,20 +75,21 @@ export default {
 
     init() {
       getSinglePhotoData(this.imageName)
-        .then(body => {
-          this.photoComments = body.comments
+        .then(({ caption, comments, userName, userId, likes }) => {
+          this.photoComments = comments
           this.caption = {
-            userName: body.userName,
-            likes: R.length(R.uniq(body.likes)),
-            text: body.caption,
+            userName,
+            likes: R.length(R.uniq(likes)),
+            text: caption,
           }
-          this.likeState = R.findIndex(R.equals(this.userId), body.likes) !== -1
+          this.creatorId = userId,
+          this.likeState = R.findIndex(R.equals(this.userId), likes) !== -1
         })
         .catch(err => err)
     },
 
     sendComment(info) {
-      const { userId, ...other } = info
+      const { ...other } = info
       const { author } = other
       return comment => {
         addComment(other, comment)
@@ -102,15 +104,10 @@ export default {
 
     sendLike(info) {
       const { username, ...other } = info
-      const { userId } = other
       this.likeState = true
       addLike(other).then(() => {
-        W.sendNotificationToUsers(
-          'Phlico',
-          `${username} Has liked your image ❤️`,
-          '',
-          [userId],
-        )
+        console.log('kind', this.creatorId)
+        W.sendNotificationToUsers("Phlico", `${username} has liked your photo ❤️`, "", [this.creatorId])
         W.analytics('LIKE_POST') // inke vase che posti hast track beshe ya na?
       }).catch(console.log)
     },

@@ -2,7 +2,7 @@
   <div id="get-comment">
     <div id="caption">
       <div class="caption-text">
-        <p>{{ caption.text }}</p>
+        <p dir="auto">{{ caption.text }}</p>
       </div>
 
       <div class="bot">

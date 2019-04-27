@@ -6,6 +6,7 @@
       :imageName="item.imageName"
       :caption="item.caption"
       :creator="item.creator"
+      :creatorId="item.userId"
       :likes="item.likes"
       :comments="item.comments"
       :userInfo="{ userId, username }"
@@ -69,10 +70,11 @@ export default {
       getAll(this.wisId).then(body => {
         if (body) {
           this.phlicoz = R.map(
-            ({ imageName, comments, creator, likes, caption }) => ({
+            ({ imageName, comments, creator, likes, caption, userId }) => ({
               imageName,
               comments,
               creator,
+              userId,
               caption,
               likes: R.length(R.uniq(likes)),
               likeState: R.findIndex(R.equals(this.userId), likes) !== -1,

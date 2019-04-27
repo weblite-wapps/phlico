@@ -4,7 +4,7 @@
     <div class="caption">
       <span class="bigger">{{creator}}</span>
       <div>
-        <p>{{caption}}</p>
+        <p dir="auto">{{caption}}</p>
         <span class="bigger" id="like">{{likes}} ❤</span>
       </div>
     </div>

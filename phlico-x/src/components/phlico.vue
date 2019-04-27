@@ -6,7 +6,7 @@
       :likeState="likeState"
       :canDelete="userInfo.username === creator"
       :sendToChat="sendToChat"
-      @like="sendLike({ username: userInfo.username, userId: userInfo.userId, imageName })"
+      @like="sendLike({ username: userInfo.username, userId: userInfo.userId, creatorId, imageName })"
       @del="del({ userId: userInfo.userId, imageName })"
       @state="changeState"
       :isLoaded="isLoaded"
@@ -39,6 +39,7 @@ export default {
     caption: String,
     likes: Number,
     creator: String,
+    creatorId: String,
     userInfo: Object,
     likeState: Boolean,
     updateLike: Function,
@@ -75,12 +76,11 @@ export default {
         })
     },
 
-    sendLike(info) {
+    sendLike(info) { 
       const { username, ...other } = info
-      const { userId } = other
       addLike(other).then(() => {
         this.updateLike()
-        W.sendNotificationToUsers("Phlico", `${username} has liked your image ❤️`, "", [userId])
+        W.sendNotificationToUsers("Phlico", `${username} has liked your photo ❤️`, "", [this.creatorId])
         W.analytics("LIKE_POST") // inke vase che posti hast track beshe ya na?
       }) 
     },

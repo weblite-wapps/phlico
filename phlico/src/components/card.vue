@@ -1,20 +1,28 @@
 <template>
-  <div :style="container">
-    <div :style="card" @click.self="switchMode" v-show="isLoaded">
-      <!--Heart-->
-      <span id="heart" @click="changeState('like')" :class="heartClass">
-        <i>favorite</i>
-      </span>
-      <!--Notification-->
-      <span :class="navPopUpsClass">
-        <img
-          src="../assets/logo/comment.png"
-          v-on:load="onLoadHandler"
-          id="comment-icon"
-          @click="changeState('comments')"
-        >
-      </span>
-    </div>
+  <div>
+    <div :style="blur" />
+
+    <div
+      @click.self="switchMode"
+      v-show="isLoaded"
+      :style="image"
+    />
+
+    <!--Heart-->
+    <span id="heart" @click="changeState('like')" :class="heartClass">
+      <i>favorite</i>
+    </span>
+
+    <!--Notification-->
+    <span :class="navPopUpsClass">
+      <img
+        src="../assets/logo/comment.png"
+        v-on:load="onLoadHandler"
+        id="comment-icon"
+        @click="changeState('comments')"
+      />
+    </span>
+
     <InitialLoading v-show="!isLoaded"/>
   </div>
 </template>
@@ -40,12 +48,14 @@ export default {
 
   data() {
     return {
-      card: {
-        backgroundSize: 'Contain',
+      image: {
+        backgroundImage: `url('${this.getPhoto}')`,
+        backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
-        backgroundColor: 'rgb(94,94,94)',
-        width: this.mode == 'inline' ? '320px' : '100%',
+        backgroundSize: 'contain',
+        width: this.mode === 'inline' ? '320px' : '100%',
         height: this.mode == 'inline' ? '320px' : '100%',
+        margin: 'auto',
       },
       isLoaded: false,
     }
@@ -61,7 +71,7 @@ export default {
     },
 
     navPopUpsClass() {
-      return this.mode === 'inline' ? 'navInline' : 'navFullscreen'
+      return this.mode === 'inline' ? 'nav' : 'nav'
     },
 
     getPhoto() {
@@ -79,7 +89,7 @@ export default {
 
     switchMode() {
       W && W.changeModeTo('fullscreen')
-      W.analytics('CHANGE_MODE', { from: this.mode })
+      W && W.analytics('CHANGE_MODE', { from: this.mode })
     },
 
     onLoadHandler() {
@@ -90,19 +100,26 @@ export default {
   watch: {
     imageName: {
       handler() {
-        this.card = {
+        this.image = {
           backgroundImage: `url('${this.getPhoto}')`,
-          backgroundSize: 'Contain',
+          backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
-          backgroundColor: 'rgb(94,94,94)',
+          backgroundSize: 'contain',
           width: this.mode === 'inline' ? '320px' : '100%',
-          height: this.mode === 'inline' ? '320px' : '100%',
+          height: this.mode == 'inline' ? '320px' : '100%',
+          position: this.mode !== 'inline' && 'absolute',
           overflow: 'hidden',
         }
-        this.container = {
-          width: this.mode === 'inline' ? '320px' : '100%',
-          height: this.mode === 'inline' ? '320px' : '100%',
-          overflow: 'hidden',
+        this.blur = {
+          backgroundImage: `url('${this.getPhoto}')`,
+          filter: 'blur(8px)',
+          '-webkit-filter': 'blur(8px)',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          position: this.mode !== 'inline' && 'absolute',
+          width: '100%',
+          height: '100%',
         }
       },
       immediate: true,
@@ -146,29 +163,19 @@ export default {
   color: #f70a31;
   opacity: 1;
 }
-.navInline {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  position: relative;
-  bottom: -85%;
-  margin: 0 auto;
-}
-.navFullscreen {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  position: relative;
-  bottom: -92%;
-  margin: 0 auto;
+.nav {
+  z-index: 2;
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
 }
 #heart {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position: fixed;
+  top: 10px;
+  left: 10px;
   margin: 15px;
+  transition: all .3s;
+  z-index: 2;
   cursor: pointer;
   font-size: 12px;
   transition: all 0.3s;

@@ -112,8 +112,8 @@ export default {
         }
         this.blur = {
           backgroundImage: `url('${this.getPhoto}')`,
-          filter: 'blur(8px)',
-          '-webkit-filter': 'blur(8px)',
+          filter: 'blur(8px) grayscale(50%)',
+          '-webkit-filter': 'blur(8px) grayscale(50%)',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',

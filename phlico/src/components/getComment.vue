@@ -7,7 +7,7 @@
 
       <div class="bot">
         <span id="like">{{ likes }} ❤</span>
-        <span class="username">{{ caption.userName }}</span>
+        <span class="username">{{ caption.creator }}</span>
       </div>
     </div>
 
@@ -43,7 +43,6 @@ export default {
 
   methods: {
     submit() {
-      // console.log(this.caption);
       const time = Date()
         .split(' ')
         .splice(1, 4)

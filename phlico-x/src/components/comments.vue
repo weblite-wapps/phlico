@@ -7,7 +7,7 @@
         <p dir="auto">{{caption}}</p>
         <span class="bigger" id="like">{{likes}} ❤</span>
       </div>
-    </div>
+    </div> 
 
     <!-- Get Comment -->
     <Add-comment :send="send" @state="changeState"/>

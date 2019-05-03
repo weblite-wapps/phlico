@@ -74,11 +74,11 @@ export default {
     },
 
     init() {
-      getSinglePhotoData(this.imageName)
-        .then(({ caption, comments, userName, userId, likes }) => {
+      getSinglePhotoData(this.imageName) 
+        .then(({ caption, comments, creator, userId, likes }) => {
           this.photoComments = comments
           this.caption = {
-            userName,
+            creator, 
             likes: R.length(R.uniq(likes)),
             text: caption,
           }
@@ -106,7 +106,6 @@ export default {
       const { username, ...other } = info
       this.likeState = true
       addLike(other).then(() => {
-        console.log('kind', this.creatorId)
         W.sendNotificationToUsers("Phlico", `${username} has liked your photo ❤️`, "", [this.creatorId])
         W.analytics('LIKE_POST') // inke vase che posti hast track beshe ya na?
       }).catch(console.log)

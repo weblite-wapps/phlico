@@ -1,22 +1,24 @@
 <template>
   <div id="app" :class="appClass">
-    <card
-      v-if="state === 'card'"
-      :imageName="imageName"
-      :likeState="likeState"
-      :mode="mode"
-      @like="sendLike({ username, userId, imageName })" 
-      @state="changeState"
-    />
+    <keep-alive>
+      <card
+        v-if="state === 'card'"
+        :imageName="imageName"
+        :likeState="likeState"
+        :mode="mode"
+        @like="sendLike({ username, userId, imageName })"
+        @state="changeState"
+      />
 
-    <comments
-      v-else-if="state === 'comments'"
-      :comments="photoComments"
-      :caption="caption"
-      :send="sendComment({ 'author': username, userId, imageName })"
-      :mode="mode"
-      @state="changeState"
-    />
+      <comments
+        v-else-if="state === 'comments'"
+        :comments="photoComments"
+        :caption="caption"
+        :send="sendComment({ 'author': username, userId, imageName })"
+        :mode="mode"
+        @state="changeState"
+      />
+    </keep-alive>
   </div>
 </template>
 

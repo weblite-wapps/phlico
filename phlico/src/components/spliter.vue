@@ -5,31 +5,29 @@
 </template>
 
 <script>
-  export default {
-    name: 'spliter',
+export default {
+  name: 'spliter',
 
-    data() {
-      return {
-
-      }
-    },
-  }
+  data() {
+    return {}
+  },
+}
 </script>
 
 <style scoped>
 .on-the-line {
   font-size: 21px;
   font-family: 'sans-serif';
-  margin: 20px 0;
+  margin: 10px 0;
   color: #fff;
   text-align: center;
 }
 .on-the-line::after,
 .on-the-line::before {
-  border-top: solid 1.3px #97989D;
+  border-top: solid 1.3px #97989d;
   content: '';
   display: inline-block;
   margin: 0 12px 3px;
-  width: 30%;
+  width: 20%;
 }
 </style>

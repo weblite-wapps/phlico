@@ -12,4 +12,5 @@ app.use(cors({ origin: "*" }))
 app.use(bodyParser.json())
 app.use("/", router)
 
+
 app.listen(3094, () => console.log('Server Running!'))

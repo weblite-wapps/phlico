@@ -1,11 +1,12 @@
 <template>
-  <div id="app" ref="appref">
-    <phlico
+  <div id="app" ref="appref" v-if="isLoaded === false">
+    <Phlico
       v-for="item in phlicoz"
       :key="item.imageName"
       :imageName="item.imageName"
       :caption="item.caption"
       :creator="item.creator"
+      :creatorId="item.userId"
       :likes="item.likes"
       :comments="item.comments"
       :userInfo="{ userId, username }"
@@ -13,44 +14,50 @@
       :updateLike="updateLike(item)"
       :sendToChat="sendToChat"
       :del="deletePhoto"
+      :isLoaded="isLoaded"
     />
 
-    <spliter v-if="this.phlicoz.length">upload</spliter>
+    <Splitter v-if="this.phlicoz.length">Upload</Splitter>
 
-    <uploader :send="addPhoto" />
+    <Uploader :send="addPhoto" :loading="isLoading"/>
   </div>
+  <InitialLoading v-else/>
 </template>
 
 <script>
-import phlico from "./components/phlico"
-import uploader from "./components/uploader"
-import spliter from "./helper/components/spliter"
+import Phlico from './components/phlico'
+import Uploader from './components/uploader'
+import Splitter from './helper/components/splitter'
+import InitialLoading from './components/loading'
 // helper
-import webliteHandler from "./helper/function/weblite.api"
+import webliteHandler from './helper/function/weblite.api'
 import {
   savePhoto,
   deletePhoto,
   getAll,
   // addLike,
-} from "./helper/function/requestHandler"
+} from './helper/function/requestHandler'
 const { W, R } = window
 
 export default {
-  name: "App",
+  name: 'App',
 
   data() {
     return {
-      wisId: (W && W.wisId) || "1",
-      userId: "",
-      username: "",
+      wisId: (W && W.wisId) || '1',
+      userId: '',
+      username: '',
       phlicoz: [],
+      isLoading: false,
+      isLoaded: true,
     }
   },
 
   components: {
-    uploader,
-    phlico,
-    spliter,
+    Uploader,
+    Phlico,
+    Splitter,
+    InitialLoading,
   },
 
   created() {
@@ -63,10 +70,11 @@ export default {
       getAll(this.wisId).then(body => {
         if (body) {
           this.phlicoz = R.map(
-            ({ imageName, comments, creator, likes, caption }) => ({
+            ({ imageName, comments, creator, likes, caption, userId }) => ({
               imageName,
               comments,
               creator,
+              userId,
               caption,
               likes: R.length(R.uniq(likes)),
               likeState: R.findIndex(R.equals(this.userId), likes) !== -1,
@@ -74,6 +82,7 @@ export default {
             body,
           )
         }
+        this.isLoaded = false
       })
     },
 
@@ -83,14 +92,14 @@ export default {
         userId: this.userId,
         creator: this.username,
       }
-      W && W.sendNotificationToAll(
-        "Phlico",
-        `${info.creator} Has added new image =)`,
-      )
-      this.$refs.appref.scrollTop = 0
+      this.isLoading = true
       savePhoto(info, photo)
         .then(res => {
+          this.isLoading = false
+          this.$refs.appref.scrollTop = 0
           this.phlicoz = R.prepend(res.body.doc, this.phlicoz)
+          W && W.sendNotificationToAll('Phlico', `${info.creator} Has added new image =)`)
+          W && W.analytics('UPLOAD_PHOTO')
         })
         .catch(console.log)
     },
@@ -98,10 +107,11 @@ export default {
     deletePhoto(info) {
       deletePhoto(info).then(res => {
         this.phlicoz = R.reject(
-          R.propEq("imageName", res.body.imageName),
+          R.propEq('imageName', res.body.imageName),
           this.phlicoz,
         )
       })
+      W.analytics('DELETE_PHOTO')
     },
 
     updateLike(phlico) {
@@ -112,10 +122,11 @@ export default {
     },
 
     sendToChat(imageName) {
-      W.sendMessageToCurrentChat("wapp", {
-        wappId: "5bbf571656852737c7286218",
+      W.sendMessageToCurrentChat('wapp', {
+        wappId: '5c950b8c7e208e68972d546c',
         customize: { imageName },
       })
+      W.analytics('SNED_TO_CHAT')
     },
   },
 }

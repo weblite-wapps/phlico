@@ -2,12 +2,12 @@
   <div id="get-comment">
     <div id="caption">
       <div class="caption-text">
-        <p>{{ caption.text }}</p>
+        <p dir="auto">{{ caption.text }}</p>
       </div>
 
       <div class="bot">
         <span id="like">{{ likes }} ❤</span>
-        <span class="username">{{ caption.userName }}</span>
+        <span class="username">{{ caption.creator }}</span>
       </div>
     </div>
 
@@ -16,6 +16,7 @@
         class="comment-text"
         id="scrollbar"
         placeholder=" Add comment..."
+        dir="auto"
         @keyup.ctrl.enter="submit"
         v-model="opinion"
       />
@@ -28,40 +29,39 @@
 
 <script>
 export default {
-  name: "getComments",
+  name: 'getComments',
   data() {
     return {
-      opinion: ""
-    };
+      opinion: '',
+    }
   },
 
   props: {
     caption: Object,
-    send: Function
+    send: Function,
   },
 
   methods: {
     submit() {
-      // console.log(this.caption);
       const time = Date()
-        .split(" ")
-        .splice(1, 4);
-      const date = `${time[0]} ${time[1]}, ${time[2]} ${time[3]}`;
-      if (this.opinion === "") alert("Comment is empty");
+        .split(' ')
+        .splice(1, 4)
+      const date = `${time[0]} ${time[1]}, ${time[2]} ${time[3]}`
+      if (this.opinion === '') alert('Comment is empty')
       else {
-        const opinion = this.opinion;
-        this.send({ opinion, date });
+        const opinion = this.opinion
+        this.send({ opinion, date })
       }
-      this.opinion = "";
-    }
+      this.opinion = ''
+    },
   },
 
   computed: {
     likes() {
-      return this.caption.likes || "0";
-    }
-  }
-};
+      return this.caption.likes || '0'
+    },
+  },
+}
 </script>
 
 <style scoped>
@@ -87,7 +87,7 @@ export default {
   padding: 0 8px;
   margin-left: 20px;
   border-radius: 20px;
-  font-size: 11px;
+  font-size: 13px;
 }
 #like {
   color: #fc3939;
@@ -117,10 +117,10 @@ export default {
   border-radius: 4px;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
   color: #cbc7e5;
-  font-size: 12px;
+  font-size: 16px;
   padding: 5px 10px;
   outline: none;
-  width: 340px;
+  width: 260px;
 }
 
 .row button {

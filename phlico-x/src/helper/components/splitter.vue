@@ -6,9 +6,9 @@
 
 
 <script>
-  export default {
-    name: 'spliter',
-  }
+export default {
+  name: 'splitter',
+}
 </script>
 
 
@@ -23,7 +23,7 @@
 
 .on-the-line::after,
 .on-the-line::before {
-  border-top: solid 1.3px #97989D;
+  border-top: solid 1.3px #97989d;
   content: '';
   display: inline-block;
   margin: 0 12px 3px;

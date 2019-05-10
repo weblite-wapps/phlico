@@ -1,91 +1,131 @@
 <template>
-  <div :style="card" @click.self="switchMode">
+  <div>
+    <div :style="blur" />
+
+    <div
+      @click.self="switchMode"
+      v-show="isLoaded"
+      :style="image"
+    />
+
     <!--Heart-->
     <span id="heart" @click="changeState('like')" :class="heartClass">
       <i>favorite</i>
     </span>
+
     <!--Notification-->
     <span :class="navPopUpsClass">
-      <img src="../assets/logo/comment.png" id="comment-icon" @click="changeState('comments')">
+      <img
+        src="../assets/logo/comment.png"
+        v-on:load="onLoadHandler"
+        id="comment-icon"
+        @click="changeState('comments')"
+      />
     </span>
+
+    <InitialLoading v-show="!isLoaded"/>
   </div>
 </template>
 
 <script>
-import config from "../config";
+import config from '../config'
+import InitialLoading from './loading'
 
-const domain = config.server;
-const { W } = window;
+const domain = config.server
+const { W } = window
 
 export default {
-  name: "card",
+  name: 'card',
 
   props: {
     imageName: String,
     likeState: {
       type: Boolean,
-      required: true
+      required: true,
     },
-    mode: String
+    mode: String,
   },
 
   data() {
     return {
-      card: {
-        backgroundSize: "Contain",
-        backgroundRepeat: "no-repeat",
-        backgroundColor: "rgb(94,94,94)",
-        width: this.mode == "inline" ? "400px" : "100%",
-        height: this.mode == "inline" ? "400px" : "100%"
-      }
-    };
+      image: {
+        backgroundImage: `url('${this.getPhoto}')`,
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'contain',
+        width: this.mode === 'inline' ? '320px' : '100%',
+        height: this.mode == 'inline' ? '320px' : '100%',
+        margin: 'auto',
+      },
+      isLoaded: false,
+    }
+  },
+
+  components: {
+    InitialLoading,
   },
 
   computed: {
     heartClass() {
-      return this.likeState ? "like" : "unlike";
+      return this.likeState ? 'like' : 'unlike'
     },
 
     navPopUpsClass() {
-      return this.mode === "inline" ? "navInline" : "navFullscreen";
+      return this.mode === 'inline' ? 'nav' : 'nav'
     },
 
     getPhoto() {
-      return this.mode === "inline"
+      return this.mode === 'inline'
         ? `${domain}/img/Sqr_${this.imageName}`
-        : `${domain}/img/high_${this.imageName}`;
-    }
+        : `${domain}/img/high_${this.imageName}`
+    },
   },
-
-  created() {},
 
   methods: {
     changeState(event) {
-      if (event === "like" && !this.likeState) this.$emit("like");
-      if (event === "comments") this.$emit("state", event);
+      if (event === 'like' && !this.likeState) this.$emit('like')
+      if (event === 'comments') this.$emit('state', event)
     },
 
     switchMode() {
-      W && W.changeModeTo("fullscreen");
-    }
+      W && W.changeModeTo('fullscreen')
+      W && W.analytics('CHANGE_MODE', { from: this.mode })
+    },
+
+    onLoadHandler() {
+      this.isLoaded = true
+    },
   },
 
   watch: {
     imageName: {
       handler() {
-        this.card = {
+        this.image = {
           backgroundImage: `url('${this.getPhoto}')`,
-          backgroundSize: "Contain",
-          backgroundRepeat: "no-repeat",
-          backgroundColor: "rgb(94,94,94)",
-          width: this.mode == "inline" ? "400px" : "100%",
-          height: this.mode == "inline" ? "400px" : "100%"
-        };
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'contain',
+          width: this.mode === 'inline' ? '320px' : '100%',
+          height: this.mode == 'inline' ? '320px' : '100%',
+          position: this.mode !== 'inline' && 'absolute',
+          overflow: 'hidden',
+        }
+        this.blur = {
+          backgroundImage: `url('${this.getPhoto}')`,
+          filter: 'blur(8px) grayscale(50%)',
+          '-webkit-filter': 'blur(8px) grayscale(50%)',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          position: this.mode !== 'inline' && 'absolute',
+          width: '100%',
+          height: '100%',
+        }
       },
-      immediate: true
-    }
-  }
-};
+      immediate: true,
+    },
+  },
+}
 </script>
 
 <style scoped>
@@ -99,6 +139,7 @@ export default {
   cursor: pointer;
   transition: all 0.3s;
 }
+
 .unlike:hover {
   opacity: 1;
 }
@@ -122,29 +163,19 @@ export default {
   color: #f70a31;
   opacity: 1;
 }
-.navInline {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  position: relative;
-  bottom: -85%;
-  margin: 0 auto;
-}
-.navFullscreen {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  position: relative;
-  bottom: -92%;
-  margin: 0 auto;
+.nav {
+  z-index: 2;
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
 }
 #heart {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position: fixed;
+  top: 10px;
+  left: 10px;
   margin: 15px;
+  transition: all .3s;
+  z-index: 2;
   cursor: pointer;
   font-size: 12px;
   transition: all 0.3s;
